@@ -432,7 +432,7 @@ body.admin {
   background: $green;
 }
 
-.admin-wrapper .content h2 {
+.admin-wrapper .content h2, .admin-wrapper .content h4 {
   border-bottom: 1px solid #eeeeee;
 }
 
@@ -652,6 +652,7 @@ body.admin {
   input[type=number],
   input[type=email],
   input[type=password],
+  select,
   textarea {
     border-color: $blueberry;
     &:hover {
