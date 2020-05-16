@@ -39,7 +39,9 @@ class Api::V1::Timelines::PublicController < Api::BaseController
   end
 
   def public_timeline_statuses
-    Status.as_public_timeline(current_account, truthy_param?(:remote) ? :remote : truthy_param?(:local))
+    query = Status.as_public_timeline(current_account, truthy_param?(:remote) ? :remote : truthy_param?(:local))
+    query = query.without_local_only unless truthy_param?(:local)
+    query
   end
 
   def insert_pagination_headers
