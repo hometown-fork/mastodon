@@ -280,6 +280,7 @@
   "lists.subheading": "Your lists",
   "load_pending": "{count, plural, one {# new item} other {# new items}}",
   "loading_indicator.label": "Loading...",
+  "media_gallery.described": "Media description(s) present",
   "media_gallery.toggle_visible": "Hide {number, plural, one {image} other {images}}",
   "missing_indicator.label": "Not found",
   "missing_indicator.sublabel": "This resource could not be found",

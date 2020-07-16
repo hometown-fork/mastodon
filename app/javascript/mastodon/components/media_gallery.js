@@ -12,6 +12,7 @@ import Blurhash from 'mastodon/components/blurhash';
 
 const messages = defineMessages({
   toggle_visible: { id: 'media_gallery.toggle_visible', defaultMessage: 'Hide {number, plural, one {image} other {images}}' },
+  described: { id: 'media_gallery.described', defaultMessage: 'Media description(s) present' },
 });
 
 class Item extends React.PureComponent {
@@ -315,6 +316,15 @@ class MediaGallery extends React.PureComponent {
 
     const width = this.state.width || defaultWidth;
 
+    let described = [];
+    if (media.take(4).some((attachment, i) => attachment.get("description"))) {
+      described = (
+        <div className='media-gallery__described' aria-hidden='true'>
+          <IconButton title={intl.formatMessage(messages.described)} onClick={this.handleOpen} icon='universal-access' overlay />
+        </div>
+      );
+    }
+
     let children, spoilerButton;
 
     const style = {};
@@ -359,6 +369,8 @@ class MediaGallery extends React.PureComponent {
         <div className={classNames('spoiler-button', { 'spoiler-button--minified': visible && !uncached, 'spoiler-button--click-thru': uncached })}>
           {spoilerButton}
         </div>
+
+        {described}
 
         {children}
       </div>

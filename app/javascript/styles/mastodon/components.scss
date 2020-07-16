@@ -7364,3 +7364,10 @@ div.status__content--with-spoiler {
     text-align: center;
   }
 }
+
+.media-gallery__described {
+  position: absolute;
+  top: 4px;
+  left: 35px;
+  z-index: 100;
+}
