@@ -2,7 +2,7 @@
 en:
   about:
     about_hashtag_html: These are public posts tagged with <strong>#%{hashtag}</strong>. You can interact with them if you have an account anywhere in the fediverse.
-    about_mastodon_html: 'Hometown is adapted from Mastodon, a decentralized social network with no ads, no corporate surveillance, and ethical design.'
+    about_mastodon_html: Hometown is adapted from Mastodon, a decentralized social network with no ads, no corporate surveillance, and ethical design.
     about_this: About
     active_count_after: active
     active_footnote: Monthly Active Users (MAU)
@@ -782,9 +782,8 @@ en:
     '500':
       content: We're sorry, but something went wrong on our end.
       title: This page is not correct
-    noscript_html: To use the %{title} web application, please enable JavaScript. Alternatively, try one of the <a href="%{apps_path}">native apps</a> for Hometown/Mastodon for your platform.
     '503': The page could not be served due to a temporary server failure.
-    noscript_html: To use the Mastodon web application, please enable JavaScript. Alternatively, try one of the <a href="%{apps_path}">native apps</a> for Mastodon for your platform.
+    noscript_html: To use the %{title} web application, please enable JavaScript. Alternatively, try one of the <a href="%{apps_path}">native apps</a> for Hometown/Mastodon for your platform.
   existing_username_validator:
     not_found: could not find a local user with that username
     not_found_multiple: could not find %{usernames}
@@ -1259,9 +1258,9 @@ en:
   themes:
     contrast: Mastodon (High contrast)
     default: Mastodon (Dark)
-    mastodon-light: Mastodon (Light)
-    macaron: Macaron (Pastel light)
     fairy-floss: Fairy Floss (Pastel dark)
+    macaron: Macaron (Pastel light)
+    mastodon-light: Mastodon (Light)
   time:
     formats:
       default: "%b %d, %Y, %H:%M"
