@@ -23,28 +23,26 @@ vi:
         explanation: Bạn đã tạo một tài khoản trên %{host} với địa chỉ email này. Chỉ cần một cú nhấp chuột nữa để kích hoạt nó. Nếu đây không phải là bạn, xin vui lòng bỏ qua email này.
         explanation_when_pending: Bạn đã đăng ký %{host} với địa chỉ email này. Chúng tôi chỉ xem xét đơn đăng ký sau khi bạn xác thực địa chỉ email. Bạn có thể đăng nhập để thay đổi chi tiết hoặc xóa tài khoản của mình, nhưng bạn không thể truy cập hầu hết các chức năng cho đến khi tài khoản của bạn được chấp thuận. Nếu bạn bị từ chối, dữ liệu của bạn sẽ bị xóa, do đó bạn sẽ không cần phải thực hiện thêm hành động nào nữa. Nếu đây không phải là bạn, xin vui lòng bỏ qua email này.
         extra_html: Xin đọc kỹ <a href="%{terms_path}">nội quy máy chủ</a> và <a href="%{policy_path}">điều khoản dịch vụ</a> của chúng tôi.
-        subject: 'Mastodon: Xác thực email cho %{instance}'
         title: Xác thực địa chỉ email
       email_changed:
         explanation: 'Địa chỉ email cho tài khoản của bạn đang được thay đổi thành:'
         extra: Nếu bạn không thay đổi email của mình, có khả năng ai đó đã truy cập được vào tài khoản của bạn. Hãy thay đổi mật khẩu ngay lập tức hoặc liên hệ với quản trị viên.
-        subject: 'Mastodon: Email đã thay đổi'
+        subject: "%{title}: Email đã thay đổi"
         title: Địa chỉ email mới
       password_change:
         explanation: Mật khẩu tài khoản của bạn đã được thay đổi.
         extra: Nếu bạn không thay đổi mật khẩu tài khoản của mình, có khả năng ai đó đã truy cập được vào tài khoản của bạn. Hãy thay đổi mật khẩu ngay lập tức hoặc liên hệ với quản trị viên.
-        subject: 'Mastodon: Mật khẩu đã thay đổi'
+        subject: "%{title}: Mật khẩu đã thay đổi"
         title: Mật khẩu đã được thay đổi
       reconfirmation_instructions:
         explanation: Xác nhận địa chỉ email mới của bạn.
-        extra: Nếu thay đổi này không phải do bạn thực hiện, vui lòng bỏ qua email này. Địa chỉ email cho tài khoản Mastodon sẽ giữ nguyên cho đến khi bạn truy cập vào liên kết ở trên.
-        subject: 'Mastodon: Xác thực email cho %{instance}'
+        extra: Nếu thay đổi này không phải do bạn thực hiện, vui lòng bỏ qua email này. Địa chỉ email cho tài khoản %{title} sẽ giữ nguyên cho đến khi bạn truy cập vào liên kết ở trên.
         title: Xác thực địa chỉ email
       reset_password_instructions:
         action: Đổi mật khẩu
         explanation: Bạn đã yêu cầu mật khẩu mới cho tài khoản của bạn.
         extra: Nếu bạn không yêu cầu điều này, xin vui lòng bỏ qua email này. Mật khẩu của bạn sẽ giữ nguyên cho đến khi bạn truy cập vào liên kết ở trên và tạo một mật khẩu mới.
-        subject: 'Mastodon: Hướng dẫn đổi lại mật khẩu'
+        subject: "%{title}: Hướng dẫn đổi lại mật khẩu"
         title: Đổi lại mật khẩu
       two_factor_disabled:
         explanation: Đã vô hiệu hóa xác thực hai bước cho tài khoản của bạn. Bây giờ chỉ có thể đăng nhập bằng địa chỉ email và mật khẩu.

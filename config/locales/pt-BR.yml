@@ -9,10 +9,9 @@ pt-BR:
     administered_by: 'Administrado por:'
     api: API
     apps: Aplicativos
-    apps_platforms: Use o Mastodon a partir do iOS, Android e outras plataformas
+    apps_platforms: Use o %{title} a partir do iOS, Android e outras plataformas
     browse_directory: Navegue pelo diretório de perfis e filtre por interesses
     browse_local_posts: Navegue pelos toots públicos locais em tempo real
-    browse_public_posts: Navegue pelos toots públicos globais em tempo real
     contact: Contato
     contact_missing: Não definido
     contact_unavailable: Não disponível
@@ -783,7 +782,7 @@ pt-BR:
       content: Desculpe, algo deu errado por aqui.
       title: Esta página não está certa
     '503': A página não pôde ser carregada devido a uma falha temporária do servidor.
-    noscript_html: Para usar o aplicativo web do Mastodon, por favor ative o JavaScript. Ou, se quiser, experimente um dos <a href="%{apps_path}">aplicativos nativos</a> para o Mastodon em sua plataforma.
+    noscript_html: Para usar o aplicativo web do %{title}, por favor ative o JavaScript. Ou, se quiser, experimente um dos <a href="%{apps_path}">aplicativos nativos</a> para o Mastodon em sua plataforma.
   existing_username_validator:
     not_found: não foi possível encontrar um usuário local com esse nome de usuário
     not_found_multiple: não foi possível encontrar %{usernames}
@@ -1077,7 +1076,7 @@ pt-BR:
       weibo: Weibo
     current_session: Sessão atual
     description: "%{browser} em %{platform}"
-    explanation: Estes são os navegadores que estão conectados com a sua conta Mastodon.
+    explanation: Estes são os navegadores que estão conectados com a sua conta %{title}.
     ip: IP
     platforms:
       adobe_air: Adobe Air
@@ -1279,7 +1278,7 @@ pt-BR:
     wrong_code: Código de dois fatores inválido. O horário da instância e o horário do seu celular estão corretos?
   user_mailer:
     backup_ready:
-      explanation: Você pediu um backup completo da sua conta no Mastodon. E agora está pronto para ser baixado!
+      explanation: Você pediu um backup completo da sua conta no %{title}. E agora está pronto para ser baixado!
       subject: Seu arquivo está pronto para ser baixado
       title: Baixar arquivo
     sign_in_token:
@@ -1316,11 +1315,11 @@ pt-BR:
       full_handle_hint: Isso é o que você compartilha com aos seus amigos para que eles possam te mandar toots ou te seguir a partir de outra instância.
       review_preferences_action: Alterar preferências
       review_preferences_step: Não se esqueça de configurar suas preferências, como quais e-mails você gostaria de receber, que nível de privacidade você gostaria que seus toots tenham por padrão. Se você não sofre de enjoo com movimento, você pode habilitar GIFs animado automaticamente.
-      subject: Boas-vindas ao Mastodon
+      subject: Boas-vindas ao %{title}
       tip_federated_timeline: A linha global é uma visão contínua da rede do Mastodon. Mas ela só inclui pessoas de instâncias que a sua instância conhece, então não é a rede completa.
       tip_following: Você vai seguir administrador(es) da sua instância por padrão. Para encontrar mais gente interessante, confira as linhas local e global.
       tip_local_timeline: A linha local é uma visão contínua das pessoas em %{instance}. Estes são seus vizinhos!
-      tip_mobile_webapp: Se o seu navegador móvel oferecer a opção de adicionar Mastodon à tela inicial, você pode receber notificações push. Será como um aplicativo nativo!
+      tip_mobile_webapp: Se o seu navegador móvel oferecer a opção de adicionar %{instance} à tela inicial, você pode receber notificações push. Será como um aplicativo nativo!
       tips: Dicas
       title: Boas vindas, %{name}!
   users:
@@ -1334,5 +1333,5 @@ pt-BR:
     signed_in_as: 'Entrou como:'
     suspicious_sign_in_confirmation: Parece que você não fez login deste dispositivo antes, e você não fez login por um tempo. Portanto, estamos enviando um código de segurança para o seu endereço de e-mail para confirmar que é você.
   verification:
-    explanation_html: 'Você pode <strong>verificar os links nos metadados do seu perfil</strong>. Para isso, o site citado deve conter um link de volta para o seu perfil do Mastodon. O link de volta <strong>deve</strong> conter um atributo <code>rel="me"</code>. O conteúdo ou texto do link não importa. Aqui está um exemplo:'
+    explanation_html: 'Você pode <strong>verificar os links nos metadados do seu perfil</strong>. Para isso, o site citado deve conter um link de volta para o seu perfil do %{instance}. O link de volta <strong>deve</strong> conter um atributo <code>rel="me"</code>. O conteúdo ou texto do link não importa. Aqui está um exemplo:'
     verification: Verificação

@@ -9,10 +9,9 @@ ja:
     administered_by: '管理者:'
     api: API
     apps: アプリ
-    apps_platforms: iOSやAndroidなど、各種環境から利用できます
     browse_directory: ディレクトリから気になる人を探しましょう
     browse_local_posts: このサーバーの公開タイムラインをご覧ください
-    browse_public_posts: Mastodonの公開ライブストリームをご覧ください
+    browse_public_posts: "%{title}の公開ライブストリームをご覧ください"
     contact: 連絡先
     contact_missing: 未設定
     contact_unavailable: N/A
@@ -773,7 +772,7 @@ ja:
       content: もうしわけありませんが、なにかが間違っています。
       title: このページは正しくありません
     '503': 一時的なサーバー障害のため利用することができません。
-    noscript_html: Mastodonのウェブアプリケーションを利用する場合はJavaScriptを有効にしてください。またはあなたのプラットフォーム向けの<a href="%{apps_path}">Mastodonネイティブアプリ</a>を探すことができます。
+    noscript_html: '%{title}のウェブアプリケーションを利用する場合はJavaScriptを有効にしてください。またはあなたのプラットフォーム向けの<a href="%{apps_path}">Mastodonネイティブアプリ</a>を探すことができます。'
   existing_username_validator:
     not_found: そのようなユーザー名はローカルに見つかりませんでした
     not_found_multiple: "%{usernames} は見つかりませんでした"
@@ -1063,7 +1062,7 @@ ja:
       weibo: Weibo
     current_session: 現在のセッション
     description: "%{platform} 上の %{browser}"
-    explanation: あなたのMastodonアカウントに現在ログインしているウェブブラウザの一覧です。
+    explanation: あなたの%{title}アカウントに現在ログインしているウェブブラウザの一覧です。
     ip: IP
     platforms:
       adobe_air: Adobe Air
@@ -1259,7 +1258,7 @@ ja:
     wrong_code: コードが間違っています。サーバー上の時間とデバイス上の時間が一致していますか？
   user_mailer:
     backup_ready:
-      explanation: Mastodonアカウントのアーカイブを受け付けました。今すぐダウンロードできます！
+      explanation: "%{title}アカウントのアーカイブを受け付けました。今すぐダウンロードできます！"
       subject: アーカイブの準備ができました
       title: アーカイブの取り出し
     sign_in_token:
@@ -1296,11 +1295,11 @@ ja:
       full_handle_hint: 別のサーバーの友達とフォローやメッセージをやり取りする際には、これを伝えることになります。
       review_preferences_action: 設定の変更
       review_preferences_step: 受け取りたいメールの種類や投稿のデフォルト公開範囲など、ユーザー設定を必ず済ませておきましょう。目が回らない自信があるなら、アニメーション GIF を自動再生する設定もご検討ください。
-      subject: Mastodon へようこそ
+      subject: "%{title} へようこそ"
       tip_federated_timeline: 連合タイムラインは Mastodon ネットワークの流れを見られるものです。ただしあなたと同じサーバーの人がフォローしている人だけが含まれるので、それが全てではありません。
       tip_following: 最初は、サーバーの管理者をフォローした状態になっています。もっと興味のある人たちを見つけるには、ローカルタイムラインと連合タイムラインを確認してみましょう。
       tip_local_timeline: ローカルタイムラインは %{instance} にいる人々の流れを見られるものです。彼らはあなたと同じサーバーにいる隣人のようなものです！
-      tip_mobile_webapp: お使いのモバイル端末で、ブラウザから Mastodon をホーム画面に追加できますか？ もし追加できる場合、プッシュ通知の受け取りなど、まるで「普通の」アプリのような機能が楽しめます！
+      tip_mobile_webapp: お使いのモバイル端末で、ブラウザから %{instance} をホーム画面に追加できますか？ もし追加できる場合、プッシュ通知の受け取りなど、まるで「普通の」アプリのような機能が楽しめます！
       tips: 豆知識
       title: ようこそ、%{name}！
   users:
@@ -1314,5 +1313,4 @@ ja:
     signed_in_as: '下記でログイン中:'
     suspicious_sign_in_confirmation: おかえりなさい。このデバイスからのアクセスは初めてなので、セキュリティ確保のためにメールでセキュリティーコードを送信しました。
   verification:
-    explanation_html: <strong>プロフィール内のリンクの所有者であることを認証することができます</strong>。そのためにはリンクされたウェブサイトにMastodonプロフィールへのリンクが含まれている必要があります。リンクには<code>rel="me"</code>属性を<strong>必ず</strong>与えなければなりません。リンクのテキストについては重要ではありません。以下は例です：
     verification: 認証

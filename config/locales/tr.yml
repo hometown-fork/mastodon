@@ -9,10 +9,9 @@ tr:
     administered_by: 'Yöneten:'
     api: API
     apps: Mobil uygulamalar
-    apps_platforms: İos, Android ve diğer platformlardaki Mastodon'u kullanın
+    apps_platforms: İos, Android ve diğer platformlardaki %{title}'u kullanın
     browse_directory: Bir profil dizinine göz atın ve ilgi alanlarına göre filtreleyin
     browse_local_posts: Bu sunucudaki herkese açık yayınlara göz atın
-    browse_public_posts: Mastodon'daki herkese açık yayınlara göz atın
     contact: İletişim
     contact_missing: Ayarlanmadı
     contact_unavailable: Yok
@@ -743,7 +742,7 @@ tr:
       content: Üzgünüz, ancak bir şey ters gitti.
       title: Bu sayfa doğru değil
     '503': Geçici sunucu hatası nedeniyle sayfa görüntülenemedi.
-    noscript_html: Mastodon web uygulamasını kullanmak için lütfen JavaScript'i etkinleştirin. Alternatif olarak, platformunuz için Mastodon <a href="%{apps_path}">yerel uygulamalardan</a> birini deneyin.
+    noscript_html: '%{title} web uygulamasını kullanmak için lütfen JavaScript''i etkinleştirin. Alternatif olarak, platformunuz için Mastodon <a href="%{apps_path}">yerel uygulamalardan</a> birini deneyin.'
   existing_username_validator:
     not_found: bu kullanıcı adına sahip yerel bir kullanıcı bulunamadı
     not_found_multiple: "%{usernames} bulunamadı"
@@ -1029,7 +1028,7 @@ tr:
       weibo: Weibo
     current_session: Şu anki oturum
     description: "%{platform} üzerinde %{browser}"
-    explanation: Bunlar şu anda Mastodon hesabınızda oturum açan web tarayıcılarıdır.
+    explanation: Bunlar şu anda %{title} hesabınızda oturum açan web tarayıcılarıdır.
     ip: IP
     platforms:
       adobe_air: Adobe Air
@@ -1229,7 +1228,7 @@ tr:
     wrong_code: Girdiğiniz kod geçersiz! Telefonunuzun saati geri/ileri kalmış olabilir.
   user_mailer:
     backup_ready:
-      explanation: Mastodon hesabınızın tam bir yedeğini istediniz. Şimdi indirmeye hazır!
+      explanation: "%{title} hesabınızın tam bir yedeğini istediniz. Şimdi indirmeye hazır!"
       subject: Arşiviniz indirilmeye hazır
       title: Arşiv paketlemesi
     warning:
@@ -1260,11 +1259,10 @@ tr:
       full_handle_hint: Arkadaşlarınıza, size başka bir sunucudan mesaj atabilmeleri veya sizi takip edebilmeleri için söyleyeceğiniz şey budur.
       review_preferences_action: Tercihleri değiştirin
       review_preferences_step: Hangi e-postaları almak veya gönderilerinizin varsayılan olarak hangi gizlilik seviyesinde olmasını istediğiniz gibi tercihlerinizi ayarladığınızdan emin olun. Hareket hastalığınız yoksa, GIF otomatik oynatmayı etkinleştirmeyi seçebilirsiniz.
-      subject: Mastodon'a hoş geldiniz
       tip_federated_timeline: Federe zaman tüneli, Mastodon ağının genel bir görüntüsüdür. Ancak yalnızca komşularınızın abone olduğu kişileri içerir, bu yüzden tamamı değildir.
       tip_following: Sunucu yönetici(ler)ini varsayılan olarak takip edersiniz. Daha ilginç insanlar bulmak için yerel ve federe zaman çizelgelerini kontrol edin.
       tip_local_timeline: Yerel zaman çizelgesi, %{instance} üzerindeki kişilerin genel bir görüntüsüdür. Bunlar senin en yakın komşularındır!
-      tip_mobile_webapp: Mobil tarayıcınız size ana ekranınıza Mastodon eklemenizi önerirse, push bildirimleri alabilirsiniz. Birçok yönden yerli bir uygulama gibi davranır!
+      tip_mobile_webapp: Mobil tarayıcınız size ana ekranınıza %{instance} eklemenizi önerirse, push bildirimleri alabilirsiniz. Birçok yönden yerli bir uygulama gibi davranır!
       tips: İpuçları
       title: Gemiye hoşgeldin, %{name}!
   users:
@@ -1276,5 +1274,5 @@ tr:
     seamless_external_login: Harici bir servis aracılığıyla oturum açtınız, bu nedenle parola ve e-posta ayarları mevcut değildir.
     signed_in_as: 'Giriş yapan:'
   verification:
-    explanation_html: '<strong>Profil meta verisindeki bağlantıların sahibi olarak kendinizi doğrulayabilirsiniz</strong>. Bunun için, link verilen web sitesi Mastodon profilinize geri bir link içermelidir. Geri link bir <code>rel="me"</code> özelliğine sahip <strong>olmalıdır</strong>. Bağlantının metin içeriği önemli değildir. İşte bir örnek:'
+    explanation_html: '<strong>Profil meta verisindeki bağlantıların sahibi olarak kendinizi doğrulayabilirsiniz</strong>. Bunun için, link verilen web sitesi %{instance} profilinize geri bir link içermelidir. Geri link bir <code>rel="me"</code> özelliğine sahip <strong>olmalıdır</strong>. Bağlantının metin içeriği önemli değildir. İşte bir örnek:'
     verification: Doğrulama

@@ -9,10 +9,10 @@ sk:
     administered_by: 'Správcom je:'
     api: API
     apps: Aplikácie
-    apps_platforms: Užívaj Mastodon z iOSu, Androidu, a iných platforiem
+    apps_platforms: Užívaj %{title} z iOSu, Androidu, a iných platforiem
     browse_directory: Prehľadávaj databázu profilov, a filtruj podľa záujmov
     browse_local_posts: Prebádaj naživo prúd verejných príspevkov z tohto servera
-    browse_public_posts: Sleduj naživo prúd verejných príspevkov na Mastodone
+    browse_public_posts: Sleduj naživo prúd verejných príspevkov na %{title}
     contact: Kontakt
     contact_missing: Nezadaný
     contact_unavailable: Neuvedený/á
@@ -753,7 +753,7 @@ sk:
       content: Ospravedlňujem sa. Niečo sa pokazilo na našom konci.
       title: Táto stránka nieje v poriadku
     '503': Táto stránka nemôže byť načítaná, kvôli dočasnému výpadku servera.
-    noscript_html: Aby bolo možné používať Mastodon web aplikáciu, povoľ prosím JavaScript. Alebo skús jednu z <a href="%{apps_path}"> aplikácii </a> dostupných pre vašu platformu.
+    noscript_html: Aby bolo možné používať %{title} web aplikáciu, povoľ prosím JavaScript. Alebo skús jednu z <a href="%{apps_path}"> aplikácii </a> dostupných pre vašu platformu.
   existing_username_validator:
     not_found: nepodarilo sa nájsť miestného užívateľa s takouto prezývkou
     not_found_multiple: nepodarilo sa nájsť %{usernames}
@@ -1029,7 +1029,7 @@ sk:
       weibo: Sina/Tencent Weibo
     current_session: Aktuálna sezóna
     description: "%{browser} na %{platform}"
-    explanation: Tieto sú prehliadače ktoré sú teraz prihlásené na tvoj Mastodon účet.
+    explanation: Tieto sú prehliadače ktoré sú teraz prihlásené na tvoj %{title} účet.
     ip: IP adresa
     platforms:
       chrome_os: Google ChromeOS
@@ -1176,7 +1176,7 @@ sk:
     wrong_code: Zadaný kód bol neplatný! Je serverový čas a čas na zariadení správny?
   user_mailer:
     backup_ready:
-      explanation: Vyžiadal/a si si úplnú zálohu svojho Mastodon účtu. Táto záloha je teraz pripravená na stiahnutie!
+      explanation: Vyžiadal/a si si úplnú zálohu svojho %{title} účtu. Táto záloha je teraz pripravená na stiahnutie!
       subject: Tvoj archív je pripravený na stiahnutie
       title: Odber archívu
     warning:
@@ -1207,11 +1207,10 @@ sk:
       full_handle_hint: Toto je čo musíš dať vedieť svojím priateľom aby ti mohli posielať správy, alebo ťa následovať z iného serveru.
       review_preferences_action: Zmeniť nastavenia
       review_preferences_step: Daj si záležať na svojích nastaveniach, napríklad že aké emailové notifikácie chceš dostávať, alebo pod aký level súkromia sa tvoje príspevky majú sami automaticky zaradiť. Pokiaľ nemáš malátnosť z pohybu, môžeš si zvoliť aj automatické spúšťanie GIF animácií.
-      subject: Vitaj na Mastodone
       tip_federated_timeline: Federovaná os zobrazuje sieť Mastodonu až po jej hranice. Ale zahŕňa iba ľúdí ktorých ostatní okolo teba sledujú, takže predsa nieje úplne celistvá.
       tip_following: Správcu servera následuješ automaticky. Môžeš ale nájsť mnoho iných zaujímavých ľudí ak prezrieš tak lokálnu, ako aj globálne federovanú os.
       tip_local_timeline: Miestna časová os je celkový pohľad na aktivitu užívateľov %{instance}. Toto sú tvoji najbližší susedia!
-      tip_mobile_webapp: Pokiaľ ti prehliadač ponúkne možnosť pridať Mastodon na tvoju obrazovku, môžeš potom dostávať notifikácie skoro ako z natívnej aplikácie!
+      tip_mobile_webapp: Pokiaľ ti prehliadač ponúkne možnosť pridať %{instance} na tvoju obrazovku, môžeš potom dostávať notifikácie skoro ako z natívnej aplikácie!
       tips: Tipy
       title: Vitaj na palube, %{name}!
   users:
@@ -1222,5 +1221,5 @@ sk:
     seamless_external_login: Si prihlásená/ý cez externú službu, takže nastavenia hesla a emailu ti niesú prístupné.
     signed_in_as: 'Prihlásená/ý ako:'
   verification:
-    explanation_html: 'Môžeš sa <strong>overiť ako majiteľ odkazov v metadátach tvojho profilu</strong>. Na to ale musí odkazovaná stránka obsahovať odkaz späť na tvoj Mastodon profil. Tento spätný odkaz <strong>musí</strong> mať prívlastok <code>rel="me"</code>. Na texte odkazu nezáleží. Tu je príklad:'
+    explanation_html: 'Môžeš sa <strong>overiť ako majiteľ odkazov v metadátach tvojho profilu</strong>. Na to ale musí odkazovaná stránka obsahovať odkaz späť na tvoj %{instance} profil. Tento spätný odkaz <strong>musí</strong> mať prívlastok <code>rel="me"</code>. Na texte odkazu nezáleží. Tu je príklad:'
     verification: Overenie

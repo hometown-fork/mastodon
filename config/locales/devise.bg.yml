@@ -16,12 +16,8 @@ bg:
       unauthenticated: Преди да продължиш, трябва да влезеш в профила си или да се регистрираш.
       unconfirmed: Преди да продължиш, трябва да потвърдиш регистрацията си.
     mailer:
-      confirmation_instructions:
-        subject: 'Mastodon: Инструкции за потвърждаване %{instance}'
       password_change:
-        subject: 'Mastodon: Паролата е променена'
-      reset_password_instructions:
-        subject: Инструкции за смяна на паролата
+        subject: "%{title}: Паролата е променена"
       unlock_instructions:
         subject: Инструкции за отключване
     omniauth_callbacks:

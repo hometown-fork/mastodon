@@ -9,10 +9,10 @@ de:
     administered_by: 'Betrieben von:'
     api: API
     apps: Mobile Apps
-    apps_platforms: Benutze Mastodon auf iOS, Android und anderen Plattformen
+    apps_platforms: Benutze %{title} auf iOS, Android und anderen Plattformen
     browse_directory: Durchsuche das Profilverzeichnis und filtere nach Interessen
     browse_local_posts: Durchsuche einen Live-Stream von öffentlichen Beiträgen von diesem Server
-    browse_public_posts: Stöbere durch öffentliche Beiträge auf Mastodon
+    browse_public_posts: Stöbere durch öffentliche Beiträge auf %{title}
     contact: Kontakt
     contact_missing: Nicht angegeben
     contact_unavailable: Nicht verfügbar
@@ -783,7 +783,7 @@ de:
       content: Bitte verzeih, etwas ist bei uns schief gegangen.
       title: Diese Seite ist kaputt
     '503': Die Seite konnte wegen eines temporären Serverfehlers nicht angezeigt werden.
-    noscript_html: Bitte aktiviere JavaScript, um die Mastodon-Web-Anwendung zu verwenden. Alternativ kannst du auch eine der <a href="%{apps_path}">nativen Mastodon-Anwendungen</a> für deine Plattform probieren.
+    noscript_html: Bitte aktiviere JavaScript, um die %{title}-Web-Anwendung zu verwenden. Alternativ kannst du auch eine der <a href="%{apps_path}">nativen Mastodon-Anwendungen</a> für deine Plattform probieren.
   existing_username_validator:
     not_found: kann lokalen Benutzer nicht mit diesem Nuternamen finden
     not_found_multiple: kann %{usernames} nicht finden
@@ -1077,7 +1077,7 @@ de:
       weibo: Weibo
     current_session: Aktuelle Sitzung
     description: "%{browser} auf %{platform}"
-    explanation: Dies sind die Webbrowser, die derzeit in deinem Mastodon-Konto eingeloggt sind.
+    explanation: Dies sind die Webbrowser, die derzeit in deinem %{title}-Konto eingeloggt sind.
     ip: IP-Adresse
     platforms:
       adobe_air: Adobe Air
@@ -1281,7 +1281,7 @@ de:
     wrong_code: Der eingegebene Code war ungültig! Stimmen Serverzeit und Gerätezeit?
   user_mailer:
     backup_ready:
-      explanation: Du hast ein vollständiges Backup von deinem Mastodon-Konto angefragt. Es kann jetzt heruntergeladen werden!
+      explanation: Du hast ein vollständiges Backup von deinem %{title}-Konto angefragt. Es kann jetzt heruntergeladen werden!
       subject: Dein Archiv ist bereit zum Download
       title: Archiv-Download
     sign_in_token:
@@ -1318,11 +1318,11 @@ de:
       full_handle_hint: Dies ist was du deinen Freunden sagen kannst, damit sie dich anschreiben oder von einem anderen Server folgen können.
       review_preferences_action: Einstellungen ändern
       review_preferences_step: Stelle sicher, dass du deine Einstellungen einstellst, wie zum Beispiel welche E-Mails du gerne erhalten möchtest oder was für Privatsphäreneinstellungen voreingestellt werden sollten. Wenn dir beim Ansehen von GIFs nicht schwindelig wird, dann kannst du auch das automatische Abspielen dieser aktivieren.
-      subject: Willkommen bei Mastodon
+      subject: Willkommen bei %{title}
       tip_federated_timeline: Die föderierte Zeitleiste ist die sehr große Ansicht vom Mastodon-Netzwerk. Sie enthält aber auch nur Leute, denen du und deine Nachbarn folgen, sie ist also nicht komplett.
       tip_following: Du folgst standardmäßig deinen Server-Admin(s). Um mehr interessante Leute zu finden, kannst du die lokale oder öffentliche Zeitleiste durchsuchen.
       tip_local_timeline: Die lokale Zeitleiste ist eine Ansicht aller Leute auf %{instance}. Diese sind deine Nachbarn!
-      tip_mobile_webapp: Wenn dein mobiler Browser dir anbietet Mastodon zu deinem Startbildschirm hinzuzufügen, dann kannst du Benachrichtigungen erhalten. Es verhält sich wie eine native App in vielen Wegen!
+      tip_mobile_webapp: Wenn dein mobiler Browser dir anbietet %{instance} zu deinem Startbildschirm hinzuzufügen, dann kannst du Benachrichtigungen erhalten. Es verhält sich wie eine native App in vielen Wegen!
       tips: Tipps
       title: Willkommen an Bord, %{name}!
   users:
@@ -1336,5 +1336,4 @@ de:
     signed_in_as: 'Angemeldet als:'
     suspicious_sign_in_confirmation: Du hast dich anscheinend seit einer ganzen Weile noch nicht von diesem Gerät eingeloggt, also senden wir einen Sicherheitscode an deine E-Mail-Adresse, um zu bestätigen, dass du es bist.
   verification:
-    explanation_html: 'Du kannst <strong>bestätigen, dass die Links in deinen Profil-Metadaten dir gehören</strong>. Dafür muss die verlinkte Website einen Link zurück auf dein Mastodon-Profil enthalten. Dieser Link <strong>muss</strong> ein <code>rel="me"</code>-Attribut enthalten. Der Linktext ist dabei egal. Hier ist ein Beispiel:'
     verification: Verifizierung

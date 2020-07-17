@@ -9,10 +9,9 @@ nl:
     administered_by: 'Beheerd door:'
     api: API
     apps: Mobiele apps
-    apps_platforms: Gebruik Mastodon op iOS, Android en op andere platformen
+    apps_platforms: Gebruik %{title} op iOS, Android en op andere platformen
     browse_directory: Gebruikersgids doorbladeren en op interesses filteren
     browse_local_posts: Livestream van openbare berichten op deze server bekijken
-    browse_public_posts: Livestream van openbare Mastodonberichten bekijken
     contact: Contact
     contact_missing: Niet ingesteld
     contact_unavailable: n.v.t
@@ -781,7 +780,7 @@ nl:
       content: Het spijt ons, er is aan onze kant iets fout gegaan.
       title: Er is iets mis
     '503': De pagina kon door een tijdelijke serverstoring niet worden geladen.
-    noscript_html: Schakel JavaScript in om de webapp van Mastodon te kunnen gebruiken. Als alternatief kan je een <a href="%{apps_path}">Mastodon-app</a> zoeken voor jouw platform.
+    noscript_html: Schakel JavaScript in om de webapp van %{title} te kunnen gebruiken. Als alternatief kan je een <a href="%{apps_path}">Mastodon-app</a> zoeken voor jouw platform.
   existing_username_validator:
     not_found: Kon geen lokale gebruiker met die gebruikersnaam vinden
     not_found_multiple: Kon %{usernames} niet vinden
@@ -1075,7 +1074,6 @@ nl:
       weibo: Weibo
     current_session: Huidige sessie
     description: "%{browser} op %{platform}"
-    explanation: Dit zijn de webbrowsers die momenteel met jouw Mastodonaccount zijn ingelogd.
     ip: IP
     platforms:
       adobe_air: Adobe Air
@@ -1277,7 +1275,7 @@ nl:
     wrong_code: De ingevoerde code is ongeldig! Klopt de systeemtijd van de server en die van jouw apparaat?
   user_mailer:
     backup_ready:
-      explanation: Je hebt een volledige back-up van jouw Mastodon-account opgevraagd. Het staat nu klaar om te worden gedownload!
+      explanation: Je hebt een volledige back-up van jouw %{title}-account opgevraagd. Het staat nu klaar om te worden gedownload!
       subject: Jouw archief staat klaar om te worden gedownload
       title: Archief ophalen
     sign_in_token:
@@ -1314,11 +1312,11 @@ nl:
       full_handle_hint: Dit geef je aan jouw vrienden, zodat ze jouw berichten kunnen sturen of (vanaf een andere Mastodonserver) kunnen volgen.
       review_preferences_action: Instellingen veranderen
       review_preferences_step: Zorg dat je jouw instellingen naloopt, zoals welke e-mails je wilt ontvangen of voor wie jouw berichten standaard zichtbaar moeten zijn. Wanneer je geen last hebt van bewegende beelden, kun je het afspelen van geanimeerde GIF's inschakelen.
-      subject: Welkom op Mastodon
+      subject: Welkom op %{title}
       tip_federated_timeline: De globale tijdlijn toont berichten in het Mastodonnetwerk. Het bevat echter alleen berichten van mensen waar jouw buren mee zijn verbonden, dus het is niet compleet.
       tip_following: Je volgt standaard de beheerder(s) van jouw Mastodonserver. Bekijk de lokale en de globale tijdlijnen om meer interessante mensen te vinden.
       tip_local_timeline: De lokale tijdlijn toont berichten van mensen op %{instance}. Dit zijn jouw naaste buren!
-      tip_mobile_webapp: Wanneer jouw mobiele webbrowser Mastodon aan jouw startscherm wilt toevoegen, kun je pushmeldingen ontvangen. Het gedraagt zich op meerdere manieren als een native app!
+      tip_mobile_webapp: Wanneer jouw mobiele webbrowser %{instance} aan jouw startscherm wilt toevoegen, kun je pushmeldingen ontvangen. Het gedraagt zich op meerdere manieren als een native app!
       tips: Tips
       title: Welkom aan boord %{name}!
   users:
@@ -1332,5 +1330,4 @@ nl:
     signed_in_as: 'Ingelogd als:'
     suspicious_sign_in_confirmation: Het lijkt er op dat je nog niet eerder op dit apparaat bent ingelogd, en je bent een tijdje niet ingelogd, dus sturen we een beveiligingscode naar je e-mailadres om te bevestigen dat jij het bent.
   verification:
-    explanation_html: 'Je kunt <strong>jezelf verifiëren als de eigenaar van de links in de metadata van jouw profiel</strong>. Hiervoor moet op de gelinkte website een link terug naar jouw Mastodonprofiel staan. Deze link <strong>moet</strong> het <code>rel="me"</code>-attribuut bevatten. De omschrijving van de link maakt niet uit. Hier is een voorbeeld:'
     verification: Verificatie

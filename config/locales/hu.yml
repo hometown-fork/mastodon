@@ -9,10 +9,10 @@ hu:
     administered_by: 'Adminisztrátor:'
     api: API
     apps: Mobil appok
-    apps_platforms: Használd a Mastodont iOS-ről, Androidról vagy más platformról
+    apps_platforms: Használd a %{title} iOS-ről, Androidról vagy más platformról
     browse_directory: Böngészd a profilokat és szűrj érdeklődési körre
     browse_local_posts: Nézz bele a szerver publikus, élő adatfolyamába
-    browse_public_posts: Nézz bele a Mastodon élő adatfolyamába
+    browse_public_posts: Nézz bele a %{title} élő adatfolyamába
     contact: Kapcsolat
     contact_missing: Nincs megadva
     contact_unavailable: N/A
@@ -781,7 +781,7 @@ hu:
       content: Sajnáljuk, valami hiba történt a mi oldalunkon.
       title: Az oldal nem megfelelő
     '503': Az oldalt nem tudjuk megmutatni átmeneti szerverprobléma miatt.
-    noscript_html: A Mastodon webalkalmazás használatához engedélyezned kell a JavaScriptet. A másik megoldás, hogy kipróbálsz egy platformodnak megfelelő <a href="%{apps_path}">alkalmazást</a>.
+    noscript_html: A %{title} webalkalmazás használatához engedélyezned kell a JavaScriptet. A másik megoldás, hogy kipróbálsz egy platformodnak megfelelő <a href="%{apps_path}">alkalmazást</a>.
   existing_username_validator:
     not_found: ezzel a névvel nem találtunk helyi felhasználót
     not_found_multiple: nem találtuk %{usernames} felhasználó(ka)t
@@ -1075,7 +1075,6 @@ hu:
       weibo: Weibo
     current_session: Jelenlegi munkamenet
     description: "%{browser} az alábbi platformon: %{platform}"
-    explanation: Jelenleg az alábbi böngészőkkel vagy bejelentkezve a fiókodba.
     ip: IP
     platforms:
       adobe_air: Adobe Air
@@ -1277,7 +1276,7 @@ hu:
     wrong_code: A beírt kód nem érvényes! A szerver órája és az eszközöd órája szinkronban jár?
   user_mailer:
     backup_ready:
-      explanation: A Mastodon fiókod teljes mentését kérted. A mentés kész ás letölthető!
+      explanation: A %{title} fiókod teljes mentését kérted. A mentés kész ás letölthető!
       subject: Az adataidról készült archív letöltésre kész
       title: Archiválás
     sign_in_token:
@@ -1314,11 +1313,10 @@ hu:
       full_handle_hint: Ez az, amit megadhatsz másoknak, hogy üzenhessenek neked vagy követhessenek téged más szerverekről.
       review_preferences_action: Beállítások módosítása
       review_preferences_step: Tekintsd át beállításaidat, például hogy milyen értesítéseket kérsz e-mailben vagy hogy alapértelmezettként mi legyen a tülkjeid láthatósága. Ha nem vagy szédülős alkat, azt is engedélyezheted, hogy automatikusan lejátsszuk a GIF-eket.
-      subject: Üdvözöl a Mastodon
+      subject: Üdvözöl a %{title}
       tip_federated_timeline: A nyilvános idővonal a Mastodon ütőere, ahol minden tülkölés összefolyik. Nem teljes ugyan, mert csak azokat az embereket fogod látni, akiket a szervered többi felhasználója közül valaki követ.
       tip_following: Alapértelmezettként szervered adminisztrátorait követed. Látogasd meg a helyi és a nyilvános idővonalat, hogy más érdekes emberekre is rátalálj.
       tip_local_timeline: A helyi idővonal a saját szervered (%{instance}) ütőere. Ezek a kedves emberek itt mind a szomszédaid!
-      tip_mobile_webapp: Ha a böngésződ lehetővé teszi, hogy a kezdőképernyődhöz add a Mastodont, még értesítéseket is fogsz kapni, akárcsak egy igazi alkalmazás esetében!
       tips: Tippek
       title: Üdv a fedélzeten, %{name}!
   users:
@@ -1332,5 +1330,5 @@ hu:
     signed_in_as: Bejelentkezve mint
     suspicious_sign_in_confirmation: Úgy tűnik, erről az eszközről még sosem léptél be és egy ideje már nem láttunk, ezért egy biztonsági kódot küldünk az email címedre, hogy megerősítsd, tényleg te vagy az.
   verification:
-    explanation_html: 'A profilodon <strong>hitelesítheted magad, mint az itt található linkek tulajdonosa</strong>. Ehhez a linkelt weboldalnak tartalmaznia kell egy linket vissza a Mastodon profilodra. Ennek <strong>tartalmaznia kell</strong> a <code>rel="me"</code> attribútumot. A link szövege bármi lehet. Itt egy példa:'
+    explanation_html: 'A profilodon <strong>hitelesítheted magad, mint az itt található linkek tulajdonosa</strong>. Ehhez a linkelt weboldalnak tartalmaznia kell egy linket vissza a %{instance} profilodra. Ennek <strong>tartalmaznia kell</strong> a <code>rel="me"</code> attribútumot. A link szövege bármi lehet. Itt egy példa:'
     verification: Hitelesítés

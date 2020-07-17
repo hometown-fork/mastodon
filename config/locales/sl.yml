@@ -9,9 +9,9 @@ sl:
     administered_by: 'Upravlja:'
     api: API
     apps: Mobilne aplikacije
-    apps_platforms: Uporabljajte Mastodon iz iOS, Android ali iz drugih platform
+    apps_platforms: Uporabljajte %{title} iz iOS, Android ali iz drugih platform
     browse_directory: Brskajte po imeniku profilov in filtriranje po interesih
-    browse_public_posts: Brskajte javnih objav v živo na Mastodonu
+    browse_public_posts: Brskajte javnih objav v živo na %{title}
     contact: Kontakt
     contact_missing: Ni nastavljeno
     contact_unavailable: Ni na voljo
@@ -597,7 +597,7 @@ sl:
       content: Žal nam je, toda na našem koncu je prišlo do napake.
       title: Ta stran ni pravilna
     '503': The page could not be served due to a temporary server failure.
-    noscript_html: Če želite uporabljati spletno aplikacijo Mastodon, omogočite JavaScript. Druga možnost je, da za svojo platformo poskusite eno od <a href="%{apps_path}">lastnih aplikacij</a> za Mastodon.
+    noscript_html: Če želite uporabljati spletno aplikacijo %{title}, omogočite JavaScript. Druga možnost je, da za svojo platformo poskusite eno od <a href="%{apps_path}">lastnih aplikacij</a> za Mastodon.
   existing_username_validator:
     not_found: s tem uporabniškim imenom ni bilo mogoče najti lokalnega uporabnika
     not_found_multiple: ni bilo mogoče najti %{usernames}
@@ -845,7 +845,7 @@ sl:
       weibo: Weibo
     current_session: Trenutna seja
     description: "%{browser} na %{platform}"
-    explanation: To so spletni brskalniki, ki so trenutno prijavljeni v vaš Mastodon račun.
+    explanation: To so spletni brskalniki, ki so trenutno prijavljeni v vaš %{title} račun.
     ip: IP
     platforms:
       adobe_air: Adobe Air
@@ -1041,7 +1041,7 @@ sl:
     wrong_code: Vnesena koda je bila neveljavna! Ali sta čas strežnika in čas naprave pravilna?
   user_mailer:
     backup_ready:
-      explanation: Zahtevali ste popolno varnostno kopijo računa Mastodon. Zdaj je pripravljen za prenos!
+      explanation: Zahtevali ste popolno varnostno kopijo računa %{title}. Zdaj je pripravljen za prenos!
       subject: Vaš arhiv je pripravljen za prenos
       title: Prevzem arhiva
     warning:
@@ -1070,11 +1070,11 @@ sl:
       full_handle_hint: To bi povedali svojim prijateljem, da vam lahko pošljejo sporočila ali vam sledijo iz drugega strežnika.
       review_preferences_action: Spremenite nastavitve
       review_preferences_step: Poskrbite, da določite svoje nastavitve, na primer, katera e-poštna sporočila želite prejemati ali katere privzete ravni zasebnosti bodo imele vaše objave. Če nimate potovalne slabosti, lahko omogočite samodejno predvajanje GIF-ov.
-      subject: Dobrodošli na Mastodon
+      subject: Dobrodošli na %{title}
       tip_federated_timeline: Združena časovnica je pogled na mrežo Mastodona. Vključuje pa samo ljudi, na katere so naročeni vaši sosedje, zato ni popolna.
       tip_following: Privzeto sledite skrbnikom strežnika. Če želite najti več zanimivih ljudi, preverite lokalne in združene časovnice.
       tip_local_timeline: Lokalna časovnica je strežniški pogled ljudi na %{instance}. To so vaši neposredni sosedje!
-      tip_mobile_webapp: Če vam mobilni brskalnik ponuja, da dodate Mastodon na domači zaslon, lahko prejmete potisna obvestila. Deluje kot lastna aplikacija na več načinov!
+      tip_mobile_webapp: Če vam mobilni brskalnik ponuja, da dodate %{instance} na domači zaslon, lahko prejmete potisna obvestila. Deluje kot lastna aplikacija na več načinov!
       tips: Nasveti
       title: Dobrodošli, %{name}!
   users:
@@ -1085,5 +1085,5 @@ sl:
     seamless_external_login: Prijavljeni ste prek zunanje storitve, tako da nastavitve gesla in e-pošte niso na voljo.
     signed_in_as: 'Vpisani kot:'
   verification:
-    explanation_html: '<strong>V metapodatkih svojega profila se lahko potrdite kot lastnik povezav</strong>. Za to mora povezano spletno mesto vsebovati povezavo do vašega Mastodon profila. Povezava <strong>mora</strong> imeti atribut <code>el="me"</code>. Vsebina besedila povezave ni pomembna. Tukaj je primer:'
+    explanation_html: '<strong>V metapodatkih svojega profila se lahko potrdite kot lastnik povezav</strong>. Za to mora povezano spletno mesto vsebovati povezavo do vašega %{instance} profila. Povezava <strong>mora</strong> imeti atribut <code>el="me"</code>. Vsebina besedila povezave ni pomembna. Tukaj je primer:'
     verification: Potrditev

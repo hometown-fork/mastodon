@@ -23,28 +23,26 @@ de:
         explanation: Du hast einen Account auf %{host} mit dieser E-Mail-Adresse erstellt. Du bist nur noch einen Klick weit entfernt von der Aktivierung. Wenn du das nicht warst, kannst du diese E-Mail ignorieren.
         explanation_when_pending: Du hast dich für eine Einladung bei %{host} mit dieser E-Mailadresse beworben. Sobald du deine E-Mailadresse bestätigst werden wir deine Anfrage überprüfen. Du kannst dich in dieser Zeit nicht anmelden. Wenn deine Anfrage abgelehnt wird, werden deine Daten entfernt, also wird keine weitere Handlung benötigt. Wenn du das nicht warst kannst du diese E-Mail ignorieren.
         extra_html: Bitte lies auch die <a href="%{terms_path}">Regeln des Servers</a> und <a href="%{policy_path}">unsere Nutzungsbedingungen</a>.
-        subject: 'Mastodon: Bestätigung deines Kontos bei %{instance}'
         title: Verifiziere E-Mail-Adresse
       email_changed:
         explanation: 'Die E-Mail-Adresse deines Accounts wird geändert zu:'
         extra: Wenn du deine E-Mail-Adresse nicht geändert hast, dann kann es vermutlich sein, dass jemand Zugriff zu deinem Account erhalten hat. Bitte ändere sofort dein Passwort oder kontaktiere den Administrator des Servers, wenn du dich ausgesperrt hast.
-        subject: 'Mastodon: E-Mail-Adresse geändert'
+        subject: "%{title}: E-Mail-Adresse geändert"
         title: Neue E-Mail-Adresse
       password_change:
         explanation: Das Passwort für deinen Account wurde geändert.
         extra: Wenn du dein Passwort nicht geändert hast, dann kann es vermutlich sein, dass jemand Zugriff zu deinem Account erhalten hat. Bitte ändere sofort dein Passwort oder kontaktiere den Administrator des Servers, wenn du dich ausgesperrt hast.
-        subject: 'Mastodon: Passwort geändert'
+        subject: "%{title}: Passwort geändert"
         title: Passwort geändert
       reconfirmation_instructions:
         explanation: Bestätige deine neue E-Mail-Adresse, um sie zu ändern.
-        extra: Wenn diese Änderung nicht von dir ausgeführt wurde, dann solltest du diese E-Mail ignorieren. Die E-Mail-Adresse für deinen Mastodon-Account wird sich nicht ändern, bis du den obigen Link anklickst.
-        subject: 'Mastodon: Bestätige E-Mail-Adresse für %{instance}'
+        extra: Wenn diese Änderung nicht von dir ausgeführt wurde, dann solltest du diese E-Mail ignorieren. Die E-Mail-Adresse für deinen %{title}-Account wird sich nicht ändern, bis du den obigen Link anklickst.
         title: Verifiziere E-Mail-Adresse
       reset_password_instructions:
         action: Ändere Passwort
         explanation: Du hast ein neues Passwort für deinen Account angefragt.
         extra: Wenn du diese Anfrage nicht gestellt hast, solltest du diese E-Mail ignorieren. Dein Passwort wird sich nicht ändern solange du den obigen Link anklickst und ein neues erstellst.
-        subject: 'Mastodon: Passwort zurücksetzen'
+        subject: "%{title}: Passwort zurücksetzen"
         title: Passwort zurücksetzen
       two_factor_disabled:
         explanation: Zwei-Faktor-Authentifizierung für dein Konto wurde deaktiviert. Login ist jetzt nur mit E-Mail-Adresse und Passwort möglich.

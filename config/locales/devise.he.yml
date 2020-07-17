@@ -16,12 +16,6 @@ he:
       unauthenticated: יש להרשם או להכנס לחשבון על מנת להמשיך.
       unconfirmed: יש לאמת את כתובת הדוא"ל על מנת להמשיך.
     mailer:
-      confirmation_instructions:
-        subject: 'מסטודון: הוראות אימות %{instance}'
-      password_change:
-        subject: 'מסטודון: הסיסמא שונתה'
-      reset_password_instructions:
-        subject: 'מסטודון: הוראות לאיפוס סיסמא'
       unlock_instructions:
         subject: 'מסטודון: הוראות לביטול נעילה'
     omniauth_callbacks:

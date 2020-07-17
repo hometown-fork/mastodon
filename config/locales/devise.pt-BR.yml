@@ -23,28 +23,26 @@ pt-BR:
         explanation: Você criou uma conta em %{host} com esse endereço de e-mail. Se não foi você, por favor, ignore este e-mail.
         explanation_when_pending: Você solicitou um convite para %{host} com esse endereço de e-mail. Após você confirmar o seu endereço de e-mail, espere o resultado da revisão de sua solicitação. Se sua conta por vetada, seus dados serão excluídos e nenhuma ação será necessária de sua parte. Se você não solicitou nada, por favor, ignore este e-mail.
         extra_html: Por favor confira também <a href="%{terms_path}">as regras da instância</a> e <a href="%{policy_path}">nossos termos de serviço</a>.
-        subject: 'Mastodon: Instruções de confirmação para %{instance}'
         title: Confirme o endereço de e-mail
       email_changed:
         explanation: 'O e-mail vinculado à sua conta será alterado para:'
         extra: Se você não alterou seu email, é provável que alguém tenha ganhado acesso a sua conta. Por favor altere sua senha imediatamente ou entre em contato com o administrador do servidor se você está trancado fora de sua conta.
-        subject: 'Mastodon: Endereço de e-mail alterado'
+        subject: "%{title}: Endereço de e-mail alterado"
         title: Novo endereço de e-mail
       password_change:
         explanation: A senha da sua conta foi alterada.
         extra: Se você não alterou sua senha, é provável que alguém tenha ganhado acesso a sua conta. Por favor altere sua senha imediatamente ou entre em contato com o administrador do servidor se você está trancado fora de sua conta.
-        subject: 'Mastodon: Senha alterada'
+        subject: "%{title}: Senha alterada"
         title: Senha alterada
       reconfirmation_instructions:
         explanation: Confirme seu novo endereço para alterar seu e-mail.
-        extra: Se essa alteração não foi feita por você, por favor, ignore este e-mail. O endereço de e-mail para essa conta do Mastodon não será alterado até que você entre no link acima.
-        subject: 'Mastodon: Confirmar endereço de e-mail para %{instance}'
+        extra: Se essa alteração não foi feita por você, por favor, ignore este e-mail. O endereço de e-mail para essa conta do %{title} não será alterado até que você entre no link acima.
         title: Confirmar endereço de e-mail
       reset_password_instructions:
         action: Alterar senha
         explanation: Você solicitou uma nova senha para sua conta.
         extra: Se você não solicitou nada, por favor, ignore este e-mail. Sua senha não será alterada até que você entre no link acima e crie uma nova.
-        subject: 'Mastodon: Instruções para alterar senha'
+        subject: "%{title}: Instruções para alterar senha"
         title: Redefinir senha
       two_factor_disabled:
         explanation: A autenticação de dois fatores para sua conta foi desativada. Agora é possível acessar apenas com seu endereço de e-mail e senha.

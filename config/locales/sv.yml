@@ -9,10 +9,10 @@ sv:
     administered_by: 'Administreras av:'
     api: API
     apps: Mobilappar
-    apps_platforms: Använd Mastodon från iOS, Android och andra plattformar
+    apps_platforms: Använd %{title} från iOS, Android och andra plattformar
     browse_directory: Titta på en profilkatalog och filtrera enligt intressen
     browse_local_posts: Titta på strömmande publika inlägg från denna server
-    browse_public_posts: Titta på strömmande publika inlägg på Mastodon
+    browse_public_posts: Titta på strömmande publika inlägg på %{title}
     contact: Kontakt
     contact_missing: Inte inställd
     contact_unavailable: Ej tillämplig
@@ -561,7 +561,7 @@ sv:
       content: Vi är ledsna, men något gick fel från vårat håll.
       title: Den här sidan är inte korrekt
     '503': The page could not be served due to a temporary server failure.
-    noscript_html: För att använda Mastodon webbapplikationen, vänligen aktivera JavaScript. Alternativt kan du prova en av <a href="%{apps_path}">inhemska appar</a> för Mastodon för din plattform.
+    noscript_html: För att använda %{title} webbapplikationen, vänligen aktivera JavaScript. Alternativt kan du prova en av <a href="%{apps_path}">inhemska appar</a> för Mastodon för din plattform.
   exports:
     archive_takeout:
       date: Datum
@@ -715,7 +715,7 @@ sv:
       safari: Safari
     current_session: Nuvarande session
     description: "%{browser} på %{platform}"
-    explanation: Detta är inloggade webbläsare på Mastodon just nu.
+    explanation: Detta är inloggade webbläsare på %{title} just nu.
     ip: IP
     platforms:
       adobe_air: Adobe Air
@@ -890,7 +890,7 @@ sv:
     wrong_code: Den angivna koden var ogiltig! Är servertid och enhetstid korrekt?
   user_mailer:
     backup_ready:
-      explanation: Du begärde en fullständig säkerhetskopiering av ditt Mastodon-konto. Det är nu klart för nedladdning!
+      explanation: Du begärde en fullständig säkerhetskopiering av ditt %{title}-konto. Det är nu klart för nedladdning!
       subject: Ditt arkiv är klart för nedladdning
       title: Arkivuttagning
     welcome:
@@ -903,11 +903,11 @@ sv:
       full_handle_hint: Det här är vad du skulle berätta för dina vänner så att de kan meddela eller följa dig från en annan instans.
       review_preferences_action: Ändra inställningar
       review_preferences_step: Se till att du ställer in dina inställningar, t.ex. vilka e-postmeddelanden du vill ta emot eller vilken integritetsnivå du vill att dina inlägg ska vara. Om du inte har åksjuka, kan du välja att aktivera automatisk uppspelning av GIF-bilder.
-      subject: Välkommen till Mastodon
+      subject: Välkommen till %{title}
       tip_federated_timeline: Den förenade tidslinjen är en störtflodsvy av Mastodon-nätverket. Men det inkluderar bara människor som dina grannar följer, så det är inte komplett.
       tip_following: Du följer din servers administratör(er) som standard. För att hitta fler intressanta personer, kolla de lokala och förenade tidslinjerna.
       tip_local_timeline: Den lokala tidslinjen är en störtflodsvy av personer på %{instance}. Det här är dina närmaste grannar!
-      tip_mobile_webapp: Om din mobila webbläsare erbjuder dig att lägga till Mastodon på din hemskärm kan du få push-aviseringar. Det fungerar som en inbyggd app på många sätt!
+      tip_mobile_webapp: Om din mobila webbläsare erbjuder dig att lägga till %{instance} på din hemskärm kan du få push-aviseringar. Det fungerar som en inbyggd app på många sätt!
       title: Välkommen ombord, %{name}!
   users:
     invalid_email: E-postadressen är ogiltig

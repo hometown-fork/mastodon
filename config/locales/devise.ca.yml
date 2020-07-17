@@ -25,28 +25,26 @@ ca:
         explanation: Has creat un compte a %{host} amb aquesta adreça de correu electrònic. Estàs a un sol clic de l'activació. Si no fos així, ignora aquest correu electrònic.
         explanation_when_pending: Has sol·licitat una invitació a %{host} amb aquesta adreça de correu electrònic. Un cop confirmis la teva adreça de correu electrònic revisarem la teva sol·licitud. No es pot iniciar la sessió fins llavors. Si la teva sol·licitud és rebutjada les teves dades s’eliminaran, de manera que no s’exigirà cap altra acció. Si no has estat tu qui ha fet aquest sol·licitud si us plau ignora aquest correu electrònic.
         extra_html: Si us plau consulta també <a href="%{terms_path}"> les regles del servidor</a> i <a href="%{policy_path}"> les nostres condicions de servei</a>.
-        subject: 'Mastodon: Instruccions de confirmació %{instance}'
         title: Verifica l'adreça de correu
       email_changed:
         explanation: 'L''adreça de correu del teu compte s''està canviant a:'
         extra: Si no has canviat el teu correu electrònic és probable que algú hagi accedit al teu compte. Si us plau, canvia la contrasenya immediatament o posa't en contacte amb l'administrador del servidor si no pots accedir al teu compte.
-        subject: 'Mastodon: s''ha canviat l''adreça electrònica'
+        subject: "%{title}: s'ha canviat l'adreça electrònica"
         title: Adreça de correu electrònic nova
       password_change:
         explanation: S'ha canviat la contrasenya del teu compte.
         extra: Si no has canviat el teu correu electrònic, és probable que algú hagi accedit al teu compte. Si us plau, canvia la contrasenya immediatament o posa't en contacte amb l'administrador del servidor si no pots accedir al teu compte.
-        subject: 'Mastodon: Contrasenya canviada'
+        subject: "%{title}: Contrasenya canviada"
         title: Contrasenya canviada
       reconfirmation_instructions:
         explanation: Confirma la nova adreça per canviar el teu correu electrònic.
-        extra: Si no has iniciat aquest canvi, ignora aquest correu electrònic. L'adreça electrònica del compte de Mastodon no canviarà fins que accedeixis a l'enllaç de dalt.
-        subject: 'Mastodon: confirma l''adreça electrònica per a %{instance}'
+        extra: Si no has iniciat aquest canvi, ignora aquest correu electrònic. L'adreça electrònica del compte de %{title} no canviarà fins que accedeixis a l'enllaç de dalt.
         title: Verifica l'adreça de correu electrònic
       reset_password_instructions:
         action: Canviar contrasenya
         explanation: Has sol·licitat una contrasenya nova per al teu compte.
         extra: Si no ho has sol·licitat, ignora aquest correu electrònic. La teva contrasenya no canviarà fins que accedeixis a l'enllaç de dalt i creis un de nou.
-        subject: 'Mastodon: Instruccions per a reiniciar contrasenya'
+        subject: "%{title}: Instruccions per a reiniciar contrasenya"
         title: Contrasenya restablerta
       two_factor_disabled:
         explanation: L´autenticació de dos factors pel teu compte ha estat desactivat. L'inici de sessió és ara possible utilitzant només l'adreça de correu electrònic i la contrasenya.

@@ -22,28 +22,26 @@ sk:
         action_with_app: Potvrď a vráť sa na %{app}
         explanation: S touto emailovou adresou si si vytvoril/a účet na %{host}. Si iba jeden klik od jeho aktivácie. Pokiaľ si to ale nebol/a ty, prosím ignoruj tento email.
         extra_html: Prosím, pozri sa aj na <a href="%{terms_path}"> pravidlá tohto servera,</a> a <a href="%{policy_path}"> naše užívaťeľské podiemky</a>.
-        subject: 'Mastodon: Potvrdzovacie pokyny pre %{instance}'
         title: Potvrď emailovú adresu
       email_changed:
         explanation: 'Emailová adresa tvojho účtu bude zmenená na:'
         extra: Ak si nezmenil/a svoj email, je pravdepodobné, že niekto iný získal prístup k tvojmu účtu. Naliehavo preto prosím zmeň svoje heslo, alebo kontaktuj administrátora tohto serveru, pokiaľ si vymknutý/á zo svojho účtu.
-        subject: 'Mastodon: Emailová adresa bola zmenená'
+        subject: "%{title}: Emailová adresa bola zmenená"
         title: Nová emailová adresa
       password_change:
         explanation: Heslo k tvojmu účtu bolo zmenené.
         extra: Ak si heslo nezmenil/a, je pravdepodobné, že niekto iný získal prístup k tvojmu účtu. Naliehavo preto prosím zmeň svoje heslo, alebo kontaktuj administrátora tohto serveru, pokiaľ si vymknutý/á zo svojho účtu.
-        subject: 'Mastodon: Heslo bolo zmenené'
+        subject: "%{title}: Heslo bolo zmenené"
         title: Heslo bolo zmenené
       reconfirmation_instructions:
         explanation: Potvrď novú emailovú adresu na ktorú chceš zmeniť svoj email.
-        extra: Pokiaľ si túto akciu nevyžiadal/a, prosím ignoruj tento email. Emailová adresa pre tvoj Mastodon účet totiž nebude zmenená pokiaľ nepostúpiš na adresu uvedenú vyššie.
-        subject: 'Mastodon: Potvrď email pre %{instance}'
+        extra: Pokiaľ si túto akciu nevyžiadal/a, prosím ignoruj tento email. Emailová adresa pre tvoj %{title} účet totiž nebude zmenená pokiaľ nepostúpiš na adresu uvedenú vyššie.
         title: Over emailovú adresu
       reset_password_instructions:
         action: Zmeň svoje heslo
         explanation: Vyžiadal/a si si nové heslo pre svoj účet.
         extra: Ak si túto akciu nevyžiadal/a, prosím ignoruj tento email. Tvoje heslo nebude zmenené pokiaľ nepostúpiš na adresu uvedenú vyššie a vytvoríš si nové.
-        subject: 'Mastodon: Pokyny pre obnovu hesla'
+        subject: "%{title}: Pokyny pre obnovu hesla"
         title: Nastav nové heslo
       two_factor_disabled:
         explanation: Dvojfázové overovanie tvojho účtu bolo vypnuté. Teraz sa môžeš prihlásiť len pomocou emailu a hesla.

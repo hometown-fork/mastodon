@@ -9,10 +9,8 @@ ko:
     administered_by: '관리자:'
     api: API
     apps: 모바일 앱
-    apps_platforms: 마스토돈을 iOS, 안드로이드, 다른 플랫폼들에서도 사용하세요
     browse_directory: 프로필 책자를 둘러보고 관심사 찾기
     browse_local_posts: 이 서버의 공개글 실시간 스트림을 둘러보기
-    browse_public_posts: 마스토돈의 공개 라이브 스트림을 둘러보기
     contact: 연락처
     contact_missing: 미설정
     contact_unavailable: 없음
@@ -777,7 +775,6 @@ ko:
       content: 죄송합니다, 뭔가 잘못 되었습니다.
       title: 이 페이지는 잘못되었습니다
     '503': 이 페이지는 임시적인 서버 문제로 인해 제공 될 수 없습니다.
-    noscript_html: 마스토돈을 사용하기 위해서는 자바스크립트를 켜 주십시오. 아니면 <a href="%{apps_path}">네이티브 앱</a> 중 하나를 사용할 수 있습니다.
   existing_username_validator:
     not_found: 해당 유저네임에 대한 로컬 유저를 찾을 수 없습니다
     not_found_multiple: "%{usernames}를 찾을 수 없습니다"
@@ -1067,7 +1064,6 @@ ko:
       weibo: 웨이보
     current_session: 현재 세션
     description: "%{platform}의 %{browser}"
-    explanation: 내 마스토돈 계정에 현재 로그인 중인 웹 브라우저 목록입니다.
     ip: IP
     platforms:
       adobe_air: 어도비 에어
@@ -1263,7 +1259,6 @@ ko:
     wrong_code: 코드가 올바르지 않습니다. 서버와 휴대전화 간의 시각이 일치하나요?
   user_mailer:
     backup_ready:
-      explanation: 당신이 요청한 계정의 풀 백업이 이제 다운로드 가능합니다!
       subject: 당신의 아카이브를 다운로드 가능합니다
       title: 아카이브 테이크 아웃
     sign_in_token:
@@ -1300,11 +1295,9 @@ ko:
       full_handle_hint: 이것을 당신의 친구들에게 알려주면 다른 서버에서 팔로우 하거나 메시지를 보낼 수 있습니다.
       review_preferences_action: 설정 바꾸기
       review_preferences_step: 당신의 설정을 확인하세요. 어떤 이메일로 알림을 받을 것인지, 기본적으로 어떤 프라이버시 설정을 사용할 것인지, 멀미가 없다면 GIF를 자동 재생하도록 설정할 수도 있습니다.
-      subject: 마스토돈에 오신 것을 환영합니다
       tip_federated_timeline: 연합 타임라인은 마스토돈 네트워크의 소방호스입니다. 다만 여기엔 당신의 이웃들이 구독 중인 것만 뜹니다, 모든 것이 다 오는 것은 아니예요.
       tip_following: 기본적으로 서버의 관리자를 팔로우 하도록 되어 있습니다. 흥미로운 사람들을 더 찾으려면 로컬과 연합 타임라인을 확인해 보세요.
       tip_local_timeline: 로컬 타임라인은 %{instance}의 소방호스입니다. 여기 있는 사람들은 당신의 이웃들이에요!
-      tip_mobile_webapp: 모바일 브라우저가 홈 스크린에 바로가기를 추가해 줬다면 푸시 알림도 받을 수 있습니다. 이건 거의 네이티브 앱처럼 작동해요!
       tips: 팁
       title: 환영합니다 %{name} 님!
   users:
@@ -1318,5 +1311,4 @@ ko:
     signed_in_as: '다음과 같이 로그인 중:'
     suspicious_sign_in_confirmation: 이 기기에서 로그인 한 적이 없거나, 로그인 한 지 오래된 것으로보입니다. 본인임을 확인하기 위해 이메일 주소로 보안 코드를 보냈습니다.
   verification:
-    explanation_html: '당신은 <strong>프로필 메타데이터의 링크 소유자임을 검증할 수 있습니다</strong>. 이것을 하기 위해서는, 링크 된 웹사이트에서 당신의 마스토돈 프로필을 역으로 링크해야 합니다. 역링크는 <strong>반드시</strong> <code>rel="me"</code> 속성을 가지고 있어야 합니다. 링크의 텍스트는 상관이 없습니다. 여기 예시가 있습니다:'
     verification: 검증

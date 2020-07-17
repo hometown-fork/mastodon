@@ -9,10 +9,10 @@ cs:
     administered_by: 'Server spravuje:'
     api: API
     apps: Mobilní aplikace
-    apps_platforms: Používejte Mastodon na iOS, Androidu a dalších platformách
+    apps_platforms: Používejte %{title} na iOS, Androidu a dalších platformách
     browse_directory: Prozkoumejte adresář profilů a filtrujte dle zájmů
     browse_local_posts: Prozkoumejte živý proud veřejných příspěvků z tohoto serveru
-    browse_public_posts: Prozkoumejte živý proud veřejných příspěvků na Mastodonu
+    browse_public_posts: Prozkoumejte živý proud veřejných příspěvků na %{title}
     contact: Kontakt
     contact_missing: Nenastaveno
     contact_unavailable: Neuvedeno
@@ -797,7 +797,7 @@ cs:
       content: Omlouváme se, ale něco se u nás pokazilo.
       title: Tato stránka není správná
     '503': Stránku nelze načíst kvůli dočasnému selhání serveru.
-    noscript_html: Pro použití webové aplikace Mastodon prosím povolte JavaScript. Nebo zkuste jednu z <a href="%{apps_path}">nativních aplikací</a> pro Mastodon pro vaši platformu.
+    noscript_html: Pro použití webové aplikace %{title} prosím povolte JavaScript. Nebo zkuste jednu z <a href="%{apps_path}">nativních aplikací</a> pro Mastodon pro vaši platformu.
   existing_username_validator:
     not_found: nelze najít místního uživatele s tímto uživatelským jménem
     not_found_multiple: nelze najít %{usernames}
@@ -1093,7 +1093,7 @@ cs:
       weibo: Weibo
     current_session: Aktuální relace
     description: "%{browser} na systému %{platform}"
-    explanation: Tohle jsou webové prohlížeče aktuálně přihlášené na váš účet Mastodon.
+    explanation: Tohle jsou webové prohlížeče aktuálně přihlášené na váš účet %{title}.
     ip: IP adresa
     platforms:
       adobe_air: Adobe Air
@@ -1302,7 +1302,7 @@ cs:
     wrong_code: Zadaný kód byl neplatný! Je čas na serveru a na zařízení správný?
   user_mailer:
     backup_ready:
-      explanation: Vyžádali jste si úplnou zálohu svého účtu Mastodon. Nyní je připravena ke stažení!
+      explanation: Vyžádali jste si úplnou zálohu svého účtu %{title}. Nyní je připravena ke stažení!
       subject: Váš archiv je připraven ke stažení
       title: Stažení archivu
     sign_in_token:
@@ -1339,11 +1339,10 @@ cs:
       full_handle_hint: Tohle je, co byste řekli svým přátelům, aby vám mohli posílat zprávy nebo vás sledovat z jiného serveru.
       review_preferences_action: Změnit předvolby
       review_preferences_step: Nezapomeňte si nastavit například jaké e-maily chcete přijímat či jak soukromé mají ve výchozím stavu být vaše příspěvky. Nemáte-li epilepsii, můžete si nastavit automatické přehrávání obrázků GIF.
-      subject: Vítejte na Mastodonu
       tip_federated_timeline: Federovaná časová osa je náhled celé sítě Mastodon. Zahrnuje ovšem pouze lidi, které sledují vaši sousedé, takže není úplná.
       tip_following: Administrátory serveru sledujete automaticky. Chcete-li najít další zajímavé lidi, podívejte se do místní a federované časové osy.
       tip_local_timeline: Místní časová osa je náhled lidí na serveru %{instance}. Jsou to vaši nejbližší sousedé!
-      tip_mobile_webapp: Pokud vám váš mobilní prohlížeč nabídne přidat si Mastodon na vaši domovskou obrazovku, můžete dostávat oznámení. V mnoha ohledech to funguje jako nativní aplikace!
+      tip_mobile_webapp: Pokud vám váš mobilní prohlížeč nabídne přidat si %{instance} na vaši domovskou obrazovku, můžete dostávat oznámení. V mnoha ohledech to funguje jako nativní aplikace!
       tips: Tipy
       title: Vítejte na palubě, %{name}!
   users:
@@ -1357,5 +1356,4 @@ cs:
     signed_in_as: 'Přihlášeni jako:'
     suspicious_sign_in_confirmation: Zdá se, že se z tohoto zařízení přihlašujete poprvé a po dlouhé době. Pro ověření tohoto přihlášení jsme vám e-mailem zaslali bezpečnostní kód.
   verification:
-    explanation_html: 'Můžete se <strong>ověřit jako vlastník odkazů v metadatech profilu</strong>. Pro tento účel musí stránka v odkazu obsahovat odkaz zpět na váš profil na Mastodonu. Odkaz zpět <strong>musí</strong> mít atribut <code>rel="me"</code>. Na textu odkazu nezáleží. Zde je příklad:'
     verification: Ověření

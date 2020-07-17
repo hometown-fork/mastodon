@@ -23,28 +23,26 @@ fi:
         explanation: Olet luonut tilin palvelimelle %{host} käyttäen tätä sähköpostiosoitetta. Aktivoi tili yhdellä klikkauksella. Jos et luonut tiliä itse, voit jättää tämän viestin huomiotta.
         explanation_when_pending: Teit hakemuksen kutsusta palvelimelle %{host} tällä sähköpostiosoitteella. Kun olet vahvistanut sähköpostiosoitteesi, tarkistamme hakemuksesi. Voit kirjautua sisään muuttaaksesi hakemuksen sisältöä tai poistaaksesi tilin, mutta et voi käyttää suurinta osaa toiminnallisuudesta ennen kuin hakemuksesi on hyväksytty. Jos hakemuksesi hylätään, tietosi poistetaan eikä sinulta tarvita enempää toimia. Jos sinä et tehnyt hakemusta, voit jättää tämän viestin huomiotta.
         extra_html: Katso myös <a href="%{terms_path}">palvelimen säännöt</a> ja <a href="%{policy_path}">käyttöehdot</a>.
-        subject: 'Mastodon: Vahvistusohjeet palvelimelle %{instance}'
         title: Vahvista sähköpostiosoitteesi
       email_changed:
         explanation: 'Tilin sähköpostiosoitteeksi vaihdetaan:'
         extra: Jos et vaihtanut sähköpostiosoitettasi, joku muu on todennäköisesti päässyt käyttämään tiliäsi. Vaihda salasanasi viipymättä. Jos et pääse kirjautumaan tilillesi, ota yhteyttä instanssin ylläpitäjään.
-        subject: 'Mastodon: Sähköpostiosoite vaihdettu'
+        subject: "%{title}: Sähköpostiosoite vaihdettu"
         title: Uusi sähköpostiosoite
       password_change:
         explanation: Tilisi salasana on vaihdettu.
         extra: Jos et vaihtanut salasanaasi, joku muu on todennäköisesti päässyt käyttämään tiliäsi. Vaihda salasanasi viipymättä. Jos et pääse kirjautumaan tilillesi, ota yhteyttä instanssin ylläpitäjään.
-        subject: 'Mastodon: Salasana vaihdettu'
+        subject: "%{title}: Salasana vaihdettu"
         title: Salasana vaihdettu
       reconfirmation_instructions:
         explanation: Vahvista uusi sähköpostiosoite, niin muutos astuu voimaan.
-        extra: Jos et tehnyt muutosta itse, voit jättää tämän viestin huomiotta. Mastodon-tilin sähköpostiosoitetta ei vaihdeta, ennen kuin klikkaat yllä olevaa linkkiä.
-        subject: 'Mastodon: Vahvista sähköpostiosoite - %{instance}'
+        extra: Jos et tehnyt muutosta itse, voit jättää tämän viestin huomiotta. %{title}-tilin sähköpostiosoitetta ei vaihdeta, ennen kuin klikkaat yllä olevaa linkkiä.
         title: Vahvista sähköpostiosoite
       reset_password_instructions:
         action: Vaihda salasana
         explanation: Pyysit tilillesi uuden salasanan.
         extra: Jos et tehnyt pyyntöä itse, voit jättää tämän viestin huomiotta. Salasanaasi ei vaihdeta, ennen kuin klikkaat yllä olevaa linkkiä ja luot uuden salasanan.
-        subject: 'Mastodon: Ohjeet salasanan vaihtoon'
+        subject: "%{title}: Ohjeet salasanan vaihtoon"
         title: Salasanan vaihto
       two_factor_disabled:
         explanation: Kaksivaiheinen tunnistus tilillesi on otettu pois käytöstä. Kirjautuminen onnistuu nyt pelkällä sähköpostiosoitteella ja salasanalla.

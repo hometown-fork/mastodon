@@ -9,10 +9,10 @@ co:
     administered_by: 'Amministratu da:'
     api: API
     apps: Applicazione per u telefuninu
-    apps_platforms: Utilizà Mastodon dapoi à iOS, Android è altre piattaforme
+    apps_platforms: Utilizà %{title} dapoi à iOS, Android è altre piattaforme
     browse_directory: Navigà un'annuariu di i prufili è filtra per interessi
     browse_local_posts: Navigà un flussu di statuti pubblichi da stu servore
-    browse_public_posts: Navigà un flussu di i statuti pubblichi nant'à Mastodon
+    browse_public_posts: Navigà un flussu di i statuti pubblichi nant'à %{title}
     contact: Cuntattu
     contact_missing: Mancante
     contact_unavailable: Micca dispunibule
@@ -783,7 +783,7 @@ co:
       content: Scusate, mà c’hè statu un prublemu cù u nostru servore.
       title: Sta pagina ùn hè curretta
     '503': A pagina ùn hè micca stata servita per via di un prublemu timpuraneu di u servore.
-    noscript_html: Mastodon nant’à u web hà bisognu di JavaScript per funziunà. Pudete ancu pruvà <a href="%{apps_path}">l’applicazione native</a> per a vostra piattaforma.
+    noscript_html: '%{title} nant’à u web hà bisognu di JavaScript per funziunà. Pudete ancu pruvà <a href="%{apps_path}">l’applicazione native</a> per a vostra piattaforma.'
   existing_username_validator:
     not_found: ùn si pudeva micca truvà un'utilizatore lucale cù stu cugnome
     not_found_multiple: ùn si pudeva micca truvà %{usernames}
@@ -1077,7 +1077,7 @@ co:
       weibo: Weibo
     current_session: Sessione attuale
     description: "%{browser} nant’à %{platform}"
-    explanation: Quessi sò i navigatori cunnettati à u vostru contu Mastodon.
+    explanation: Quessi sò i navigatori cunnettati à u vostru contu %{title}.
     ip: IP
     platforms:
       adobe_air: Adobe Air
@@ -1279,7 +1279,7 @@ co:
     wrong_code: U codice ùn hè micca currettu! Site sicuru·a chì l’ora di l'apparechju è di u servore sò esatte?
   user_mailer:
     backup_ready:
-      explanation: Avete dumandatu un’archiviu cumpletu di u vostru contu Mastodon. Avà hè prontu per scaricà!
+      explanation: Avete dumandatu un’archiviu cumpletu di u vostru contu %{title}. Avà hè prontu per scaricà!
       subject: U vostru archiviu hè prontu à scaricà
       title: Archiviu prontu
     sign_in_token:
@@ -1316,11 +1316,11 @@ co:
       full_handle_hint: Quessu ghjè cio chì direte à i vostri amichi per circavi, abbunassi à u vostru contu da altrò, o mandà missaghji.
       review_preferences_action: Mudificà e priferenze
       review_preferences_step: Quì pudete adattà u cumpurtamentu di Mastodon à e vostre priferenze, cum’è l’email che vulete riceve, u nivellu di cunfidenzialità predefinitu di i vostri statuti, o u cumpurtamentu di i GIF animati.
-      subject: Benvenutu·a nant’à Mastodon
+      subject: Benvenutu·a nant’à %{title}
       tip_federated_timeline: A linea pubblica glubale mostra i statuti da altre istanze nant’a rete Mastodon, mà ùn hè micca cumpleta perchè ci sò soli i conti à quelli sò abbunati membri di a vostr’istanza.
       tip_following: Site digià abbunatu·a à l’amministratori di u vostru servore. Per truvà d’altre parsone da siguità, pudete pruvà e linee pubbliche.
       tip_local_timeline: A linea pubblica lucale ghjè una vista crunulogica di i statuti di a ghjente nant’à %{instance}. Quessi sò i vostri cunvicini!
-      tip_mobile_webapp: Pudete aghjunghje Mastodon à a pagina d’accolta di u vostru navigatore di telefuninu per riceve nutificazione, cum’un applicazione!
+      tip_mobile_webapp: Pudete aghjunghje %{instance} à a pagina d’accolta di u vostru navigatore di telefuninu per riceve nutificazione, cum’un applicazione!
       tips: Cunsiglii
       title: Benvenutu·a, %{name}!
   users:
@@ -1334,5 +1334,5 @@ co:
     signed_in_as: 'Cunnettatu·a cum’è:'
     suspicious_sign_in_confirmation: Ci pare ch'ùn vi site mai cunnettatu·a da quess'apparechju, è ùn vi site micca cunnettatu·a dapoi una stonda, allora vi mandemu un codice di sicurità à u vostr'indirizzu e-mail per cunfirmà chì site voi.
   verification:
-    explanation_html: 'Pudete <strong>verificavi cum''è u pruprietariu di i ligami in i metadati di u vostru prufile</strong>. Per quessa, u vostru situ deve avè un ligame versu a vostra pagina Mastodon. U ligame <strong>deve</strong> avè un''attributu <code>rel="me"</code>. U cuntenutu di u testu di u ligame ùn hè micca impurtante. Eccu un''esempiu:'
+    explanation_html: 'Pudete <strong>verificavi cum''è u pruprietariu di i ligami in i metadati di u vostru prufile</strong>. Per quessa, u vostru situ deve avè un ligame versu a vostra pagina %{instance}. U ligame <strong>deve</strong> avè un''attributu <code>rel="me"</code>. U cuntenutu di u testu di u ligame ùn hè micca impurtante. Eccu un''esempiu:'
     verification: Verificazione

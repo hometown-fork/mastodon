@@ -7,7 +7,7 @@ ast:
     administered_by: 'Alministráu por:'
     api: API
     apps: Aplicaciones pa móviles
-    apps_platforms: Usa Mastodon dende Android, iOS y otres plataformes
+    apps_platforms: Usa %{title} dende Android, iOS y otres plataformes
     contact: Contautu
     contact_missing: Nun s'afitó
     contact_unavailable: N/D
@@ -503,7 +503,7 @@ ast:
         suspend: Cuenta suspendida
     welcome:
       full_handle_hint: Esto ye lo que-yos diríes a los collacios pa que puean unviate mensaxes o siguite dende otra instancia.
-      subject: Afáyate en Mastodon
+      subject: Afáyate en %{title}
       tips: Conseyos
   users:
     invalid_email: La direición de corréu nun ye válida

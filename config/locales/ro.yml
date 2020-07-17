@@ -9,10 +9,10 @@ ro:
     administered_by: 'Administrat de:'
     api: API
     apps: Aplicații mobile
-    apps_platforms: Folosește Mastodon de pe iOS, Android și alte platforme
+    apps_platforms: Folosește %{title} de pe iOS, Android și alte platforme
     browse_directory: Răsfoiți directorul de profil și filtrați după interese
     browse_local_posts: Răsfoiți un flux live al postărilor publice de pe acest server
-    browse_public_posts: Răsfoiește un flux live de postări publice pe Mastodon
+    browse_public_posts: Răsfoiește un flux live de postări publice pe %{title}
     contact: Contact
     contact_missing: Nesetat
     contact_unavailable: N/A
@@ -367,7 +367,7 @@ ro:
       content: Ne pare rău, dar ceva a funcționat greșit. Încercați din nou!?
       title: Această pagină nu este corectă
     '503': The page could not be served due to a temporary server failure.
-    noscript_html: Pentru a utiliza o aplicație web Mastodon, te rog activează JavaScript. Alternativ, încearcă una din <a href="%{apps_path}">aplicațiile native</a> Mastodon pentru platforma ta.
+    noscript_html: Pentru a utiliza o aplicație web %{title}, te rog activează JavaScript. Alternativ, încearcă una din <a href="%{apps_path}">aplicațiile native</a> Mastodon pentru platforma ta.
   exports:
     archive_takeout:
       date: Data
@@ -697,7 +697,6 @@ ro:
     wrong_code: Codul introdus nu a fost valid! Orele serverului și timpul dispozitivului sunt corecte?
   user_mailer:
     backup_ready:
-      explanation: Ai solicitat o copie de rezervă completă a contului tău. Acum este gata pentru descărcare!
       subject: Arhiva ta este gata pentru descărcare
       title: Preluare arhivă
     warning:
@@ -728,11 +727,10 @@ ro:
       full_handle_hint: Asta este ceea ce vei putea spune prietenilor pentru a te putea contacta sau pentru a te urmării de pe un alt server.
       review_preferences_action: Schimbă preferințele
       review_preferences_step: Asigură-te că setezi preferințele tale, cum ar fi e-mailurile pe care dorești să le primești sau ce nivel de confidențialitate vrei ca mesajele tale să fie implicite. Dacă nu ai rău de mişcare, ai putea alege să activezi imaginile GIF să pornească automat.
-      subject: Bine ai venit
       tip_federated_timeline: Fluxul federat este o vedere de ansamblu a rețelei Mastodon. Dar include doar oameni la care s-au abonat vecinii tăi, așa că nu este completă.
       tip_following: Urmăriți implicit administratorul(ii) serverului. Pentru a găsi oameni mai interesanți, verificați fluxurile locale și federalizate.
       tip_local_timeline: Fluxul local este o vedere în ansamblu a persoanelor de pe %{instance}. Aceștia sunt vecinii tăi apropiați!
-      tip_mobile_webapp: Dacă navigatorul tău mobil îți oferă să adaugi Mastodon pe ecranul tău de pornire, poți primi notificări push. Se comportă ca o aplicație nativă în multe moduri!
+      tip_mobile_webapp: Dacă navigatorul tău mobil îți oferă să adaugi %{instance} pe ecranul tău de pornire, poți primi notificări push. Se comportă ca o aplicație nativă în multe moduri!
       tips: Sfaturi
       title: Bine ai venit la bord, %{name}!
   users:
@@ -743,5 +741,4 @@ ro:
     seamless_external_login: Sunteți autentificat prin intermediul unui serviciu extern, astfel încât parola și setările de e-mail nu sunt disponibile.
     signed_in_as: 'Conectat ca:'
   verification:
-    explanation_html: 'Poți <strong>să te verifici ca proprietar al link-urilor din metadatele profilului tău</strong>. Pentru aceasta, site-ul web asociat trebuie să conțină un link înapoi la profilul tău. Link-ul înapoi <strong>trebuie</strong> să aibă un atribut <code>rel="me"</code>. Conținut textului link-ului nu contează. Iată un exemplu:'
     verification: Verificare

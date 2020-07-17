@@ -23,28 +23,26 @@ cy:
         explanation: Yr ydych wedi creu cyfrif ar %{host} gyda'r cyfrif e-bost hwn. Dim ond un clic sydd angen i'w wneud yn weithredol. Os nad chi oedd hyn, anwybyddwch yr e-bost hwn os gwelwch yn dda.
         explanation_when_pending: Rydych wedi gwneud cais am wahoddiad i %{host} gyda'r ebost hyn. Unwaith rydych wedi cadarnhau eich ebost, byddem yn adolygu eich cais. Ni fyddwch yn gallu mewngofnodi tan yr amser hono. Os caiff eich cais ei wrthod, felly nid oes angen unrhyw gweithred pellach o chi. Os nad oeddech wedi gwneud y cais hyn, anwybyddu'r ebost hon, os gwelwch yn dda.
         extra_html: Gwnewch yn siŵr i edrych ar <a href="%{terms_path}">reolau'r achos</a> a <a href="%{policy_path}">ein telerau gwasanaeth</a>.
-        subject: 'Mastodon: Canllawiau cadarnhau i %{instance}'
         title: Gwirio cyfeiriad e-bost
       email_changed:
         explanation: 'Mae''r cyfeiriad e-bost ar gyfer eich cyfrif yn cael ei newid i:'
         extra: Os na wnaethoch chi newid eich e-bost, mae'n debygol fod rhywun wedi cael mynediad i'ch cyfrif. Newidwch eich cyfrinair yn syth os gwelwch yn dda neu cysylltwch a gweinydd yr achos os ydych wedi'ch cloi allan o'ch cyfrif.
-        subject: 'Mastodon: Newidwyd e-bost'
+        subject: "%{title}: Newidwyd e-bost"
         title: Cyfeiriad e-bost newydd
       password_change:
         explanation: Newidwyd cyfrinair eich cyfrif.
         extra: Os na wnaethoch chi newid eich e-bost, mae'n debygol fod rhywun wedi cael mynediad i'ch cyfrif. Newidwch eich cyfrinair yn syth os gwelwch yn dda neu cysylltwch a gweinydd yr achos os ydych wedi'ch cloi allan o'ch cyfrif.
-        subject: 'Mastodon: Newidwyd Cyfrinair'
+        subject: "%{title}: Newidwyd Cyfrinair"
         title: Newidwyd cyfrinair
       reconfirmation_instructions:
         explanation: Cadarnhewch y cyferiad newydd i newid eich e-bost.
-        extra: Os nad chi wnaeth y newid hwn, anwybyddwch yr e-bost hwn os gwelwch yn dda. Ni fydd y cyfeiriad e-bost ar gyfer y cyfrif Mastodon yn newid nes eich bod yn mynd at y ddolen uchod.
-        subject: 'Mastodon: Cadarnhewch e-bost i %{instance}'
+        extra: Os nad chi wnaeth y newid hwn, anwybyddwch yr e-bost hwn os gwelwch yn dda. Ni fydd y cyfeiriad e-bost ar gyfer y cyfrif %{title} yn newid nes eich bod yn mynd at y ddolen uchod.
         title: Gwirio cyfeiriad e-bost
       reset_password_instructions:
         action: Newid cyfrinair
         explanation: Gofynnoch am gyfrinair newydd i'ch cyfrif.
         extra: Os na wnaethoch gais am hyn, anwybyddwch yr e-bost hwn os gwelwch yn dda. Ni fydd eich cyfrinair yn newid nes i chi fynd at y ddolen uchod a chreu un newydd.
-        subject: 'Mastodon: Ailosod cyfarwyddiadau cyfrinair'
+        subject: "%{title}: Ailosod cyfarwyddiadau cyfrinair"
         title: Ailosod cyfrinair
       two_factor_disabled:
         explanation: Mae dilysu dau ffactor ar gyfer eich cyfrif wedi'i anablu. Mae mewngofnodi bellach yn bosibl gan ddefnyddio cyfeiriad e-bost a chyfrinair yn unig.

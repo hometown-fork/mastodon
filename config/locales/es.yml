@@ -9,10 +9,10 @@ es:
     administered_by: 'Administrado por:'
     api: API
     apps: Aplicaciones móviles
-    apps_platforms: Utiliza Mastodon desde iOS, Android y otras plataformas
+    apps_platforms: Utiliza %{title} desde iOS, Android y otras plataformas
     browse_directory: Navega por el directorio de perfiles y filtra por intereses
     browse_local_posts: Explora en vivo los posts públicos de este servidor
-    browse_public_posts: Navega por un transmisión en vivo de publicaciones públicas en Mastodon
+    browse_public_posts: Navega por un transmisión en vivo de publicaciones públicas en %{title}
     contact: Contacto
     contact_missing: No especificado
     contact_unavailable: N/A
@@ -783,7 +783,7 @@ es:
       content: Lo sentimos, algo ha funcionado mal por nuestra parte.
       title: Esta página no es correcta
     '503': La página no se ha podido cargar debido a un fallo temporal del servidor.
-    noscript_html: Para usar la aplicación web de Mastodon, por favor activa Javascript. Alternativamente, prueba alguna de las <a href="%{apps_path}">aplicaciones nativas</a> para Mastodon para tu plataforma.
+    noscript_html: Para usar la aplicación web de %{title}, por favor activa Javascript. Alternativamente, prueba alguna de las <a href="%{apps_path}">aplicaciones nativas</a> para Mastodon para tu plataforma.
   existing_username_validator:
     not_found: no pudo encontrar un usuario local con ese nombre de usuario
     not_found_multiple: no pudo encontrar %{usernames}
@@ -1077,7 +1077,7 @@ es:
       weibo: Weibo
     current_session: Sesión actual
     description: "%{browser} en %{platform}"
-    explanation: Estos son los navegadores web conectados actualmente en tu cuenta de Mastodon.
+    explanation: Estos son los navegadores web conectados actualmente en tu cuenta de %{title}.
     ip: IP
     platforms:
       adobe_air: Adobe Air
@@ -1279,7 +1279,7 @@ es:
     wrong_code: "¡El código ingresado es inválido! ¿El dispositivo y tiempo del servidor están correctos?"
   user_mailer:
     backup_ready:
-      explanation: Has solicitado una copia completa de tu cuenta de Mastodon. ¡Ya está preparada para descargar!
+      explanation: Has solicitado una copia completa de tu cuenta de %{title}. ¡Ya está preparada para descargar!
       subject: Tu archivo está preparado para descargar
       title: Descargar archivo
     sign_in_token:
@@ -1316,11 +1316,11 @@ es:
       full_handle_hint: Esto es lo que le dirías a tus amigos para que ellos puedan enviarte mensajes o seguirte desde otra instancia.
       review_preferences_action: Cambiar preferencias
       review_preferences_step: Asegúrate de poner tus preferencias, como que correos te gustaría recibir, o que nivel de privacidad te gustaría que tus publicaciones tengan por defecto. Si no tienes mareos, podrías elegir habilitar la reproducción automática de "GIFs".
-      subject: Bienvenido a Mastodon
+      subject: Bienvenido a %{title}
       tip_federated_timeline: La línea de tiempo federada es una vista de la red de Mastodon. Pero solo incluye gente que tus vecinos están siguiendo, así que no está completa.
       tip_following: Sigues a tus administradores de servidor por defecto. Para encontrar más gente interesante, revisa las lineas de tiempo local y federada.
       tip_local_timeline: La linea de tiempo local is una vista de la gente en %{instance}. Estos son tus vecinos inmediatos!
-      tip_mobile_webapp: Si el navegador de tu dispositivo móvil ofrece agregar Mastodon a tu página de inicio, puedes recibir notificaciones. Actúa como una aplicación nativa en muchas formas!
+      tip_mobile_webapp: Si el navegador de tu dispositivo móvil ofrece agregar %{instance} a tu página de inicio, puedes recibir notificaciones. Actúa como una aplicación nativa en muchas formas!
       tips: Consejos
       title: Te damos la bienvenida a bordo, %{name}!
   users:
@@ -1334,5 +1334,5 @@ es:
     signed_in_as: 'Sesión iniciada como:'
     suspicious_sign_in_confirmation: Parece que no has iniciado sesión desde este dispositivo antes, y no has iniciado sesión durante un tiempo, así que estamos enviando un código de seguridad a tu dirección de correo electrónico para confirmar que eres tú.
   verification:
-    explanation_html: 'Puedes <strong> verificarte a ti mismo como el dueño de los links en los metadatos de tu perfil </strong>. Para eso, el sitio vinculado debe contener un vínculo a tu perfil de Mastodon. El vínculo en tu sitio <strong> debe </strong> tener un atributo <code> rel="me"</code>. El texto del vínculo no importa. Aquí un ejemplo:'
+    explanation_html: 'Puedes <strong> verificarte a ti mismo como el dueño de los links en los metadatos de tu perfil </strong>. Para eso, el sitio vinculado debe contener un vínculo a tu perfil de %{instance}. El vínculo en tu sitio <strong> debe </strong> tener un atributo <code> rel="me"</code>. El texto del vínculo no importa. Aquí un ejemplo:'
     verification: Verificación

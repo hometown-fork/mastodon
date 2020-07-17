@@ -9,10 +9,9 @@ eu:
     administered_by: 'Administratzailea(k):'
     api: APIa
     apps: Aplikazio mugikorrak
-    apps_platforms: Erabili Mastodon, iOS, Android eta beste plataformetatik
+    apps_platforms: Erabili %{title}, iOS, Android eta beste plataformetatik
     browse_directory: Arakatu profilen direktorio bat eta iragazi interesen arabera
     browse_local_posts: Ikusi zerbitzari honetako mezu publikoen zuzeneko jario bat
-    browse_public_posts: Arakatu Mastodoneko mezu publikoen zuzeneko jario bat
     contact: Kontaktua
     contact_missing: Ezarri gabe
     contact_unavailable: E/E
@@ -759,7 +758,7 @@ eu:
       content: Sentitzen dugu, zerbait okerra gertatu da gure aldean.
       title: Orri hau ez da zuzena
     '503': Orria ezin izan da zerbitzatu zerbitzariaren behin behineko arazo bat dela eta.
-    noscript_html: Mastodon web aplikazioa erabiltzeko, gaitu JavaScript. Bestela, probatu Mastodon plataformarako <a href="%{apps_path}">aplikazio natibo</a>ren bat.
+    noscript_html: '%{title} web aplikazioa erabiltzeko, gaitu JavaScript. Bestela, probatu Mastodon plataformarako <a href="%{apps_path}">aplikazio natibo</a>ren bat.'
   existing_username_validator:
     not_found: ezin izan da izen hori duen kide lokalik aurkitu
     not_found_multiple: ezin izan dira aurkitu %{usernames}
@@ -1048,7 +1047,7 @@ eu:
       weibo: Weibo
     current_session: Uneko saioa
     description: "%{browser} - %{platform}"
-    explanation: Zure Mastodon kontuan saioa hasita duten nabigatzaileak daude.
+    explanation: Zure %{title} kontuan saioa hasita duten nabigatzaileak daude.
     ip: IP-a
     platforms:
       adobe_air: Adobe Air
@@ -1247,7 +1246,7 @@ eu:
     wrong_code: Sartutako kodea baliogabea da! Zerbitzariaren eta gailuaren erlojuak ondo ezarrita daude?
   user_mailer:
     backup_ready:
-      explanation: Zure Mastodon kontuaren babes-kopia osoa eskatu duzu. Deskargatzeko prest dago!
+      explanation: Zure %{title} kontuaren babes-kopia osoa eskatu duzu. Deskargatzeko prest dago!
       subject: Zure artxiboa deskargatzeko prest dago
       title: Artxiboa jasotzea
     warning:
@@ -1278,11 +1277,10 @@ eu:
       full_handle_hint: Hau da lagunei esango zeniekeena beste zerbitzari batetik zu jarraitzeko edo zuri mezuak bidaltzeko.
       review_preferences_action: Aldatu hobespenak
       review_preferences_step: Ziurtatu hobespenak ezartzen dituzula, jaso nahi dituzu e-mail mezuak, lehenetsitako pribatutasuna mezu berrietarako. Mareatzen ez bazaitu GIF-ak automatikoki abiatzea ezarri dezakezu ere.
-      subject: Ongi etorri Mastodon-era
       tip_federated_timeline: Federatutako denbora-lerroan Mastodon sarearen trafikoa ikusten da. Baina zure instantziako auzokideak jarraitutakoak besterik ez daude hor, ez da osoa.
       tip_following: Lehenetsita zerbitzariko administratzailea jarraitzen duzu. Jende interesgarri gehiago aurkitzeko, egiaztatu denbora-lerro lokala eta federatua.
       tip_local_timeline: Denbora-lerro lokalean %{instance} instantziako trafikoa ikusten da. Hauek zure instantziako auzokideak dira!
-      tip_mobile_webapp: Zure mugikorreko nabigatzaileak Mastodon hasiera pantailan gehitzea eskaintzen badizu, push jakinarazpenak jaso ditzakezu. Aplikazio natiboaren parekoa da zentzu askotan!
+      tip_mobile_webapp: Zure mugikorreko nabigatzaileak %{instance} hasiera pantailan gehitzea eskaintzen badizu, push jakinarazpenak jaso ditzakezu. Aplikazio natiboaren parekoa da zentzu askotan!
       tips: Aholkuak
       title: Ongi etorri, %{name}!
   users:
@@ -1293,5 +1291,5 @@ eu:
     seamless_external_login: Kanpo zerbitzu baten bidez hasi duzu saioa, beraz pasahitza eta e-mail ezarpenak ez daude eskuragarri.
     signed_in_as: 'Saioa honela hasita:'
   verification:
-    explanation_html: 'Ezin duzu <strong>zure burua zure profileko metadatuen esteken jabe gisa egiaztatu</strong>. Horretarako, estekatutako webgunean zure Mastodon profilera daraman esteka bat egon behar du. Mastodonera daraman esteka horrek<strong>derrigorrez</strong> <code>rel="me"</code> artibutua izan behar du . Estekaren testuak ez du axola. Hona adibide bat:'
+    explanation_html: 'Ezin duzu <strong>zure burua zure profileko metadatuen esteken jabe gisa egiaztatu</strong>. Horretarako, estekatutako webgunean zure %{instance} profilera daraman esteka bat egon behar du. Mastodonera daraman esteka horrek<strong>derrigorrez</strong> <code>rel="me"</code> artibutua izan behar du . Estekaren testuak ez du axola. Hona adibide bat:'
     verification: Egiaztaketa

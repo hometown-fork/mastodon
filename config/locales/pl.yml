@@ -9,10 +9,10 @@ pl:
     administered_by: 'Administrowana przez:'
     api: API
     apps: Aplikacje
-    apps_platforms: Korzystaj z Mastodona z poziomu iOS-a, Androida i innych
+    apps_platforms: Korzystaj z %{title} z poziomu iOS-a, Androida i innych
     browse_directory: Przeglądaj katalog profilów i filtruj z uwzględnieniem zainteresowań
     browse_local_posts: Przeglądaj strumień publicznych wpisów z tego serwera
-    browse_public_posts: Przeglądaj strumień publicznych wpisów na Mastodonie na żywo
+    browse_public_posts: Przeglądaj strumień publicznych wpisów na %{title} na żywo
     contact: Kontakt
     contact_missing: Nie ustawiono
     contact_unavailable: Nie dotyczy
@@ -799,7 +799,7 @@ pl:
       content: Przepraszamy, coś poszło nie tak, po naszej stronie.
       title: Ta strona jest nieprawidłowa
     '503': Strona nie może zostać wyświetlona z powodu tymczasowego niepowodzenia serwera.
-    noscript_html: Aby korzystać z aplikacji Mastodon, włącz JavaScript. Możesz też skorzystać z jednej z <a href="%{apps_path}">natywnych aplikacji</a> obsługującej Twoje urządzenie.
+    noscript_html: Aby korzystać z aplikacji %{title}, włącz JavaScript. Możesz też skorzystać z jednej z <a href="%{apps_path}">natywnych aplikacji</a> obsługującej Twoje urządzenie.
   existing_username_validator:
     not_found: nie znaleziono lokalnego użytkownika o tej nazwie
     not_found_multiple: nie znaleziono %{usernames}
@@ -1097,7 +1097,6 @@ pl:
       weibo: Weibo
     current_session: Obecna sesja
     description: "%{browser} na %{platform}"
-    explanation: Przeglądarki z aktywną sesją Twojego konta.
     ip: Adres IP
     platforms:
       adobe_air: Adobe Air
@@ -1306,7 +1305,7 @@ pl:
     wrong_code: Wprowadzony kod jest niepoprawny! Czy czas serwera i urządzenia jest poprawny?
   user_mailer:
     backup_ready:
-      explanation: Zażądałeś pełnej kopii zapasowej konta na Mastodonie. Jest ona dostępna do pobrania!
+      explanation: Zażądałeś pełnej kopii zapasowej konta na %{title}. Jest ona dostępna do pobrania!
       subject: Twoje archiwum jest gotowe do pobrania
       title: Odbiór archiwum
     sign_in_token:
@@ -1343,11 +1342,9 @@ pl:
       full_handle_hint: Ten adres możesz podać znajomym, aby mogli skontaktować się z Tobą lub zacząć śledzić z innego serwera.
       review_preferences_action: Zmień ustawienia
       review_preferences_step: Upewnij się, że zmieniłeś(-aś) ustawienia, takie jak maile, które chciałbyś otrzymywać lub domyślne opcje prywatności. Jeżeli nie masz choroby lokomocyjnej, możesz włączyć automatyczne odtwarzanie animacji GIF.
-      subject: Witaj w Mastodonie
       tip_federated_timeline: Oś czasu federacji przedstawia całą sieć Mastodona. Wyświetla tylko wpisy osób, które śledzą użytkownicy Twojej instancji, więc nie jest kompletna.
       tip_following: Domyślnie śledzisz administratora/ów swojej instancji. Aby znaleźć więcej ciekawych ludzi, zajrzyj na lokalną i federalną oś czasu.
       tip_local_timeline: Lokalna oś czasu przedstawia osoby z %{instance}. To Twoi najbliżsi sąsiedzi!
-      tip_mobile_webapp: Jeżeli Twoja przeglądarka pozwala na dodanie Mastodona na ekran główny, będziesz otrzymywać natychmiastowe powiadomienia. Działa to prawie jak natywna aplikacja!
       tips: Wskazówki
       title: Witaj na pokładzie, %{name}!
   users:
@@ -1361,5 +1358,4 @@ pl:
     signed_in_as: 'Zalogowany jako:'
     suspicious_sign_in_confirmation: Wygląda na to, że nie logowałeś się wcześniej z tego urządzenia i przez jakiś czas nie logowałeś się, więc wysłaliśmy na Twój adres e-mail kod zabezpieczający, aby potwierdzić, że to Ty.
   verification:
-    explanation_html: 'Możesz <strong>zweryfikować siebie jako właściciela stron, do których odnośniki znajdują się w metadanych</strong>. Aby to zrobić, strona musi zawierać odnośnik do Twojego profilu na Mastodonie. Odnośnik <strong>musi</strong> zawierać atrybut <code>rel="me"</code>. Jego zawartość nie ma znaczenia. Przykład:'
     verification: Weryfikacja

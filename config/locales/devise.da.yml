@@ -23,28 +23,26 @@ da:
         explanation: Du har oprettet en konto på %{host} med denne email adresse. Du er et klik fra at aktivere din konto. Hvis du ikke har oprettet dig, ignorer venligst denne email.
         explanation_when_pending: Du har ansøgt om en invitation til %{host} med denne mailadresse. Når du bekræfter din mailadresse vil vi bedømme din ansøgning. Indtil da kan du ikke logge ind. Din data slettes hvis din ansøgning bliver afvist så du behøver ikke foretage yderligere handlinger. Hvis dette ikke var dig kan du ignorere denne mail.
         extra_html: Tjek også <a href="%{terms_path}">reglerne for serveren</a> og <a href="%{policy_path}">vores betingelser</a>.
-        subject: 'Mastodon: Bekræftelses instrukser for %{instance}'
         title: Bekræft email adresse
       email_changed:
         explanation: 'Email adressen for din konto bliver ændret til:'
         extra: Hvis du ikke har ændret din email adresse er det muligt, at nogen har fået adgang til din konto. Venligst ændre dit kodeord med det samme eller kontakt administratoren på serveren hvis du er låst ude af din konto.
-        subject: 'Mastodon: Email ændret'
+        subject: "%{title}: Email ændret"
         title: Ny email adresse
       password_change:
         explanation: Kodeordet for din konto er blevet ændret.
         extra: Hvis du ikke har ændret dit kodeord er det muligt, at nogen har fået adgang til din konto. Venligst ændre dit kodeord med det samme eller kontakt administratoren på serveren hvis du er låst ude af din konto.
-        subject: 'Mastodon: Kodeord ændret'
+        subject: "%{title}: Kodeord ændret"
         title: Kodeordet er blevet ændret
       reconfirmation_instructions:
         explanation: Bekræft den nye adresse for at ændre din email.
-        extra: Hvis denne ændring ikke blev foretaget af dig, ignorer denne email. Email adressen for denne Mastodon konto vil ikke blive ændret før du følger linket foroven.
-        subject: 'Mastodon: Bekræft email for %{instance}'
+        extra: Hvis denne ændring ikke blev foretaget af dig, ignorer denne email. Email adressen for denne %{title} konto vil ikke blive ændret før du følger linket foroven.
         title: Bekræft email adresse
       reset_password_instructions:
         action: Ændre kodeord
         explanation: Du anmodede om en ny adgangskode for din konto.
         extra: Hvis du ikke har anmodet om dette, ignorer denne email. Din adgangskode vil ikke blive ændret før du har fulgt linket foroven og oprettet en ny.
-        subject: 'Mastodon: Instrukser for nulstilling af adgangskode'
+        subject: "%{title}: Instrukser for nulstilling af adgangskode"
         title: Kodeordet er blevet nulstillet
       two_factor_disabled:
         explanation: To-trins godkendelse for din konto er blevet deaktiveret. Det nu kun muligt at logge ind med email og kodeord.

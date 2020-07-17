@@ -9,10 +9,10 @@ zh-HK:
     administered_by: 管理者：
     api: API
     apps: 行動應用程式
-    apps_platforms: 在 iOS、Android 和其他平台使用 Mastodon
+    apps_platforms: 在 iOS、Android 和其他平台使用 %{title}
     browse_directory: 依興趣瀏覽個人資料目錄和過濾器
     browse_local_posts: 瀏覽這台伺服器中公開嘟文的直播串流
-    browse_public_posts: 在 Mastodon 瀏覽公開嘟文的即時串流
+    browse_public_posts: 在 %{title} 瀏覽公開嘟文的即時串流
     contact: 聯絡
     contact_missing: 未設定
     contact_unavailable: 未公開
@@ -596,7 +596,7 @@ zh-HK:
       content: 抱歉，我們的後台出錯了。
       title: 這個頁面有問題
     '503': The page could not be served due to a temporary server failure.
-    noscript_html: 使用 Mastodon 網頁版應用需要啟用 JavaScript。你也可以選擇適用於你的平台的 <a href="%{apps_path}">Mastodon 應用</a>。
+    noscript_html: 使用 %{title} 網頁版應用需要啟用 JavaScript。你也可以選擇適用於你的平台的 <a href="%{apps_path}">Mastodon 應用</a>。
   exports:
     archive_takeout:
       date: 日期
@@ -741,7 +741,7 @@ zh-HK:
       weibo: 新浪微博
     current_session: 目前的作業階段
     description: "%{platform} 上的 %{browser}"
-    explanation: 這些是現在正登入於你的 Mastodon 帳號的瀏覽器。
+    explanation: 這些是現在正登入於你的 %{title} 帳號的瀏覽器。
     ip: IP 位址
     platforms:
       ios: iOS
@@ -824,7 +824,7 @@ zh-HK:
     wrong_code: 你輸入的認證碼並不正確！可能伺服器時間和你手機不一致，請檢查你手機的時鐘，或與本站管理員聯絡。
   user_mailer:
     backup_ready:
-      explanation: 你要求的 Mastodon 帳號完整備份檔案現已就緒，可供下載。
+      explanation: 你要求的 %{title} 帳號完整備份檔案現已就緒，可供下載。
       subject: 你的備份檔已可供下載
       title: 檔案匯出
     welcome:
@@ -837,11 +837,11 @@ zh-HK:
       full_handle_hint: 你需要把這個告訴你的朋友們，這樣他們就能從另一個實例向你發送信息或者關注你。
       review_preferences_action: 更改首選項
       review_preferences_step: 記得調整你的偏好設置，比如你想接收什麼類型的郵件，或者你想把你的文章可見範圍默認設定為什麼級別。如果你沒有暈車的話，考慮一下啟用「自動播放 GIF 動畫」這個選項吧。
-      subject: 歡迎來到 Mastodon
+      subject: 歡迎來到 %{title}
       tip_federated_timeline: 跨站公共時間軸可以讓你一窺更廣闊的 Mastodon 網絡。不過，由於它只顯示你的鄰居們所訂閱的內容，所以並不是全部。
       tip_following: 默認情況下，你會自動關注你所在服務站的管理員。想結交更多有趣的人的話，記得多逛逛本站時間軸和跨站公共時間軸哦。
       tip_local_timeline: 本站時間軸可以讓你一窺 %{instance} 上的用戶。他們就是離你最近的鄰居！
-      tip_mobile_webapp: 如果你的移動設備瀏覽器允許你將 Mastodon 添加到主屏幕，你就能夠接收推送消息。它就像本地應用一樣好使！
+      tip_mobile_webapp: 如果你的移動設備瀏覽器允許你將 %{instance} 添加到主屏幕，你就能夠接收推送消息。它就像本地應用一樣好使！
       tips: 小貼士
       title: "%{name}，歡迎你的加入！"
   users:

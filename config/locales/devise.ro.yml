@@ -23,28 +23,23 @@ ro:
         explanation: Ai creat un cont pe %{host} cu această adresă de e-mail. Ești la un click distanță de a o activa. Dacă nu ai fost tu, ignoră acest e-mail.
         explanation_when_pending: Ai solicitat o invitație către %{host} cu această adresă de e-mail. Odată ce îți confirmi adresa de e-mail, îți vom revizui cererea. Te poți autentifica pentru a-ți schimba detaliile sau pentru a-ți șterge contul, dar nu poți accesa majoritatea funcțiilor până când contul tău nu este aprobat. Dacă cererea ta este respinsă, datele tale vor fi șterse, astfel încât nu va fi necesară nicio altă acțiune din partea ta. Dacă nu ai fost tu, ignoră acest e-mail.
         extra_html: Te rugăm să verifici și <a href="%{terms_path}">regulile serverului</a> și <a href="%{policy_path}">termenii noștri de serviciu</a>.
-        subject: 'Mastodon: Instrucțiuni de confirmare pentru %{instance}'
         title: Verifică adresa de e-mail
       email_changed:
         explanation: 'Adresa de e-mail pentru contul tău este schimbată la:'
         extra: Dacă nu v-ați schimbat adresa de e-mail, probabil că cineva a obținut acces la contul dvs. Te rugăm să îți schimbi parola imediat sau să contactezi administratorul serverului dacă nu ai acces la contul tău.
-        subject: E-mail schimbat
         title: Noua adresa de e-mail
       password_change:
         explanation: Parola contului tău a fost schimbată.
         extra: Dacă nu v-ați schimbat parola, este posibil ca cineva să fi obținut acces la contul dvs. Te rugăm să îți schimbi parola imediat sau să contactezi administratorul serverului dacă nu ai acces la contul tău.
-        subject: Parolă schimbată
         title: Parolă schimbată
       reconfirmation_instructions:
         explanation: Confirmă noua adresă pentru a schimba adresa de e-mail.
-        extra: Dacă această modificare nu a fost inițiată de dvs., vă rugăm să ignorați acest e-mail. Adresa de e-mail pentru contul Mastodon nu se va schimba până când nu accesați link-ul de mai sus.
-        subject: 'Mastodon: Confirmați e-mailul pentru %{instance}'
+        extra: Dacă această modificare nu a fost inițiată de dvs., vă rugăm să ignorați acest e-mail. Adresa de e-mail pentru contul %{title} nu se va schimba până când nu accesați link-ul de mai sus.
         title: Verifică adresa de e-mail
       reset_password_instructions:
         action: Schimbă parola
         explanation: Ați solicitat o nouă parolă pentru contul dvs.
         extra: Dacă nu ați solicitat acest lucru, ignorați acest e-mail. Parola dvs. nu se va schimba până când nu veți accesa link-ul de mai sus și nu veți crea unul nou.
-        subject: Instrucțiuni pentru resetarea parolei
         title: Resetare parolă
       two_factor_disabled:
         explanation: Autentificarea în doi pași pentru contul tău a fost dezactivată. Autentificarea este posibilă acum folosind doar adresa de e-mail și parola.

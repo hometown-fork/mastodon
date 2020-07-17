@@ -23,28 +23,25 @@ co:
         explanation: Avete creatu un contu nant’à %{host} cù st’indirizzu email. Pudete attivallu cù un clic, o ignurà quessu missaghji s’ellu un era micca voi.
         explanation_when_pending: Avete dumandatu un'invitazione à %{host}, cù st'indirizzu e-mail. Una volta ch'ellu hè cunfirmatu, avemu da dà un'ochjata à a vostra dumanda. Ùn pudete micca cunnettavi nanz'à quessa. S'ella hè righjittata a vostra dumanda, i vostri dati saranu sguassati è ùn duverete fà nund'altru. S'ellu ùn era micca voi, pudete ignurà quess'e-mail.
         extra_html: Pensate à leghje <a href="%{terms_path}">e regule di u servore</a> è <a href="%{policy_path}">i termini d’usu</a>.
-        subject: 'Mastodon: Istruzzione di cunfirmazione per %{instance}'
         title: Verificà l’indirizzu email
       email_changed:
         explanation: 'L’indirizzu email di u vostru contu hè stata cambiata per:'
         extra: S’ellu un era micca voi ch’avete cambiatu u vostru email, qualch’un’altru hà accessu à u vostru contu. Duvete cambià a vostra chjave d’accessu o cuntattà l’amministratore di u servore s’ellu ùn hè più pussibule di cunnettavi.
-        subject: 'Mastodon: Email cambiatu'
+        subject: "%{title}: Email cambiatu"
         title: Novu indirizzu email
       password_change:
         explanation: A chjave d’accessu per u vostru contu hè stata cambiata.
         extra: S’ellu un era micca voi ch’avete cambiatu a vostra chjave d’accessu, qualch’un’altru hà accessu à u vostru contu. Duvete cambià a vostra chjave d’accessu o cuntattà l’amministratore di u servore s’ellu ùn hè più pussibule di cunnettavi.
-        subject: 'Mastodon: Chjave d’accessu cambiata'
+        subject: "%{title}: Chjave d’accessu cambiata"
         title: Chjave cambiata
       reconfirmation_instructions:
         explanation: Cunfirmà u novu indirizzu per cambià l’email.
-        extra: S’ellu ùn era micca voi, ignurate stu missaghju. L’email ùn cambiarà micca s’è voi ùn cliccate micca u ligame.
-        subject: 'Mastodon: Cunfirmà l’email per %{instance}'
         title: Verificà indirizzu email
       reset_password_instructions:
         action: Cambià a chjave d’accessu
         explanation: Avete dumandatu una nova chjave d’accessu per u vostru contu.
         extra: S’ellu ùn era micca voi, ignurate stu missaghju. A chjave d’accessu ùn cambiarà micca s’è voi ùn cliccate micca u ligame.
-        subject: 'Mastodon: Cambià a chjave d’accessu'
+        subject: "%{title}: Cambià a chjave d’accessu"
         title: Cambià a chjave
       two_factor_disabled:
         explanation: L'autentificazione à dui fattori per u vostru contu hè stata disattivata. A cunnessione hè avà pussibule cù l'usu solu di u vostru e-mail è di a chjave d'accessu.

@@ -9,10 +9,10 @@ vi:
     administered_by: 'Quản trị viên:'
     api: API
     apps: Ứng dụng di động
-    apps_platforms: Lướt Mastodon trên iOS, Android và các nền tảng khác
+    apps_platforms: Lướt %{title} trên iOS, Android và các nền tảng khác
     browse_directory: Tìm những người có sở thích giống bạn
     browse_local_posts: Xem thử những tút công khai gần đây
-    browse_public_posts: Xem thử những tút công khai trên mạng Mastodon
+    browse_public_posts: Xem thử những tút công khai trên mạng %{title}
     contact: Liên lạc
     contact_missing: Chưa thiết lập
     contact_unavailable: N/A
@@ -773,7 +773,7 @@ vi:
       content: Chúng tôi xin lỗi, nhưng đã xảy ra sự cố.
       title: Múi giờ trên thiết bị không đúng
     '503': Trang không thể hiển thị do lỗi máy chủ tạm thời.
-    noscript_html: Để sử dụng ứng dụng web Mastodon, vui lòng bật JavaScript. Ngoài ra, hãy thử một trong những <a href="%{apps_path}">ứng dụng gốc</a> của Mastodon cho hệ điều hành của bạn.
+    noscript_html: Để sử dụng ứng dụng web %{title}, vui lòng bật JavaScript. Ngoài ra, hãy thử một trong những <a href="%{apps_path}">ứng dụng gốc</a> của Mastodon cho hệ điều hành của bạn.
   existing_username_validator:
     not_found: không có tên người dùng này trên máy chủ
     not_found_multiple: không tìm thấy %{usernames}
@@ -1063,7 +1063,7 @@ vi:
       weibo: Weibo
     current_session: Phiên hiện tại
     description: "%{browser} trên %{platform}"
-    explanation: Đây là các trình duyệt web sử dụng để đăng nhập vào tài khoản Mastodon của bạn.
+    explanation: Đây là các trình duyệt web sử dụng để đăng nhập vào tài khoản %{title} của bạn.
     ip: IP
     platforms:
       adobe_air: Adobe Air
@@ -1179,7 +1179,7 @@ vi:
     wrong_code: Mã vừa nhập không hợp lệ! Thời gian máy chủ và thời gian thiết bị có đúng không?
   user_mailer:
     backup_ready:
-      explanation: Bạn đã yêu cầu sao lưu toàn bộ tài khoản Mastodon của mình. Bây giờ có thể tải về!
+      explanation: Bạn đã yêu cầu sao lưu toàn bộ tài khoản %{title} của mình. Bây giờ có thể tải về!
       subject: Dữ liệu cá nhân của bạn đã sẵn sàng để tải về
       title: Nhận dữ liệu cá nhân
     sign_in_token:
@@ -1216,11 +1216,11 @@ vi:
       full_handle_hint: Đây cũng là địa chỉ được dùng để tương tác với tất cả mọi người.
       review_preferences_action: Tùy chỉnh giao diện
       review_preferences_step: Tùy chỉnh mọi thứ! Chẳng hạn như chọn loại email nào bạn muốn nhận hoặc trạng thái tút mà bạn muốn sử dụng mặc định. Hãy tắt tự động phát GIF nếu bạn hay bị chóng mặt.
-      subject: Chào mừng đến với Mastodon
+      subject: Chào mừng đến với %{title}
       tip_federated_timeline: Mạng liên kết là một dạng "liên hợp quốc" của Mastodon. Hiểu một cách đơn giản, nó là những người bạn đã theo dõi từ các máy chủ khác.
       tip_following: Theo mặc định, bạn sẽ theo dõi (các) quản trị viên máy chủ của bạn. Để tìm những người thú vị hơn, hãy xem qua bảng tin và mạng liên kết.
       tip_local_timeline: Bảng tin là nơi hiện lên những tút công khai của thành viên %{instance}. Họ là những người hàng xóm trực tiếp của bạn!
-      tip_mobile_webapp: Nếu trình duyệt trên điện thoại di động của bạn thêm Mastodon vào màn hình chính, bạn có thể nhận được thông báo đẩy. Nó hoạt động gần giống như một app điện thoại!
+      tip_mobile_webapp: Nếu trình duyệt trên điện thoại di động của bạn thêm %{instance} vào màn hình chính, bạn có thể nhận được thông báo đẩy. Nó hoạt động gần giống như một app điện thoại!
       tips: Mẹo
       title: Xin chào %{name}!
   users:
@@ -1234,5 +1234,4 @@ vi:
     signed_in_as: 'Đăng nhập với tư cách là:'
     suspicious_sign_in_confirmation: Đây là lần đầu tiên bạn đăng nhập trên thiết bị này. Vì vậy, chúng tôi sẽ gửi một mã an toàn đến email của bạn để xác thực danh tính.
   verification:
-    explanation_html: 'Bạn có thể <strong>xác minh mình là chủ sở hữu của các trang web ở đầu trang cá nhân của bạn</strong>. Để xác minh, trang web <strong>phải</strong> chèn mã <code>rel="me"</code>. Nội dung văn bản của liên kết không quan trọng. Đây là một ví dụ:'
     verification: Xác minh

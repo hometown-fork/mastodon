@@ -9,10 +9,10 @@ gl:
     administered_by: 'Administrada por:'
     api: API
     apps: Aplicacións móbiles
-    apps_platforms: Emprega Mastodon dende iOS, Android e outras plataformas
+    apps_platforms: Emprega %{title} dende iOS, Android e outras plataformas
     browse_directory: Navega polo directorio de perfís e filtra por intereses
     browse_local_posts: Navega polas publicacións públicas deste servidor en tempo real
-    browse_public_posts: Navega polas publicacións públicas de Mastodon en tempo real
+    browse_public_posts: Navega polas publicacións públicas de %{title} en tempo real
     contact: Contacto
     contact_missing: Non establecido
     contact_unavailable: Non dispoñíbel
@@ -781,7 +781,7 @@ gl:
       content: Sentímolo, pero algo do noso lado falloou.
       title: Esta páxina non é correcta
     '503': A páxina non se puido servir debido a un fallo temporal no servidor.
-    noscript_html: Para utilizar a aplicación web de Mastodon debe habilitar JavaScript. De xeito alternativo, intente unha das <a href="%{apps_path}">apps nativas</a> para Mastodon da súa plataforma.
+    noscript_html: Para utilizar a aplicación web de %{title} debe habilitar JavaScript. De xeito alternativo, intente unha das <a href="%{apps_path}">apps nativas</a> para Mastodon da súa plataforma.
   existing_username_validator:
     not_found: non se atopou unha usuaria local con ese alcume
     not_found_multiple: non se atopou a %{usernames}
@@ -1075,7 +1075,6 @@ gl:
       weibo: Weibo
     current_session: Sesión actual
     description: "%{browser} en %{platform}"
-    explanation: Estos son os navegadores web nos que actualmente ten sesión aberta.
     ip: IP
     platforms:
       adobe_air: Adobe Air
@@ -1277,7 +1276,7 @@ gl:
     wrong_code: O código introducido non é válido! Son correctas as horas no dispositivo e o servidor?
   user_mailer:
     backup_ready:
-      explanation: Solicitou un respaldo completo da súa conta de Mastodon. Xa está listo para descargar!
+      explanation: Solicitou un respaldo completo da súa conta de %{title}. Xa está listo para descargar!
       subject: O seu ficheiro xa está listo para descargar
       title: Leve o ficheiro
     sign_in_token:
@@ -1314,11 +1313,11 @@ gl:
       full_handle_hint: Esto é o que lle dirá aos seus amigos para que poidan seguila ou enviarlle mensaxes desde outro servidor.
       review_preferences_action: Cambiar preferencias
       review_preferences_step: Lembre establecer as preferencias, tales como qué correos-e lle querería recibir, ou o nivel de intimidade por omisión para as súas mensaxes. Se non lle molestan as imaxes con movemento, pode escoller que os GIF se reproduzan automáticamente.
-      subject: Benvida a Mastodon
+      subject: Benvida a %{title}
       tip_federated_timeline: A liña temporal federada é unha visión reducida da rede Mastodon. Inclúe xente a que segue xente que ti segues, así que non é completa.
       tip_following: Por omisión segues a Admin(s) no teu servidor. Para atopar máis xente interesante, mira nas liñas temporais local e federada.
       tip_local_timeline: A liña temporal local é unha ollada xeral sobre a xente en %{instance}. Son as súas veciñas máis próximas!
-      tip_mobile_webapp: Si o navegador móbil lle ofrece engadir Mastodon a pantalla de inicio, pode recibir notificacións push. En moitos aspectos comportarase como un aplicativo nativo!
+      tip_mobile_webapp: Si o navegador móbil lle ofrece engadir %{instance} a pantalla de inicio, pode recibir notificacións push. En moitos aspectos comportarase como un aplicativo nativo!
       tips: Consellos
       title: Benvida, %{name}!
   users:
@@ -1332,5 +1331,5 @@ gl:
     signed_in_as: 'Rexistrada como:'
     suspicious_sign_in_confirmation: Semella que non te conectaches antes desde este dispositivo, e hai tempo que non te conectas, así que ímosche enviar un código de seguridade ao teu enderezo de email para confirmar que es ti.
   verification:
-    explanation_html: 'Podes <strong>validarte a ti mesma como a dona das ligazóns nos metadatos do teu perfil</strong>. Para esto, o sitio web ligado debe conter unha ligazón de retorno ao perfil de Mastodon. Esta ligazón de retorno <strong>ten que</strong> ter un atributo <code>rel="me"</code>. O texto da ligazón non importa. Aquí tes un exemplo:'
+    explanation_html: 'Podes <strong>validarte a ti mesma como a dona das ligazóns nos metadatos do teu perfil</strong>. Para esto, o sitio web ligado debe conter unha ligazón de retorno ao perfil de %{instance}. Esta ligazón de retorno <strong>ten que</strong> ter un atributo <code>rel="me"</code>. O texto da ligazón non importa. Aquí tes un exemplo:'
     verification: Validación

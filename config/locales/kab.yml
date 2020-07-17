@@ -9,7 +9,6 @@ kab:
     administered_by: 'Yettwadbel sɣur:'
     api: API
     apps: Isnasen izirazen
-    apps_platforms: Seqdec Maṣṭudun deg iOS, Android d tɣeṛγṛin-nniḍen
     browse_directory: Qelleb deg ukaram n imaɣnuten teǧǧeḍ-d gar-asen widak tebɣiḍ
     contact: Anermis
     contact_missing: Ur yettusbadu ara
@@ -689,7 +688,6 @@ kab:
     welcome:
       full_handle: Tansa umiḍan-ik takemmalit
       review_preferences_action: Beddel imenyafen
-      subject: Ansuf γer Maṣṭudun
       tips: Tixbaluyin
       title: Ansuf yessek·em, %{name}!
   users:

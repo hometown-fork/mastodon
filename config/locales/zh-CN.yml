@@ -9,10 +9,10 @@ zh-CN:
     administered_by: 本站管理员：
     api: API
     apps: 移动应用
-    apps_platforms: 在 iOS、Android 和其他平台上使用 Mastodon
+    apps_platforms: 在 iOS、Android 和其他平台上使用 %{title}
     browse_directory: 浏览用户目录并按兴趣筛选
     browse_local_posts: 浏览此服务器上实时公开嘟文
-    browse_public_posts: 浏览 Mastodon 上公共嘟文的实时信息流
+    browse_public_posts: 浏览 %{title} 上公共嘟文的实时信息流
     contact: 联系方式
     contact_missing: 未设定
     contact_unavailable: 未公开
@@ -773,7 +773,7 @@ zh-CN:
       content: 抱歉，我们的后台出错了。
       title: 这个页面有问题
     '503': 服务暂时不可用，无法请求该页面。
-    noscript_html: 使用 Mastodon 网页版应用需要启用 JavaScript。你也可以选择适用于你的平台的 <a href="%{apps_path}">Mastodon 应用</a>。
+    noscript_html: 使用 %{title} 网页版应用需要启用 JavaScript。你也可以选择适用于你的平台的 <a href="%{apps_path}">Mastodon 应用</a>。
   existing_username_validator:
     not_found: 在本站找不到此用户
     not_found_multiple: 找不到 %{usernames}
@@ -1063,7 +1063,7 @@ zh-CN:
       weibo: 新浪微博
     current_session: 当前会话
     description: "%{platform} 上的 %{browser}"
-    explanation: 你的 Mastodon 帐户目前已在这些浏览器上登录。
+    explanation: 你的 %{title} 帐户目前已在这些浏览器上登录。
     ip: IP 地址
     platforms:
       adobe_air: Adobe Air
@@ -1259,7 +1259,7 @@ zh-CN:
     wrong_code: 输入的认证码无效！请确认服务器时间与设备时间是否正确？
   user_mailer:
     backup_ready:
-      explanation: 你请求了一份 Mastodon 帐户的完整备份。现在你可以下载了！
+      explanation: 你请求了一份 %{title} 帐户的完整备份。现在你可以下载了！
       subject: 你的存档已经准备完毕
       title: 存档导出
     sign_in_token:
@@ -1296,11 +1296,10 @@ zh-CN:
       full_handle_hint: 你需要把这个告诉你的朋友们，这样他们就能从另一台服务器向你发送信息或者关注你。
       review_preferences_action: 更改首选项
       review_preferences_step: 记得调整你的偏好设置，比如你想接收什么类型的邮件，或者你想把你的嘟文可见范围默认设置为什么级别。如果你没有晕动病的话，考虑一下启用“自动播放 GIF 动画”这个选项吧。
-      subject: 欢迎来到 Mastodon
+      subject: 欢迎来到 %{title}
       tip_federated_timeline: 跨站公共时间轴可以让你一窥更广阔的 Mastodon 网络。不过，由于它只显示你的邻居们所订阅的内容，所以并不是全部。
       tip_following: 默认情况下，你会自动关注你所在服务器的管理员。想结交更多有趣的人的话，记得多逛逛本站时间轴和跨站公共时间轴哦。
       tip_local_timeline: 本站时间轴可以让你一窥 %{instance} 上的用户。他们就是离你最近的邻居！
-      tip_mobile_webapp: 如果你的移动设备浏览器允许你将 Mastodon 添加到主屏幕，你就能够接收推送消息。它就像本地应用一样好使！
       tips: 小贴士
       title: "%{name}，欢迎你的加入！"
   users:
@@ -1314,5 +1313,5 @@ zh-CN:
     signed_in_as: 当前登录的帐户：
     suspicious_sign_in_confirmation: 你似乎没有在这台设备上登录过，并且你也有很久没有登录过了，所以我们给你的电子邮箱发了封邮件，想确认一下确实是你。
   verification:
-    explanation_html: 您可以 <strong>验证自己是个人资料元数据中的某个链接的所有者</strong>。 为此，被链接网站必须包含一个到您的 Mastodon 主页的链接。链接中 <strong>必须</strong> 包括 <code>rel="me"</code> 属性。链接的文本内容可以随意填写。例如：
+    explanation_html: 您可以 <strong>验证自己是个人资料元数据中的某个链接的所有者</strong>。 为此，被链接网站必须包含一个到您的 %{instance} 主页的链接。链接中 <strong>必须</strong> 包括 <code>rel="me"</code> 属性。链接的文本内容可以随意填写。例如：
     verification: 验证

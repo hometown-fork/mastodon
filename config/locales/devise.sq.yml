@@ -23,28 +23,26 @@ sq:
         explanation: Keni krijuar një llogari te %{host}, me këtë adresë email. Jeni një klikim larg aktivizimit të saj. Nëse s’jeni ju, shpërfilleni këtë email.
         explanation_when_pending: Keni aplikuar për një ftesë te %{host} me këtë adresë email. Pasi të ripohoni adresën tuaj email, do të marrim në shqyrtim aplikimin tuaj. Mund të bëni hyrjen që të ndryshoni hollësitë tuaja ose të fshini llogarinë tuaj, por s’mund të përdorni shumicën e funksioneve, para se llogaria juaj të miratohet. Nëse aplikimi juaj hidhet poshtë, të dhënat tuaja do të hiqen, ndaj s’do të ketë nevojë për veprim të mëtejshëm nga ana juaj. Nëse ky s’qetë ju, ju lutemi, shpërfilleni këtë email.
         extra_html: Ju lutemi, shihni edhe <a href="%{terms_path}">rregullat e shërbyesit</a> dhe <a href="%{policy_path}">kushtet tona të shërbimit</a>.
-        subject: 'Mastodon: Udhëzime ripohimi për %{instance}'
         title: Verifikoni adresë email
       email_changed:
         explanation: 'Adresa email për llogarinë tuaj po ndryshohet në:'
         extra: Nëse email-in tuaj s’e ndryshuat ju, gjasat janë që dikush tjetër ka arritur të hyjë në llogarinë tuaj. Nëse jeni kyçur jashtë llogarisë tuaj, ju lutemi, ndryshoni menjëherë fjalëkalimin tuaj ose lidhuni me përgjegjësin e shërbyesit.
-        subject: 'Mastodon: U ndryshua email'
+        subject: "%{title}: U ndryshua email"
         title: Adresë email e re
       password_change:
         explanation: Fjalëkalimi për llogarinë tuaj u ndryshua.
         extra: Nëse fjalëkalimin tuaj s’e ndryshuat ju, gjasat janë që dikush tjetër ka arritur të hyjë në llogarinë tuaj. Ju lutemi, ndryshoni menjëherë fjalëkalimin tuaj ose lidhuni me përgjegjësin e shërbyesit, nëse jeni kyçur jashtë llogarisë tuaj.
-        subject: 'Mastodon: U ndryshua fjalëkalim'
+        subject: "%{title}: U ndryshua fjalëkalim"
         title: Fjalëkalimi u ndryshua
       reconfirmation_instructions:
         explanation: Që të ndryshohet email-i juaj, ripohoni adresën e re.
-        extra: Nëse ky ndryshim s’qe filluar prej jush, ju lutemi, shpërfilleni këtë email. Adresa email për llogarinë Mastodon s’do të ndryshojë, para se të hyni në lidhjen më sipër.
-        subject: 'Mastodon: Ripohoni email-in për %{instance}'
+        extra: Nëse ky ndryshim s’qe filluar prej jush, ju lutemi, shpërfilleni këtë email. Adresa email për llogarinë %{title} s’do të ndryshojë, para se të hyni në lidhjen më sipër.
         title: Verifikoni adresë email
       reset_password_instructions:
         action: Ndryshoni fjalëkalimin
         explanation: Kërkuat një fjalëkalim të ri për këtë llogari.
         extra: Nëse këtë s’e kërkuat ju, ju lutemi, shpërfilleni këtë email. Fjalëkalimi juaj s’do të ndryshohet pa hyrë në lidhjen më sipër dhe krijimin e një të riu.
-        subject: 'Mastodon: Udhëzime ricaktimi fjalëkalimi'
+        subject: "%{title}: Udhëzime ricaktimi fjalëkalimi"
         title: Ricaktim fjalëkalimi
       two_factor_disabled:
         explanation: Mirëfilltësimi dyfaktorësh për llogarinë tuaj është çaktivizuar. Hyrja tanimë është e mundur vetëm duke përdorur adresën email dhe fjalëkalimin.

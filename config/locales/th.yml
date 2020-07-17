@@ -9,10 +9,10 @@ th:
     administered_by: 'ดูแลโดย:'
     api: API
     apps: แอปมือถือ
-    apps_platforms: ใช้ Mastodon จาก iOS, Android และแพลตฟอร์มอื่น ๆ
+    apps_platforms: ใช้ %{title} จาก iOS, Android และแพลตฟอร์มอื่น ๆ
     browse_directory: เรียกดูไดเรกทอรีโปรไฟล์และกรองตามความสนใจ
     browse_local_posts: เรียกดูสตรีมสดของโพสต์สาธารณะจากเซิร์ฟเวอร์นี้
-    browse_public_posts: เรียกดูสตรีมสดของโพสต์สาธารณะใน Mastodon
+    browse_public_posts: เรียกดูสตรีมสดของโพสต์สาธารณะใน %{title}
     contact: ติดต่อ
     contact_missing: ไม่ได้ตั้ง
     contact_unavailable: ไม่มี
@@ -1032,7 +1032,7 @@ th:
         suspend: ระงับบัญชีอยู่
     welcome:
       review_preferences_action: เปลี่ยนการกำหนดลักษณะ
-      subject: ยินดีต้อนรับสู่ Mastodon
+      subject: ยินดีต้อนรับสู่ %{title}
       tips: เคล็ดลับ
       title: ยินดีต้อนรับ %{name}!
   users:

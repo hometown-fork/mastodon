@@ -320,7 +320,6 @@ sr-Latn:
       content: Izvinjavamo se, nešto je pošlo po zlu sa ove strane.
       title: Strana nije ispravna
     '503': The page could not be served due to a temporary server failure.
-    noscript_html: Da biste koristili Mastodont veb aplikaciju, omogućite JavaScript. U suprotnom, probajte neku od <a href="%{apps_path}">originalnih aplikacija</a> za Mastodont za Vašu platformu.
   exports:
     blocks: Blokirali ste
     mutes: Ućutkali ste
@@ -419,7 +418,7 @@ sr-Latn:
       generic: Nepoznati veb čitač
     current_session: Trenutna sesija
     description: "%{browser} sa %{platform}"
-    explanation: Ovo su trenutno prijavljeni veb čitači na Vaš Mastodont nalog.
+    explanation: Ovo su trenutno prijavljeni veb čitači na Vaš %{title} nalog.
     platforms:
       adobe_air: Adobe Air-a
       android: Androida

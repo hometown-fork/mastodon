@@ -9,10 +9,9 @@ sq:
     administered_by: 'Administruar nga:'
     api: API
     apps: Aplikacione për celular
-    apps_platforms: Përdoreni Mastodon-in prej iOS-i, Android-i dhe platformash të tjera
     browse_directory: Shfletoni një drejtori profilesh dhe filtrojeni sipas interesash
     browse_local_posts: Shfletoni një rrjedhë të drejtpërdrejtë postimesh publike nga ky shërbyes
-    browse_public_posts: Shfletoni një rrjedhë të drejtpërdrejtë postimesh publike në Mastodon
+    browse_public_posts: Shfletoni një rrjedhë të drejtpërdrejtë postimesh publike në %{title}
     contact: Kontakt
     contact_missing: I parregulluar
     contact_unavailable: N/A
@@ -783,7 +782,7 @@ sq:
       content: Na ndjeni, diçka shkoi ters në anën tonë.
       title: Kjo faqe s’është e saktë
     '503': Kjo faqe s’u shërbye dot për shkak të një dështimi të përkohshëm të shërbyesit.
-    noscript_html: Që të përdorni aplikacionin web Mastodon, ju lutemi, aktivizoni JavaScript-in. Ndryshe, provoni për Mastodon-in një nga <a href="%{apps_path}">aplikacionet e brendshëm</a> të platformës tuaj.
+    noscript_html: Që të përdorni aplikacionin web %{title}, ju lutemi, aktivizoni JavaScript-in. Ndryshe, provoni për Mastodon-in një nga <a href="%{apps_path}">aplikacionet e brendshëm</a> të platformës tuaj.
   existing_username_validator:
     not_found: s’u gjet dot përdorues vendor me atë emër përdoruesi
     not_found_multiple: s’u gjet dot %{usernames}
@@ -1077,7 +1076,7 @@ sq:
       weibo: Weibo
     current_session: Sesioni i tanishëm
     description: "%{browser} në %{platform}"
-    explanation: Këta janë shfletuesit e futur në këtë çast te llogaria juaj Mastodon.
+    explanation: Këta janë shfletuesit e futur në këtë çast te llogaria juaj %{title}.
     ip: IP
     platforms:
       adobe_air: Adobe Air
@@ -1279,7 +1278,7 @@ sq:
     wrong_code: Kodi i dhënë është i pavlefshëm! A janë të sakta koha e shërbyesit dhe koha e pajisjes?
   user_mailer:
     backup_ready:
-      explanation: Kërkuat një kopjeruajtje të plotë të llogarisë tuaj Mastodon. E keni gati për shkarkim!
+      explanation: Kërkuat një kopjeruajtje të plotë të llogarisë tuaj %{title}. E keni gati për shkarkim!
       subject: Arkivi juaj është gati për shkarkim
       title: Marrje arkivi me vete
     sign_in_token:
@@ -1316,11 +1315,9 @@ sq:
       full_handle_hint: Kjo është ajo çka do të duhej t’u tregonit shokëve tuaj, që të mund t’ju dërgojnë mesazhe ose t’ju ndjekin nga një shërbyes tjetër.
       review_preferences_action: Ndryshoni parapëlqime
       review_preferences_step: Mos harroni të caktoni parapëlqimet tuaja, fjala vjen, ç’email-e dëshironi të merrni, ose çfarë shkalle privatësie do të donit të kishin, si parazgjedhje, postimet tuaja. Nëse nuk ju merren mendtë nga rrotullimi, mund të zgjidhni të aktivizoni vetëluajtje GIF-esh.
-      subject: Mirë se vini te Mastodon-i
       tip_federated_timeline: Rrjedha kohore e të federuarve është një pamje e fluksit të rrjetit Mastodon. Por përfshin vetëm persona te të cilët janë pajtuar fqinjët tuaj, pra s’është e plotë.
       tip_following: Përgjegjësin e shërbyesit tuaj e ndiqni, si parazgjedhje. Për të gjetur më shumë persona interesantë, shihni te rrjedha kohore vendore dhe ajo e të federuarve.
       tip_local_timeline: Rrjedha kohore vendore është një pamje e fluksit të njerëzve në %{instance}. Këta janë fqinjët tuaj më të afërt!
-      tip_mobile_webapp: Nëse shfletuesi juaj celular ju ofron të shtohet Mastodon-i te skena juaj e kreut, mund të merrni njoftime <em>push</em>. Nga shumë pikëpamje vepron si një aplikacion i brendshëm i platformës së celularit!
       tips: Ndihmëza
       title: Mirë se vini, %{name}!
   users:
@@ -1334,5 +1331,5 @@ sq:
     signed_in_as: 'I futur si:'
     suspicious_sign_in_confirmation: Duket se s’keni hyrë më parë nga kjo pajisje, dhe se keni kohë pa bërë hyrje, ndaj po ju dërgojmë një kod sigurie te adresa juaj email, që të ripohoni se jeni ju.
   verification:
-    explanation_html: 'Mundeni <strong>të verifikoni veten si i zoti i lidhjeve te tejtëdhënat e profilit tuaj</strong>. Për këtë, sajti i lidhur duhet të përmbajë një lidhje për te profili juaj Mastodon. Lidhje për te ajo <strong>duhet</strong> të ketë një atribut <code>rel="me"</code>. Lënda tekst e lidhjes nuk ngre peshë. Ja një shembull:'
+    explanation_html: 'Mundeni <strong>të verifikoni veten si i zoti i lidhjeve te tejtëdhënat e profilit tuaj</strong>. Për këtë, sajti i lidhur duhet të përmbajë një lidhje për te profili juaj %{instance}. Lidhje për te ajo <strong>duhet</strong> të ketë një atribut <code>rel="me"</code>. Lënda tekst e lidhjes nuk ngre peshë. Ja një shembull:'
     verification: Verifikim

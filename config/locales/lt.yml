@@ -495,7 +495,7 @@ lt:
       content: Atsiprašome, tačiau mūsų pusėje įvyko klaida.
       title: Netinkamas puslapis
     '503': The page could not be served due to a temporary server failure.
-    noscript_html: Kad naudotumėtės Mastodon web aplikacija, prašome įsijungti JavaScript. Alternatyviai, pabandykite viena iš <a href="%{apps_path}">vietinių aplikacijų</a> Mastodon savo platformai.
+    noscript_html: Kad naudotumėtės %{title} web aplikacija, prašome įsijungti JavaScript. Alternatyviai, pabandykite viena iš <a href="%{apps_path}">vietinių aplikacijų</a> Mastodon savo platformai.
   exports:
     archive_takeout:
       date: Data
@@ -645,7 +645,7 @@ lt:
       generic: Nežinoma naršyklė
     current_session: Dabartinė sesija
     description: "%{browser} ant %{platform}"
-    explanation: Čia rodomos web naršyklės prijungtos prie Jūsų Mastodon paskyros.
+    explanation: Čia rodomos web naršyklės prijungtos prie Jūsų %{title} paskyros.
     platforms:
       other: nežinoma platforma
     revoke: Atšaukti
@@ -793,7 +793,7 @@ lt:
     wrong_code: Koda netinkamas! Ar serverio laikas ir prietaiso laikas vienodi?
   user_mailer:
     backup_ready:
-      explanation: Jūs prašėte pilnos Mastodon paskyros atsarginės kopijos. Ji paruošta parsisiuntimui!
+      explanation: Jūs prašėte pilnos %{title} paskyros atsarginės kopijos. Ji paruošta parsisiuntimui!
       subject: Jūsų archyvas paruoštas parsisiuntimui
       title: Archyvas išimtas
     warning:
@@ -822,11 +822,11 @@ lt:
       full_handle_hint: Štai ką jūs sakytumėte savo draugams, kad jie galėtų jums siųsti žinutes arba just sekti iš kitų serverių.
       review_preferences_action: Pakeisti pasirinkimus
       review_preferences_step: Nustatykite savo pasirinkimus, tokius kaip el pašto laiškai, kuriuos norėtumėte gauti, arba kokiu privatumo lygiu norėtumėte, kad jūsų įrašai būtų talpinami, taip pat galite įjungti automatinį GIF paleidimą.
-      subject: Sveiki atvykę į Mastodon
+      subject: Sveiki atvykę į %{title}
       tip_federated_timeline: Federuota laiko juosta yra lyg gaisrininkų žarną rodanti Mastodon tinklą. Tačiau, joje rodomi tik žmonės kurie yra sekami Jūsų kaimynų.
       tip_following: Jūs sekate savo serverio administratorius numatyta tvarka. Norint rasti įdomesnių žmonių, patikrinkite lokalią bei federuotą laiko juostas.
       tip_local_timeline: Lokali laiko juosta, joje rodomi žmonės iš %{instance}. Jie yra Jūsų artimiausi kaimynai!
-      tip_mobile_webapp: Jeigu Jūsų mobilioji naršyklė leidžia jums pridėti Mastodon prie namų ekrano, jūs galite gauti priminimus. Tai gali veikti kaip vietinė aplikacija!
+      tip_mobile_webapp: Jeigu Jūsų mobilioji naršyklė leidžia jums pridėti %{instance} prie namų ekrano, jūs galite gauti priminimus. Tai gali veikti kaip vietinė aplikacija!
       tips: Patarimai
       title: Sveiki atvykę, %{name}!
   users:
@@ -837,5 +837,5 @@ lt:
     seamless_external_login: Jūs esate prisijungę per išorini įrenginį, todėl slaptąžodis ir el pašto nustatymai neprieinami.
     signed_in_as: 'Prisijungta kaip:'
   verification:
-    explanation_html: 'Jūs galite <strong>patvirtinti savę kaip savininką nuorodų savo profilio meta duomenyse</strong>. Kad tai padarytumėte, susieta svetainė privalo turėti nuorodą atgal į Jūsų Mastodon profilį. Nuoroda atgal <strong> privalo </strong> turėti <code>rel="me"</code> savybę. Teksto turinys nuorodoje nesvarbus. Štai pavyzdys:'
+    explanation_html: 'Jūs galite <strong>patvirtinti savę kaip savininką nuorodų savo profilio meta duomenyse</strong>. Kad tai padarytumėte, susieta svetainė privalo turėti nuorodą atgal į Jūsų %{instance} profilį. Nuoroda atgal <strong> privalo </strong> turėti <code>rel="me"</code> savybę. Teksto turinys nuorodoje nesvarbus. Štai pavyzdys:'
     verification: Patvirtinimas

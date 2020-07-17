@@ -9,10 +9,10 @@ it:
     administered_by: 'Amministrato da:'
     api: API
     apps: Applicazioni per dispositivi mobili
-    apps_platforms: Usa Mastodon da iOS, Android e altre piattaforme
+    apps_platforms: Usa %{title} da iOS, Android e altre piattaforme
     browse_directory: Sfoglia la directory dei profili e filtra per interessi
     browse_local_posts: Sfoglia il flusso in tempo reale di post pubblici su questo server
-    browse_public_posts: Sfoglia il flusso in tempo reale di post pubblici su Mastodon
+    browse_public_posts: Sfoglia il flusso in tempo reale di post pubblici su %{title}
     contact: Contatti
     contact_missing: Non impostato
     contact_unavailable: N/D
@@ -785,7 +785,7 @@ it:
       content: Siamo spiacenti, ma qualcosa non ha funzionato dal nostro lato.
       title: Questa pagina non è corretta
     '503': La pagina non può essere trasmessa a causa di un errore temporaneo del server.
-    noscript_html: Per usare l'interfaccia web di Mastodon dovi abilitare JavaScript. In alternativa puoi provare una delle <a href="%{apps_path}">app native</a> per Mastodon per la tua piattaforma.
+    noscript_html: Per usare l'interfaccia web di %{title} dovi abilitare JavaScript. In alternativa puoi provare una delle <a href="%{apps_path}">app native</a> per Mastodon per la tua piattaforma.
   existing_username_validator:
     not_found: impossibile trovare un utente locale con quel nome utente
     not_found_multiple: impossibile trovare %{usernames}
@@ -1079,7 +1079,7 @@ it:
       weibo: Weibo
     current_session: Sessione corrente
     description: "%{browser} su %{platform}"
-    explanation: Questi sono i browser da cui attualmente è avvenuto l'accesso al tuo account Mastodon.
+    explanation: Questi sono i browser da cui attualmente è avvenuto l'accesso al tuo account %{title}.
     ip: IP
     platforms:
       adobe_air: Adobe Air
@@ -1284,7 +1284,7 @@ it:
     wrong_code: Il codice inserito non è corretto! Assicurati che l'orario del server e l'orario del dispositivo siano corretti.
   user_mailer:
     backup_ready:
-      explanation: Hai richiesto un backup completo del tuo account Mastodon. È pronto per essere scaricato!
+      explanation: Hai richiesto un backup completo del tuo account %{title}. È pronto per essere scaricato!
       subject: Il tuo archivio è pronto per essere scaricato
       title: Esportazione archivio
     sign_in_token:
@@ -1321,11 +1321,11 @@ it:
       full_handle_hint: Questo è ciò che diresti ai tuoi amici in modo che possano seguirti o contattarti da un altro server.
       review_preferences_action: Cambia preferenze
       review_preferences_step: Dovresti impostare le tue preferenze, ad esempio quali email vuoi ricevere oppure il livello predefinito di privacy per i tuoi post. Se le immagini in movimento non ti danno fastidio, puoi abilitare l'animazione automatica delle GIF.
-      subject: Benvenuto/a su Mastodon
+      subject: Benvenuto/a su %{title}
       tip_federated_timeline: La timeline federata visualizza uno dopo l'altro i messaggi pubblicati su Mastodon. Ma comprende solo gli utenti seguiti dai tuoi vicini, quindi non è completa.
       tip_following: Per impostazione predefinita, segui l'amministratore/i del tuo server. Per trovare utenti più interessanti, dà un'occhiata alle timeline locale e federata.
       tip_local_timeline: La timeline locale visualizza uno dopo l'altro i messaggi degli utenti di %{instance}. Questi sono i tuoi vicini!
-      tip_mobile_webapp: Se il tuo browser mobile ti dà la possibilità di aggiungere Mastodon allo schermo, puoi ricevere le notifiche. Funziona un po' come un'app natova!
+      tip_mobile_webapp: Se il tuo browser mobile ti dà la possibilità di aggiungere %{instance} allo schermo, puoi ricevere le notifiche. Funziona un po' come un'app natova!
       tips: Suggerimenti
       title: Benvenuto a bordo, %{name}!
   users:
@@ -1339,5 +1339,5 @@ it:
     signed_in_as: 'Hai effettuato l''accesso come:'
     suspicious_sign_in_confirmation: Sembra che tu non abbia effettuato l'accesso da questo dispositivo prima d'ora, e non hai effettuato l'accesso per un po', quindi inviamo un codice di sicurezza al tuo indirizzo e-mail per confermare che sei proprio tu.
   verification:
-    explanation_html: 'Puoi <strong>certificare te stesso come proprietario dei link nei metadati del tuo profilo</strong>. Per farlo, il sito a cui punta il link deve contenere un link che punta al tuo profilo Mastodon. Il link di ritorno <strong>deve</strong> avere l''attributo <code>rel="me"</code>. Il testo del link non ha importanza. Ecco un esempio:'
+    explanation_html: 'Puoi <strong>certificare te stesso come proprietario dei link nei metadati del tuo profilo</strong>. Per farlo, il sito a cui punta il link deve contenere un link che punta al tuo profilo %{instance}. Il link di ritorno <strong>deve</strong> avere l''attributo <code>rel="me"</code>. Il testo del link non ha importanza. Ecco un esempio:'
     verification: Verifica

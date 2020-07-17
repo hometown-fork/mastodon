@@ -9,10 +9,10 @@ eo:
     administered_by: 'Administrata de:'
     api: API
     apps: Poŝtelefonaj aplikaĵoj
-    apps_platforms: Uzu Mastodon ĉe iOS, Android kaj aliajn platformojn
+    apps_platforms: Uzu %{title} ĉe iOS, Android kaj aliajn platformojn
     browse_directory: Esplori profilujo kaj filtri per interesoj
     browse_local_posts: Vidi vivantan fluon de publikaj mesaĝoj al Mastodon
-    browse_public_posts: Vidi vivantan fluon de publikaj mesaĝoj al Mastodon
+    browse_public_posts: Vidi vivantan fluon de publikaj mesaĝoj al %{title}
     contact: Kontakti
     contact_missing: Ne elektita
     contact_unavailable: Ne disponebla
@@ -731,7 +731,7 @@ eo:
       title: Ĉi tiu paĝo ne estas ĝusta
     '503': The page could not be served due to a temporary server failure.
     noscript_html: |-
-      Por uzi la retan aplikaĵon de Mastodon, bonvolu ebligi JavaScript. Alimaniere, provu unu el la
+      Por uzi la retan aplikaĵon de %{title}, bonvolu ebligi JavaScript. Alimaniere, provu unu el la
       <a href="%{apps_path}">operaciumaj aplikaĵoj</a> por Mastodon por via platformo.
   existing_username_validator:
     not_found: Ne povas trovi lokaj uzanto kun tiu uzantnomo
@@ -1007,7 +1007,7 @@ eo:
       weibo: Weibo
     current_session: Nuna seanco
     description: "%{browser} en %{platform}"
-    explanation: Ĉi tiuj estas la retumiloj nun ensalutintaj al via Mastodon-konto.
+    explanation: Ĉi tiuj estas la retumiloj nun ensalutintaj al via %{title}-konto.
     ip: IP
     platforms:
       adobe_air: Adobe Air
@@ -1121,7 +1121,7 @@ eo:
     wrong_code: La enmetita kodo estis nevalida! Ĉu la servila tempo kaj la aparata tempo ĝustas?
   user_mailer:
     backup_ready:
-      explanation: Vi petis kompletan arkivon de via Mastodon-konto. Ĝi nun pretas por elŝutado!
+      explanation: Vi petis kompletan arkivon de via %{title}-konto. Ĝi nun pretas por elŝutado!
       subject: Via arkivo estas preta por elŝutado
       title: Arkiva elŝuto
     warning:
@@ -1151,11 +1151,11 @@ eo:
       full_handle_hint: Jen kion vi dirus al viaj amikoj, por ke ili mesaĝu aŭ sekvu vin de alia servilo.
       review_preferences_action: Ŝanĝi preferojn
       review_preferences_step: Estu certa ke vi agordis viajn preferojn, kiel kiujn retmesaĝojn vi ŝatus ricevi, aŭ kiun dekomencan privatecan nivelon vi ŝatus ke viaj mesaĝoj havu. Se tio ne ĝenas vin, vi povas ebligi aŭtomatan ekigon de GIF-oj.
-      subject: Bonvenon en Mastodon
+      subject: Bonvenon en %{title}
       tip_federated_timeline: La fratara templinio estas antaŭvido de la reto de Mastodon. Sed ĝi enhavas nur homojn, kiuj estas sekvataj de aliaj homoj de via nodo, do ĝi ne estas kompleta.
       tip_following: Vi dekomence sekvas la administrantojn de via servilo. Por trovi pli da interesaj homoj, rigardu la lokan kaj frataran templiniojn.
       tip_local_timeline: La loka templinio estas antaŭvido de la homoj en %{instance}. Ĉi tiuj estas viaj apudaj najbaroj!
-      tip_mobile_webapp: Se via telefona retumilo proponas al vi aldoni Mastodon al via hejma ekrano, vi povas ricevi puŝsciigojn. Tio multmaniere funkcias kiel operaciuma aplikaĵo!
+      tip_mobile_webapp: Se via telefona retumilo proponas al vi aldoni %{instance} al via hejma ekrano, vi povas ricevi puŝsciigojn. Tio multmaniere funkcias kiel operaciuma aplikaĵo!
       tips: Konsiloj
       title: Bonvenon, %{name}!
   users:
@@ -1166,5 +1166,5 @@ eo:
     seamless_external_login: Vi estas ensalutinta per ekstera servo, do pasvortaj kaj retadresaj agordoj ne estas disponeblaj.
     signed_in_as: 'Ensalutinta kiel:'
   verification:
-    explanation_html: 'Vi povas <strong>pruvi, ke vi estas la posedanto de la ligiloj en viaj profilaj metadatumoj</strong>. Por fari tion, la alligita retejo devas enhavi ligilon reen al via Mastodon-profilo. La religilo <strong>devas</strong> havi la atributon <code>rel="me"</code>. Ne gravas la teksta enhavo de la religilo. Jen ekzemplo:'
+    explanation_html: 'Vi povas <strong>pruvi, ke vi estas la posedanto de la ligiloj en viaj profilaj metadatumoj</strong>. Por fari tion, la alligita retejo devas enhavi ligilon reen al via %{instance}-profilo. La religilo <strong>devas</strong> havi la atributon <code>rel="me"</code>. Ne gravas la teksta enhavo de la religilo. Jen ekzemplo:'
     verification: Kontrolo

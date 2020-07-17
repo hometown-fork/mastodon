@@ -9,10 +9,10 @@ oc:
     administered_by: 'Administrat per :'
     api: API
     apps: Aplicacions per mobil
-    apps_platforms: Utilizatz Mastodon d‘iOS, Android o d’autras plataforma estant
+    apps_platforms: Utilizatz %{title} d‘iOS, Android o d’autras plataforma estant
     browse_directory: Navigatz per l’annuari de perfil e filtratz segon çò qu’aimatz
     browse_local_posts: Percórrer un flux en dirècte de las publicacions publicas d’aqueste servidor
-    browse_public_posts: Navigatz pel flux public a Mastodon
+    browse_public_posts: Navigatz pel flux public a %{title}
     contact: Contacte
     contact_missing: Pas parametrat
     contact_unavailable: Pas disponible
@@ -740,7 +740,7 @@ oc:
       content: Un quicomet a pas foncionat coma caliá.
       title: Aquesta pagina es pas corrècta
     '503': The page could not be served due to a temporary server failure.
-    noscript_html: Per utilizar l’aplicacion web de Mastodon, mercés d’activar JavaScript. O podètz utilizar <a href="%{apps_path}">una aplicacion</a> per vòstra plataforma coma alernativa.
+    noscript_html: Per utilizar l’aplicacion web de %{title}, mercés d’activar JavaScript. O podètz utilizar <a href="%{apps_path}">una aplicacion</a> per vòstra plataforma coma alernativa.
   existing_username_validator:
     not_found: impossible de trobar un utilizaire local amb aqueste nom d’utilizaire
     not_found_multiple: impossible de trobar %{usernames}
@@ -1016,7 +1016,7 @@ oc:
       weibo: Weibo
     current_session: Session en cors
     description: "%{browser} sus %{platform}"
-    explanation: Aquí los navigators connectats a vòstre compte Mastodon.
+    explanation: Aquí los navigators connectats a vòstre compte %{title}.
     ip: IP
     platforms:
       adobe_air: Adobe Air
@@ -1215,7 +1215,7 @@ oc:
     wrong_code: Lo còdi picat es invalid ! L’ora es bona sul servidor e lo mobil ?
   user_mailer:
     backup_ready:
-      explanation: Avètz demandat una salvagarda complèta de vòstre compte Mastodon. Es prèsta per telecargament !
+      explanation: Avètz demandat una salvagarda complèta de vòstre compte %{title}. Es prèsta per telecargament !
       subject: Vòstre archiu es prèst per telecargament
       title: Archiu per emportar
     warning:
@@ -1246,11 +1246,11 @@ oc:
       full_handle_hint: Es aquò que vos cal donar a vòstres amics per que pòscan vos escriure o sègre a partir d’un autre servidor.
       review_preferences_action: Cambiar las preferéncias
       review_preferences_step: Pensatz de configurar vòstras preferéncias, tal coma los corrièls que volètz recebrer o lo nivèl de confidencialitat de vòstres tuts per defaut. O se l’animacion vos dòna pas enveja de rendre, podètz activar la lectura automatica dels GIF.
-      subject: Benvengut a Mastodon
+      subject: Benvengut a %{title}
       tip_federated_timeline: Lo flux d’actualitat federat es una vista generala del malhum Mastodon. Mas aquò inclutz solament lo monde que vòstres vesins sègon, doncas es pas complèt.
       tip_following: Seguètz l’administrator del servidor per defaut. Per trobar de monde mai interessant, agachatz lo flux d’actualitat local e lo global.
       tip_local_timeline: Lo flux d’actualitat local es una vista del monde de %{instance}. Son vòstres vesins dirèctes !
-      tip_mobile_webapp: Se vòstre navigator mobil nos permet d’apondre Mastodon a l’ecran d‘acuèlh, podètz recebre de notificacions. Aquò se compòrta coma una aplicacion nativa !
+      tip_mobile_webapp: Se vòstre navigator mobil nos permet d’apondre %{instance} a l’ecran d‘acuèlh, podètz recebre de notificacions. Aquò se compòrta coma una aplicacion nativa !
       tips: Astúcias
       title: Vos desirem la benvenguda a bòrd %{name} !
   users:
@@ -1262,5 +1262,5 @@ oc:
     seamless_external_login: Sètz connectat via un servici extèrn, los paramètres de senhal e de corrièl son doncas pas disponibles.
     signed_in_as: 'Session a :'
   verification:
-    explanation_html: 'Podètz <strong>verificar vosautres meteisses coma proprietari dels ligams per las metadonadas de vòstre perfil</strong>. Per aquò far, lo site Web ligat deu conténer un ligam cap a vòstre perfil Mastodon. Lo ligam <strong>deu</strong> aver un atribut <code>rel="me"</code>. Lo contengut tèxte del ligam impòrta pas. Vaquí un exemple :'
+    explanation_html: 'Podètz <strong>verificar vosautres meteisses coma proprietari dels ligams per las metadonadas de vòstre perfil</strong>. Per aquò far, lo site Web ligat deu conténer un ligam cap a vòstre perfil %{instance}. Lo ligam <strong>deu</strong> aver un atribut <code>rel="me"</code>. Lo contengut tèxte del ligam impòrta pas. Vaquí un exemple :'
     verification: Verificacion

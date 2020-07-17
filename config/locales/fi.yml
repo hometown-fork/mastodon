@@ -8,7 +8,7 @@ fi:
     administered_by: 'Ylläpitäjä:'
     api: API
     apps: Mobiili sovellukset
-    apps_platforms: Käytä Mastodonia iOS:llä, Androidilla tai muilla alustoilla
+    apps_platforms: Käytä %{title} iOS:llä, Androidilla tai muilla alustoilla
     browse_directory: Selaa profiilihakemistoa ja suodata kiinnostuksen kohteiden mukaan
     contact: Ota yhteyttä
     contact_missing: Ei asetettu
@@ -596,7 +596,7 @@ fi:
       content: Valitettavasti jokin meni pieleen meidän päässämme.
       title: Sivu ei ole oikein
     '503': The page could not be served due to a temporary server failure.
-    noscript_html: Mastodon-selainsovelluksen käyttöön vaaditaan JavaScript. Voit vaihtoehtoisesti kokeilla jotakin omalle käyttöjärjestelmällesi tehtyä Mastodon<a href="%{apps_path}">sovellusta</a>.
+    noscript_html: '%{title}-selainsovelluksen käyttöön vaaditaan JavaScript. Voit vaihtoehtoisesti kokeilla jotakin omalle käyttöjärjestelmällesi tehtyä Mastodon<a href="%{apps_path}">sovellusta</a>.'
   exports:
     archive_takeout:
       date: Päiväys
@@ -788,7 +788,7 @@ fi:
       weibo: Weibo
     current_session: Nykyinen istunto
     description: "%{browser}, %{platform}"
-    explanation: Nämä verkkoselaimet ovat tällä hetkellä kirjautuneet Mastodon-tilillesi.
+    explanation: Nämä verkkoselaimet ovat tällä hetkellä kirjautuneet %{title}-tilillesi.
     ip: IP-osoite
     platforms:
       adobe_air: Adobe Air
@@ -892,7 +892,7 @@ fi:
     wrong_code: Annettu koodi oli virheellinen! Ovatko palvelimen aika ja laitteen aika oikein?
   user_mailer:
     backup_ready:
-      explanation: Pyysit täydellistä varmuuskopiota Mastodon-tilistäsi. Voit nyt ladata sen!
+      explanation: Pyysit täydellistä varmuuskopiota %{title}-tilistäsi. Voit nyt ladata sen!
       subject: Arkisto on valmiina ladattavaksi
       title: Arkiston tallennus
     welcome:
@@ -905,11 +905,9 @@ fi:
       full_handle_hint: Kerro tämä ystävillesi, niin he voivat lähettää sinulle viestejä tai löytää sinut toisen instanssin kautta.
       review_preferences_action: Muuta asetuksia
       review_preferences_step: Käy tarkistamassa, että asetukset ovat haluamallasi tavalla. Voit valita, missä tilanteissa haluat saada sähköpostia, mikä on julkaisujesi oletusnäkyvyys jne. Jos et saa helposti pahoinvointia, voit valita, että GIF-animaatiot toistetaan automaattisesti.
-      subject: Tervetuloa Mastodoniin
       tip_federated_timeline: Yleinen aikajana näyttää sisältöä koko Mastodon-verkostosta. Siinä näkyvät kuitenkin vain ne henkilöt, joita oman instanssisi käyttäjät seuraavat. Siinä ei siis näytetä aivan kaikkea.
       tip_following: Oletusarvoisesti seuraat oman palvelimesi ylläpitäjiä. Etsi lisää kiinnostavia ihmisiä paikalliselta ja yleiseltä aikajanalta.
       tip_local_timeline: Paikallinen aikajana näyttää instanssin %{instance} käyttäjien julkaisut. He ovat naapureitasi!
-      tip_mobile_webapp: Jos voit lisätä Mastodonin mobiiliselaimen kautta aloitusnäytöllesi, voit vastaanottaa push-ilmoituksia. Toiminta vastaa monin tavoin tavanomaista sovellusta!
       tips: Vinkkejä
       title: Tervetuloa mukaan, %{name}!
   users:

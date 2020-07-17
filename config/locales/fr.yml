@@ -9,10 +9,10 @@ fr:
     administered_by: 'Administrée par :'
     api: API
     apps: Applications mobiles
-    apps_platforms: Utilisez Mastodon depuis iOS, Android et d’autres plates-formes
+    apps_platforms: Utilisez %{title} depuis iOS, Android et d’autres plates-formes
     browse_directory: Parcourir l’annuaire des profils et filtrer par centres d’intérêts
     browse_local_posts: Parcourir un flux en direct de messages publics depuis ce serveur
-    browse_public_posts: Parcourir un flux en direct de messages publics sur Mastodon
+    browse_public_posts: Parcourir un flux en direct de messages publics sur %{title}
     contact: Contact
     contact_missing: Non défini
     contact_unavailable: N/D
@@ -783,7 +783,7 @@ fr:
       content: Nous sommes désolé·e·s, mais quelque chose s’est mal passé de notre côté.
       title: Cette page n’est pas correcte
     '503': La page n'a pas pu être servie en raison d'une défaillance temporaire du serveur.
-    noscript_html: Pour utiliser Mastodon, veuillez activer JavaScript. Sinon, essayez l’une des <a href="%{apps_path}">applications natives</a> pour Mastodon pour votre plate-forme.
+    noscript_html: Pour utiliser %{title}, veuillez activer JavaScript. Sinon, essayez l’une des <a href="%{apps_path}">applications natives</a> pour Mastodon pour votre plate-forme.
   existing_username_validator:
     not_found: n’a pas trouvé d’utilisateur·rice local·e avec ce nom
     not_found_multiple: n’a pas trouvé %{usernames}
@@ -1077,7 +1077,7 @@ fr:
       weibo: Weibo
     current_session: Session courante
     description: "%{browser} sur %{platform}"
-    explanation: Ceci est la liste des navigateurs actuellement connectés à votre compte Mastodon.
+    explanation: Ceci est la liste des navigateurs actuellement connectés à votre compte %{title}.
     ip: Adresse IP
     platforms:
       adobe_air: Adobe Air
@@ -1279,7 +1279,7 @@ fr:
     wrong_code: Les codes entrés sont incorrects ! L’heure du serveur et celle de votre appareil sont-elles correctes ?
   user_mailer:
     backup_ready:
-      explanation: Vous avez demandé une sauvegarde complète de votre compte Mastodon. Elle est maintenant prête à être téléchargée !
+      explanation: Vous avez demandé une sauvegarde complète de votre compte %{title}. Elle est maintenant prête à être téléchargée !
       subject: Votre archive est prête à être téléchargée
       title: Récupération de l’archive
     sign_in_token:
@@ -1316,11 +1316,11 @@ fr:
       full_handle_hint: C’est ce que vous diriez à vos ami·e·s pour leur permettre de vous envoyer un message ou vous suivre à partir d’un autre serveur.
       review_preferences_action: Modifier les préférences
       review_preferences_step: Assurez-vous de définir vos préférences, telles que les courriels que vous aimeriez recevoir ou le niveau de confidentialité auquel vous publier vos messages par défaut. Si vous n’avez pas le mal des transports, vous pouvez choisir d’activer la lecture automatique des GIF.
-      subject: Bienvenue sur Mastodon
+      subject: Bienvenue sur %{title}
       tip_federated_timeline: La fil public global est une vue en direct du réseau Mastodon. Mais elle n’inclut que les personnes auxquelles vos voisin·es sont abonné·e·s, donc elle n’est pas complète.
       tip_following: Vous suivez les administrateur·rice·s de votre serveur par défaut. Pour trouver d’autres personnes intéressantes, consultez les fils publics local et global.
       tip_local_timeline: Le fil public local est une vue des personnes sur %{instance}. Ce sont vos voisines et voisins immédiats !
-      tip_mobile_webapp: Si votre navigateur mobile vous propose d’ajouter Mastodon à votre écran d’accueil, vous pouvez recevoir des notifications. Il agit comme une application native de bien des façons !
+      tip_mobile_webapp: Si votre navigateur mobile vous propose d’ajouter %{instance} à votre écran d’accueil, vous pouvez recevoir des notifications. Il agit comme une application native de bien des façons !
       tips: Astuces
       title: Bienvenue à bord, %{name} !
   users:
@@ -1334,5 +1334,5 @@ fr:
     signed_in_as: 'Connecté·e en tant que :'
     suspicious_sign_in_confirmation: Il semblerait que vous ne vous êtes pas connecté depuis cet appareil auparavant et que vous ne vous êtes pas connecté depuis un moment, alors nous envoyons un code de sécurité à votre adresse courriel pour confirmer qu’il s’agit bien de vous.
   verification:
-    explanation_html: 'Vous pouvez <strong>vous vérifier en tant que propriétaire des liens dans les métadonnées de votre profil</strong>. Pour cela, le site web lié doit contenir un lien vers votre profil Mastodon. Le lien de retour <strong>doit</strong> avoir un attribut <code>rel="me"</code> . Le texte du lien n’a pas d’importance. Voici un exemple :'
+    explanation_html: 'Vous pouvez <strong>vous vérifier en tant que propriétaire des liens dans les métadonnées de votre profil</strong>. Pour cela, le site web lié doit contenir un lien vers votre profil %{instance}. Le lien de retour <strong>doit</strong> avoir un attribut <code>rel="me"</code> . Le texte du lien n’a pas d’importance. Voici un exemple :'
     verification: Vérification

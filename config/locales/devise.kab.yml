@@ -23,28 +23,26 @@ kab:
         explanation: Aqla-k terniḍ amiḍan deg %{host} s tansa imayl-agi. Mazal-ak yiwen utekki akken ad t-tremdeḍ. Ma mačči d kečč i yessutren ay-agi, ttxil-k ssinef izen-a.
         explanation_when_pending: Tsutreḍ-d ajerred deg %{host} s tansa-agi imayl. Ad nγeṛ asuter-ik ticki tsentmeḍ tansa-ik imayl. Send asentem, ur tezmireḍ ara ad teqqneḍ γer umiḍan-ik. Ma yella nugi asuter-ik, isefka-ik ad ttwakksen seg uqeddac, ihi ulac tigawt-nniḍen ara k-d-yettuqeblen. Ma mačči d kečč i yellan deffir n usuter-agi, ttxil-k ssinef izen-agi.
         extra_html: Ttxil-k ẓer daγen <a href="%{terms_path}">ilugan n uqeddac</a> akked <a href="%{policy_path}">twetlin n useqdec-nneγ</a>.
-        subject: 'Maṣṭudun: Asentem n ujerred deg uqeddac %{instance}'
         title: Senqed tansa-inek imayl
       email_changed:
         explanation: 'Tansa n yimayl n umiḍan-ik ibeddel ɣer:'
         extra: Ma mačči d kečč i ibeddlen tansa imayl, ihi yezmer d alebɛaḍ i ikecmen γer umiḍan-ik. Ttxil-k beddel awal-ik uffir tura neγ siwel i unedbal n uqeddac ma tḥesleḍ berra n umiḍan-ik.
-        subject: 'Maṣṭudun: Imayl-ik yettubeddel'
+        subject: "%{title}: Imayl-ik yettubeddel"
         title: Tansa imayl tamaynut
       password_change:
         explanation: Awal uffir n umiḍan-ik yettubeddel.
         extra: Ma mačči d kečč i ibeddlen awal uffir, ihi yezmer d alebɛaḍ i ikecmen γer umiḍan-ik. Ttxil-k beddel awal-ik uffir tura neγ siwel i unedbal n uqeddac ma tḥesleḍ berra n umiḍan-ik.
-        subject: 'Maṣṭudun: Yettubeddel wawal-ik uffir'
+        subject: "%{title}: Yettubeddel wawal-ik uffir"
         title: Awal uffir yettubeddel
       reconfirmation_instructions:
         explanation: Sentem tansa imayl tamaynut akken ad tbeddleḍ imayl-inek.
-        extra: Ma yella mačči d kečč·kem i yebdan aya, ttxil suref i yimayl-a. Tansa n imayl n Mastodon ur tettbeddil ara skud ur tkecmeḍ ara ɣer useɣwen-nni ufella.
-        subject: 'Maṣṭudun: Sentem tansa imayl n %{instance}'
+        extra: Ma yella mačči d kečč·kem i yebdan aya, ttxil suref i yimayl-a. Tansa n imayl n %{title} ur tettbeddil ara skud ur tkecmeḍ ara ɣer useɣwen-nni ufella.
         title: Senqed tansa-inek imayl
       reset_password_instructions:
         action: Beddel awal uffir
         explanation: Tessutreḍ awal uffir amaynut i umiḍan-ik.
         extra: Ma yella ur tsutreḍ aya, suref i yimayl-a. Awal-ik·im uffir ir ittbeddil ara skud ur tekcimeḍ ara ɣer useɣwen-nni ufella sakin ad tsutreḍ amaynut.
-        subject: 'Mastodon: Iwellihen n uwennez n wawal uffir'
+        subject: "%{title}: Iwellihen n uwennez n wawal uffir"
         title: Aɛiwed n wawal uffir
       two_factor_disabled:
         explanation: Asesṭeb s snat n tarayin insa i umiḍan-ik·im. Tzemreḍ ad teqnneḍ tura s imayl d wawal uffir kan.

@@ -9,10 +9,10 @@
     administered_by: 'Administrert av:'
     api: API
     apps: Mobilapper
-    apps_platforms: Bruk Mastodon gjennom iOS, Android og andre plattformer
+    apps_platforms: Bruk %{title} gjennom iOS, Android og andre plattformer
     browse_directory: Bla gjennom en profilmappe og filtrer etter interesser
     browse_local_posts: Bla i en sanntidsstrøm av offentlige innlegg fra denne tjeneren
-    browse_public_posts: Bla i en sanntidsstrøm av offentlige innlegg på Mastodon
+    browse_public_posts: Bla i en sanntidsstrøm av offentlige innlegg på %{title}
     contact: Kontakt
     contact_missing: Ikke innstilt
     contact_unavailable: Ikke tilgjengelig
@@ -747,7 +747,7 @@
       content: Beklager men noe gikk galt ved vår ende.
       title: Denne siden er ikke korrekt
     '503': Siden kunne ikke vises på grunn av en midlertidig serverfeil.
-    noscript_html: For å bruke Mastodon webapplikasjon må du aktivere JavaScript. Alternativt kan du forsøke en av de mange <a href="%{apps_path}">integrerte appene</a> for Mastodon til din plattform.
+    noscript_html: For å bruke %{title} webapplikasjon må du aktivere JavaScript. Alternativt kan du forsøke en av de mange <a href="%{apps_path}">integrerte appene</a> for Mastodon til din plattform.
   existing_username_validator:
     not_found: kunne ikke finne en lokal bruker med det brukernavnet
     not_found_multiple: klarte ikke å finne %{usernames}
@@ -1007,7 +1007,7 @@
       weibo: Weibo
     current_session: Nåværende økt
     description: "%{browser} på %{platform}"
-    explanation: Dette er nettlesere som er pålogget på din Mastodon-konto akkurat nå.
+    explanation: Dette er nettlesere som er pålogget på din %{title}-konto akkurat nå.
     ip: IP-adresse
     platforms:
       adobe_air: Adobe Air
@@ -1200,7 +1200,7 @@
     wrong_code: Den angitte koden var ugyldig! Stemmer instansens tid overalt med enhetens tid?
   user_mailer:
     backup_ready:
-      explanation: Du ba om en fullstendig sikkerhetskopi av Mastodon-kontoen din. Den er nå klar for nedlasting!
+      explanation: Du ba om en fullstendig sikkerhetskopi av %{title}-kontoen din. Den er nå klar for nedlasting!
       subject: Arkivet ditt er klart til å lastes ned
     warning:
       explanation:
@@ -1230,11 +1230,10 @@
       full_handle_hint: Dette er hva du forteller venner slik at de kan sende melding eller følge deg fra en annen instanse.
       review_preferences_action: Endre innstillinger
       review_preferences_step: Husk å justere dine innstillinger, som hvilke e-poster du ønsker å motta, eller hvor private du ønsker at dine poster skal være som standard. Hvis du ikke har bevegelsessyke kan du skru på automatisk avspilling av GIF-animasjoner.
-      subject: Velkommen til Mastodon
+      subject: Velkommen til %{title}
       tip_federated_timeline: Den forente tidslinjen blir konstant matet med meldinger fra Mastodon-nettverket. Men den inkluderer bare personer dine naboer abbonerer på, så den er ikke komplett.
       tip_following: Du følger din tjeners administrator(er) som standard. For å finne mer interessante personer, sjekk den lokale og forente tidslinjen.
       tip_local_timeline: Den lokale tidslinjen blir kontant matet med meldinger fra personer på %{instance}. Dette er dine nærmeste naboer!
-      tip_mobile_webapp: Hvis din mobile nettleser tilbyr deg å legge Mastadon til din hjemmeskjerm kan du motta push-varslinger. Det er nesten som en integrert app på mange måter!
       tips: Tips
       title: Velkommen ombord, %{name}!
   users:
@@ -1244,5 +1243,5 @@
     otp_lost_help_html: Hvis du mistet tilgangen til begge deler, kan du komme i kontakt med %{email}
     signed_in_as: 'Innlogget som:'
   verification:
-    explanation_html: 'Du kan <strong>bekrefte at du selv er eieren av lenkene i din profilmetadata</strong>. For å gjøre det, må det tillenkede nettstedet inneholde en lenke som fører tilbake til Mastodon-profilen din. Lenken tilbake <strong>må</strong> ha en <code>rel="me"</code>-attributt. Tekstinnholdet til lenken er irrelevant. Her er et eksempel:'
+    explanation_html: 'Du kan <strong>bekrefte at du selv er eieren av lenkene i din profilmetadata</strong>. For å gjøre det, må det tillenkede nettstedet inneholde en lenke som fører tilbake til %{instance}-profilen din. Lenken tilbake <strong>må</strong> ha en <code>rel="me"</code>-attributt. Tekstinnholdet til lenken er irrelevant. Her er et eksempel:'
     verification: Bekreftelse
