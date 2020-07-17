@@ -13,7 +13,7 @@ describe 'Localization' do
     get "/about", headers: headers
 
     expect(response.body).to include(
-      I18n.t('about.tagline', locale: 'zh-HK')
+      I18n.t('about.administered_by', locale: 'zh-HK')
     )
   end
 
@@ -23,7 +23,7 @@ describe 'Localization' do
     get "/about", headers: headers
 
     expect(response.body).to include(
-      I18n.t('about.tagline', locale: 'es')
+      I18n.t('about.administered_by', locale: 'es')
     )
   end
 
@@ -33,7 +33,7 @@ describe 'Localization' do
     get "/about", headers: headers
 
     expect(response.body).to include(
-      I18n.t('about.tagline', locale: 'en')
+      I18n.t('about.administered_by', locale: 'en')
     )
   end
 end
