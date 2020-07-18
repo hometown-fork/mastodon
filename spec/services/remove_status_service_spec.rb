@@ -3,9 +3,9 @@ require 'rails_helper'
 RSpec.describe RemoveStatusService, type: :service do
   subject { RemoveStatusService.new }
 
-  let!(:alice)  { Fabricate(:account) }
+  let!(:alice)  { Fabricate(:user).account }
   let!(:bob)    { Fabricate(:account, username: 'bob', domain: 'example.com', salmon_url: 'http://example.com/salmon') }
-  let!(:jeff)   { Fabricate(:account) }
+  let!(:jeff)   { Fabricate(:user).account }
   let!(:hank)   { Fabricate(:account, username: 'hank', protocol: :activitypub, domain: 'example.com', inbox_url: 'http://example.com/inbox') }
   let!(:bill)   { Fabricate(:account, username: 'bill', protocol: :activitypub, domain: 'example2.com', inbox_url: 'http://example2.com/inbox') }
 

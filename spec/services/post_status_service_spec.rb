@@ -153,9 +153,10 @@ RSpec.describe PostStatusService, type: :service do
     allow(DistributionWorker).to receive(:perform_async)
     allow(ActivityPub::DistributionWorker).to receive(:perform_async)
 
-    account = Fabricate(:account)
+    account = Fabricate(:user).account
 
     status = subject.call(account, text: "test status update")
+    expect(status.local_only?).to be false
 
     expect(DistributionWorker).to have_received(:perform_async).with(status.id)
     expect(ActivityPub::DistributionWorker).to have_received(:perform_async).with(status.id)
