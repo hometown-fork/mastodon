@@ -1618,9 +1618,9 @@
   integrity sha512-tHq6qdbT9U1IRSGf14CL0pUlULksvY9OZ+5eEgl1N7t+OA3tGvNpxJCzuKQlsNgCVwbAs670L1vcVQi8j9HjnA==
 
 "@types/node@*":
-  version "14.0.14"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.0.14.tgz#24a0b5959f16ac141aeb0c5b3cd7a15b7c64cbce"
-  integrity sha512-syUgf67ZQpaJj01/tRTknkMNoBBLWJOBODF0Zm4NrXmiSuxjymFrxnTu1QVYRubhVkRcZLYZG8STTwJRdVm/WQ==
+  version "14.6.0"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.6.0.tgz#7d4411bf5157339337d7cff864d9ff45f177b499"
+  integrity sha512-mikldZQitV94akrc4sCcSjtJfsTKt4p+e/s0AGscVA6XArQ9kFclP+ZiYUMnq987rc6QlYxXv/EivqlfSLxpKA==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.0"
@@ -6526,10 +6526,11 @@ jest-runtime@^26.1.0:
     yargs "^15.3.1"
 
 jest-serializer@^26.1.0:
-  version "26.1.0"
-  resolved "https://registry.yarnpkg.com/jest-serializer/-/jest-serializer-26.1.0.tgz#72a394531fc9b08e173dc7d297440ac610d95022"
-  integrity sha512-eqZOQG/0+MHmr25b2Z86g7+Kzd5dG9dhCiUoyUNJPgiqi38DqbDEOlHcNijyfZoj74soGBohKBZuJFS18YTJ5w==
+  version "26.3.0"
+  resolved "https://registry.yarnpkg.com/jest-serializer/-/jest-serializer-26.3.0.tgz#1c9d5e1b74d6e5f7e7f9627080fa205d976c33ef"
+  integrity sha512-IDRBQBLPlKa4flg77fqg0n/pH87tcRKwe8zxOVTWISxGpPHYkRZ1dXKyh04JOja7gppc60+soKVZ791mruVdow==
   dependencies:
+    "@types/node" "*"
     graceful-fs "^4.2.4"
 
 jest-snapshot@^26.1.0:
