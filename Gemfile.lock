@@ -418,7 +418,7 @@ GEM
     pghero (2.5.1)
       activerecord (>= 5)
     pkg-config (1.4.1)
-    premailer (1.11.1)
+    premailer (1.14.1)
       addressable
       css_parser (>= 1.6.0)
       htmlentities (>= 4.0.0)
@@ -434,7 +434,7 @@ GEM
       pry (~> 0.13.0)
     pry-rails (0.3.9)
       pry (>= 0.10.4)
-    public_suffix (4.0.5)
+    public_suffix (4.0.6)
     puma (4.3.5)
       nio4r (~> 2.0)
     pundit (2.1.0)
