@@ -219,7 +219,7 @@ GEM
       tzinfo
     excon (0.75.0)
     fabrication (2.21.1)
-    faker (2.13.0)
+    faker (2.15.1)
       i18n (>= 1.6, < 2)
     faraday (1.0.1)
       multipart-post (>= 1.2, < 3)
@@ -286,7 +286,7 @@ GEM
     httplog (1.4.3)
       rack (>= 1.0)
       rainbow (>= 2.0.0)
-    i18n (1.8.3)
+    i18n (1.8.5)
       concurrent-ruby (~> 1.0)
     i18n-tasks (0.9.31)
       activesupport (>= 4.0.2)
@@ -702,7 +702,7 @@ DEPENDENCIES
   e2mmap (~> 0.1.0)
   ed25519 (~> 1.2)
   fabrication (~> 2.21)
-  faker (~> 2.13)
+  faker (~> 2.15)
   fast_blank (~> 1.0)
   fastimage
   fog-core (<= 2.1.0)
