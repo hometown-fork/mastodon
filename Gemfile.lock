@@ -221,8 +221,9 @@ GEM
     fabrication (2.21.1)
     faker (2.13.0)
       i18n (>= 1.6, < 2)
-    faraday (1.0.1)
+    faraday (1.2.0)
       multipart-post (>= 1.2, < 3)
+      ruby2_keywords
     fast_blank (1.0.0)
     fastimage (2.1.7)
     ffi (1.10.0)
@@ -561,6 +562,7 @@ GEM
     ruby-progressbar (1.10.1)
     ruby-saml (1.11.0)
       nokogiri (>= 1.5.10)
+    ruby2_keywords (0.0.2)
     rufus-scheduler (3.6.0)
       fugit (~> 1.1, >= 1.1.6)
     safe_yaml (1.0.5)
