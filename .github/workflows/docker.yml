@@ -1,8 +1,4 @@
 name: Docker Build
-on:
-  push:
-    branches:
-      - main
 
 env:
   # Beware! The last part of this image name is global for your user or organization.
@@ -26,18 +22,26 @@ jobs:
         run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
         id: extract_branch
 
-      - name: Build docker image using previous image as cache
+      - name: Log in to Github docker registry
         run: |
           echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+
+      - name: Build docker images using previous images as cache
+        run: |
           docker pull $DOCKER_IMAGE_BUILD:latest || true
           docker build --cache-from $DOCKER_IMAGE_BUILD:latest --target build-dep --tag $DOCKER_IMAGE_BUILD:latest .
-          docker push $DOCKER_IMAGE_BUILD:latest
           docker pull $DOCKER_IMAGE:${{ steps.extract_branch.outputs.branch }} || true
           docker build --cache-from $DOCKER_IMAGE_BUILD:latest --cache-from $DOCKER_IMAGE:${{ steps.extract_branch.outputs.branch }} --tag $DOCKER_IMAGE:${{ steps.extract_branch.outputs.branch }} .
+
+      - name: Push docker images to Github registry
+        if: github.ref == 'refs/heads/main'
+        run: |
+          docker push $DOCKER_IMAGE_BUILD:latest
           docker push $DOCKER_IMAGE:${{ steps.extract_branch.outputs.branch }}
 
   deploy:
     name: Deploy
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-18.04
     needs: build
     steps:
