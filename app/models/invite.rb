@@ -17,7 +17,7 @@
 
 class Invite < ApplicationRecord
   include Expireable
-
+  include InviteLimiter
   belongs_to :user, inverse_of: :invites
   has_many :users, inverse_of: :invite
 
@@ -26,6 +26,8 @@ class Invite < ApplicationRecord
   validates :comment, length: { maximum: 420 }
 
   before_validation :set_code
+
+  invite_limit by: :user, family: :invites
 
   def valid_for_use?
     (max_uses.nil? || uses < max_uses) && !expired? && !(user.nil? || user.disabled?)

@@ -14,6 +14,11 @@ class RateLimiter
       period: 3.hours.freeze,
     }.freeze,
 
+    invites: {
+      limit: 3,
+      period: 7.days.freeze,
+    }.freeze,
+
     reports: {
       limit: 400,
       period: 24.hours.freeze,
