@@ -546,7 +546,7 @@ class Status extends ImmutablePureComponent {
             {ancestors}
 
             <HotKeys handlers={handlers}>
-              <div className={classNames('focusable', 'detailed-status__wrapper')} tabIndex='0' aria-label={textForScreenReader(intl, status, false)}>
+              <div className={classNames('focusable', 'detailed-status__wrapper', 'status-' + status.get('visibility'), { 'status-local-only': !!status.get('local_only') })} tabIndex='0' aria-label={textForScreenReader(intl, status, false)}>
                 <DetailedStatus
                   key={`details-${status.get('id')}`}
                   status={status}
