@@ -245,7 +245,7 @@ class User < ApplicationRecord
   end
 
   def setting_default_privacy
-    settings.default_privacy || (account.locked? ? 'private' : 'public')
+    settings.default_privacy || (account.locked? ? 'private' : 'local_only')
   end
 
   def allows_digest_emails?

@@ -47,7 +47,6 @@ export const COMPOSE_SENSITIVITY_CHANGE = 'COMPOSE_SENSITIVITY_CHANGE';
 export const COMPOSE_SPOILERNESS_CHANGE = 'COMPOSE_SPOILERNESS_CHANGE';
 export const COMPOSE_SPOILER_TEXT_CHANGE = 'COMPOSE_SPOILER_TEXT_CHANGE';
 export const COMPOSE_VISIBILITY_CHANGE  = 'COMPOSE_VISIBILITY_CHANGE';
-export const COMPOSE_FEDERATION_CHANGE  = 'COMPOSE_FEDERATION_CHANGE';
 export const COMPOSE_LISTABILITY_CHANGE = 'COMPOSE_LISTABILITY_CHANGE';
 export const COMPOSE_COMPOSING_CHANGE = 'COMPOSE_COMPOSING_CHANGE';
 
@@ -140,15 +139,23 @@ export function submitCompose(routerHistory) {
 
     dispatch(submitComposeRequest());
 
+    // TODO: This is not very pretty, better way to do this? Can we save visibility=local_only directly to database?
+    let status_visibility = getState().getIn(['compose', 'privacy']);
+    let status_local_only = false;
+    if (status_visibility === 'local_only') {
+      status_visibility = 'public';
+      status_local_only = true;
+    }
+
     api(getState).post('/api/v1/statuses', {
       status,
       in_reply_to_id: getState().getIn(['compose', 'in_reply_to'], null),
       media_ids: media.map(item => item.get('id')),
       sensitive: getState().getIn(['compose', 'sensitive']),
       spoiler_text: getState().getIn(['compose', 'spoiler']) ? getState().getIn(['compose', 'spoiler_text'], '') : '',
-      visibility: getState().getIn(['compose', 'privacy']),
+      visibility: status_visibility,
       poll: getState().getIn(['compose', 'poll'], null),
-      local_only: !getState().getIn(['compose', 'federation']),
+      local_only: status_local_only,
     }, {
       headers: {
         'Idempotency-Key': getState().getIn(['compose', 'idempotencyKey']),
@@ -590,13 +597,6 @@ export function changeComposeSpoilerText(text) {
 export function changeComposeVisibility(value) {
   return {
     type: COMPOSE_VISIBILITY_CHANGE,
-    value,
-  };
-};
-
-export function changeComposeFederation(value) {
-  return {
-    type: COMPOSE_FEDERATION_CHANGE,
     value,
   };
 };

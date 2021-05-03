@@ -1279,11 +1279,13 @@ en:
     visibilities:
       direct: Direct
       private: Followers-only
-      private_long: Only show to followers
+      private_long: Visible only for your followers (federated)
       public: Public
-      public_long: Everyone can see
+      public_long: Visible for all, shown in all timelines (federated)
       unlisted: Unlisted
-      unlisted_long: Everyone can see, but not listed on public timelines
+      unlisted_long: Visible for all, but not in public timelines (federated)
+      local_only: Local-only
+      local_only_long: Visible only for other users on this instance
   stream_entries:
     pinned: Pinned post
     reblogged: boosted
