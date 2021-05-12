@@ -200,13 +200,20 @@ border-top: 0;
   border-radius: 0 0 25px 25px;
 }
 
-.getting-started__footer {
+.getting-started__footer_container {
   padding: 20px 20px 0 20px;
   border-radius: 25px;
   background: $feed-background;
   box-shadow: inset 0 0 25px -10px $purple;
   margin-bottom: 10px;
+  min-height: 150px;
 }
+
+.getting-started__footer {
+  height: 100px;
+  overflow-y: auto;
+}
+
 .layout-multiple-columns .getting-started__footer,
 .columns-area--mobile .getting-started__footer {
   background: $white;
