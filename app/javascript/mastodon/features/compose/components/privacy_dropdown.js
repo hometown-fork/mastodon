@@ -234,9 +234,8 @@ class PrivacyDropdown extends React.PureComponent {
 
   componentWillMount () {
     const { intl: { formatMessage } } = this.props;
-    // TODO get the real instance name and domain here
-    const instance = 'Local';
-    const domain = 'this community';
+    const instance = document.title;
+    const domain = window.location.origin.replace(/^[a-z]+\:\/\//, "");
 
     this.options = [
       { icon: 'users', value: 'local_only', text: formatMessage(messages.local_only_short, { instance }), meta: formatMessage(messages.local_only_long, { domain }) },
