@@ -11,15 +11,15 @@ import Icon from 'mastodon/components/icon';
 
 const messages = defineMessages({
   public_short: { id: 'privacy.public.short', defaultMessage: 'Public' },
-  public_long: { id: 'privacy.public.long', defaultMessage: 'Visible for all, shown in public timelines across the fediverse' },
+  public_long: { id: 'privacy.public.long', defaultMessage: 'Visible for other communities in the Fediverse' },
   unlisted_short: { id: 'privacy.unlisted.short', defaultMessage: 'Unlisted' },
-  unlisted_long: { id: 'privacy.unlisted.long', defaultMessage: 'Visible for all, but not in public timelines' },
-  local_only_short: { id: 'privacy.local_only.short', defaultMessage: 'Local-only' },
-  local_only_long: { id: 'privacy.local_only.long', defaultMessage: 'Share only with my instance' },
-  private_short: { id: 'privacy.private.short', defaultMessage: 'Followers-only' },
-  private_long: { id: 'privacy.private.long', defaultMessage: 'Visible for followers across the fediverse' },
+  unlisted_long: { id: 'privacy.unlisted.long', defaultMessage: 'Visible for other communities, but not in public timelines' },
+  local_only_short: { id: 'privacy.local_only.short', defaultMessage: 'Local only' },
+  local_only_long: { id: 'privacy.local_only.long', defaultMessage: 'Visible only for other users on this community' },
+  private_short: { id: 'privacy.private.short', defaultMessage: 'Followers only' },
+  private_long: { id: 'privacy.private.long', defaultMessage: 'Visible only for your followers' },
   direct_short: { id: 'privacy.direct.short', defaultMessage: 'Direct' },
-  direct_long: { id: 'privacy.direct.long', defaultMessage: 'Visible for mentioned users across the fediverse' },
+  direct_long: { id: 'privacy.direct.long', defaultMessage: 'Visible only for mentioned users' },
   change_privacy: { id: 'privacy.change', defaultMessage: 'Adjust status privacy' },
 });
 
@@ -234,11 +234,12 @@ class PrivacyDropdown extends React.PureComponent {
 
   componentWillMount () {
     const { intl: { formatMessage } } = this.props;
-    // TODO get the site domain here
-    const domain = 'your instance';
+    // TODO get the real instance name and domain here
+    const instance = 'Local';
+    const domain = 'this community';
 
     this.options = [
-      { icon: 'users', value: 'local_only', text: formatMessage(messages.local_only_short), meta: formatMessage(messages.local_only_long, { domain }) },
+      { icon: 'users', value: 'local_only', text: formatMessage(messages.local_only_short, { instance }), meta: formatMessage(messages.local_only_long, { domain }) },
       { icon: 'globe', value: 'public', text: formatMessage(messages.public_short), meta: formatMessage(messages.public_long) },
       //{ icon: 'eye-slash', value: 'unlisted', text: formatMessage(messages.unlisted_short), meta: formatMessage(messages.unlisted_long) },
       { icon: 'lock', value: 'private', text: formatMessage(messages.private_short), meta: formatMessage(messages.private_long) },
