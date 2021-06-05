@@ -56,6 +56,7 @@ const messages = defineMessages({
   public_short: { id: 'privacy.public.short', defaultMessage: 'Public' },
   unlisted_short: { id: 'privacy.unlisted.short', defaultMessage: 'Unlisted' },
   private_short: { id: 'privacy.private.short', defaultMessage: 'Followers-only' },
+  local_private_short: { id: 'privacy.local_private.short', defaultMessage: 'Local followers only' },
   direct_short: { id: 'privacy.direct.short', defaultMessage: 'Direct' },
   local_only_short: { id: 'privacy.local_only.short', defaultMessage: 'Local-only' },
 });
@@ -453,8 +454,9 @@ class Status extends ImmutablePureComponent {
 
     const visibilityIconInfo = {
       'public': { icon: 'globe', text: intl.formatMessage(messages.public_short) },
-      'unlisted': { icon: 'unlock', text: intl.formatMessage(messages.unlisted_short) },
+      'unlisted': { icon: 'eye-slash', text: intl.formatMessage(messages.unlisted_short) },
       'private': { icon: 'lock', text: intl.formatMessage(messages.private_short) },
+      'local_private': { icon: 'key', text: intl.formatMessage(messages.local_private_short) },
       'direct': { icon: 'envelope', text: intl.formatMessage(messages.direct_short) },
       'local_only': { icon: 'users', text: intl.formatMessage(messages.local_only_short, { instance: document.title }) },
     };
@@ -464,8 +466,9 @@ class Status extends ImmutablePureComponent {
     // Override visibility with local only setting when needed
     if (status.get('local_only')) {
       if (status.get('visibility') === 'public') {
-        // This is the most common case, status is public and local only, show with simple local only icon
         visibilityIcon = visibilityIconInfo['local_only'];
+      } else if (status.get('visibility') === 'private') {
+        visibilityIcon = visibilityIconInfo['local_private'];
       } else {
         // This status is a more unusual combo of local only + another visibility than public
         // To show this we add it to the tooltip (text) only

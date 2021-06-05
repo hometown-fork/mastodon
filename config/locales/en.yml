@@ -1280,12 +1280,14 @@ en:
       direct: Direct
       private: Followers only
       private_long: Visible only for your followers
+      local_private: Local followers only
+      local_private_long: Visible only for your followers on this instance
       public: Public
-      public_long: Visible for other communities in the Fediverse
+      public_long: Visible for other instances in the Fediverse
       unlisted: Unlisted
-      unlisted_long: Visible for other communities, but not in public timelines
+      unlisted_long: Visible for other instances, but not in public timelines
       local_only: Local only
-      local_only_long: Visible only for other users on this community
+      local_only_long: Visible only for other users on this instance
   stream_entries:
     pinned: Pinned post
     reblogged: boosted

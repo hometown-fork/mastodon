@@ -146,6 +146,10 @@ export function submitCompose(routerHistory) {
       status_visibility = 'public';
       status_local_only = true;
     }
+    if (status_visibility === 'local_private') {
+      status_visibility = 'private';
+      status_local_only = true;
+    }
 
     api(getState).post('/api/v1/statuses', {
       status,

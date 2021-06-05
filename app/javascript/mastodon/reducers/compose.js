@@ -185,7 +185,7 @@ const insertEmoji = (state, position, emojiData, needsSpace) => {
 };
 
 const privacyPreference = (a, b) => {
-  const order = ['local_only', 'public', 'unlisted', 'private', 'direct'];
+  const order = ['local_only', 'public', 'unlisted', 'private', 'local_private', 'direct'];
   return order[Math.max(order.indexOf(a), order.indexOf(b), 0)];
 };
 
