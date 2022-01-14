@@ -345,7 +345,7 @@
   "privacy.change": "Change post privacy",
   "privacy.direct.long": "Visible only for mentioned users",
   "privacy.direct.short": "Direct message",
-  "privacy.private.long": "Visible only for your followers",
+  "privacy.private.long": "Visible for your followers, also on other instances",
   "privacy.private.short": "Followers only",
   "privacy.local_private.long": "Visible only for your followers on {domain}",
   "privacy.local_private.short": "{instance} followers only",

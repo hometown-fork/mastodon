@@ -185,7 +185,7 @@ class DetailedStatus extends ImmutablePureComponent {
       'public': { icon: 'globe', text: intl.formatMessage(messages.public_short) },
       'unlisted': { icon: 'eye-slash', text: intl.formatMessage(messages.unlisted_short) },
       'private': { icon: 'lock', text: intl.formatMessage(messages.private_short) },
-      'local_private': { icon: 'key', text: intl.formatMessage(messages.local_private_short) },
+      'local_private': { icon: 'user-circle', text: intl.formatMessage(messages.local_private_short, { instance: document.title }) },
       'direct': { icon: 'envelope', text: intl.formatMessage(messages.direct_short) },
       'local_only': { icon: 'users', text: intl.formatMessage(messages.local_only_short, { instance: document.title }) },
     };

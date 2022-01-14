@@ -1279,7 +1279,7 @@ en:
     visibilities:
       direct: Direct
       private: Followers only
-      private_long: Visible only for your followers
+      private_long: Visible for your followers, also on other instances
       local_private: Local followers only
       local_private_long: Visible only for your followers on this instance
       public: Public
