@@ -56,7 +56,9 @@ const messages = defineMessages({
   public_short: { id: 'privacy.public.short', defaultMessage: 'Public' },
   unlisted_short: { id: 'privacy.unlisted.short', defaultMessage: 'Unlisted' },
   private_short: { id: 'privacy.private.short', defaultMessage: 'Followers-only' },
+  local_private_short: { id: 'privacy.local_private.short', defaultMessage: 'Local followers only' },
   direct_short: { id: 'privacy.direct.short', defaultMessage: 'Direct' },
+  local_only_short: { id: 'privacy.local_only.short', defaultMessage: 'Local-only' },
 });
 
 export default @injectIntl
@@ -452,19 +454,34 @@ class Status extends ImmutablePureComponent {
 
     const visibilityIconInfo = {
       'public': { icon: 'globe', text: intl.formatMessage(messages.public_short) },
-      'unlisted': { icon: 'unlock', text: intl.formatMessage(messages.unlisted_short) },
+      'unlisted': { icon: 'eye-slash', text: intl.formatMessage(messages.unlisted_short) },
       'private': { icon: 'lock', text: intl.formatMessage(messages.private_short) },
+      'local_private': { icon: 'user-circle', text: intl.formatMessage(messages.local_private_short, { instance: document.title }) },
       'direct': { icon: 'envelope', text: intl.formatMessage(messages.direct_short) },
+      'local_only': { icon: 'users', text: intl.formatMessage(messages.local_only_short, { instance: document.title }) },
     };
 
-    const visibilityIcon = visibilityIconInfo[status.get('visibility')];
+    let visibilityIcon = visibilityIconInfo[status.get('visibility')];
+
+    // Override visibility with local only setting when needed
+    if (status.get('local_only')) {
+      if (status.get('visibility') === 'public') {
+        visibilityIcon = visibilityIconInfo['local_only'];
+      } else if (status.get('visibility') === 'private') {
+        visibilityIcon = visibilityIconInfo['local_private'];
+      } else {
+        // This status is a more unusual combo of local only + another visibility than public
+        // To show this we add it to the tooltip (text) only
+        visibilityIcon.text += ' + ' + visibilityIconInfo['local_only'].text;
+      }
+    }
 
     return (
       <HotKeys handlers={handlers}>
         <div className={classNames('status__wrapper', `status__wrapper-type-${status.get('activity_pub_type') || 'none'}` , `status__wrapper-${status.get('visibility')}`, { 'status__wrapper-reply': !!status.get('in_reply_to_id'), unread, focusable: !this.props.muted })} tabIndex={this.props.muted ? null : 0} data-featured={featured ? 'true' : null} aria-label={textForScreenReader(intl, status, rebloggedByText)} ref={this.handleRef}>
           {prepend}
 
-          <div className={classNames('status', `status-${status.get('visibility')}`, { 'status-reply': !!status.get('in_reply_to_id'), muted: this.props.muted })} data-id={status.get('id')}>
+          <div className={classNames('status', `status-${status.get('visibility')}`, { 'status-local-only': !!status.get('local_only') }, { 'status-reply': !!status.get('in_reply_to_id'), muted: this.props.muted })} data-id={status.get('id')}>
             <div className='status__expand' onClick={this.handleExpandClick} role='presentation' />
             <div className='status__info'>
               <a href={status.get('url')} className='status__relative-time' target='_blank' rel='noopener noreferrer'>

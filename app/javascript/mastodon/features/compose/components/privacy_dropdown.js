@@ -11,13 +11,17 @@ import Icon from 'mastodon/components/icon';
 
 const messages = defineMessages({
   public_short: { id: 'privacy.public.short', defaultMessage: 'Public' },
-  public_long: { id: 'privacy.public.long', defaultMessage: 'Visible for all, shown in public timelines' },
+  public_long: { id: 'privacy.public.long', defaultMessage: 'Visible for other communities in the Fediverse' },
   unlisted_short: { id: 'privacy.unlisted.short', defaultMessage: 'Unlisted' },
-  unlisted_long: { id: 'privacy.unlisted.long', defaultMessage: 'Visible for all, but not in public timelines' },
-  private_short: { id: 'privacy.private.short', defaultMessage: 'Followers-only' },
-  private_long: { id: 'privacy.private.long', defaultMessage: 'Visible for followers only' },
+  unlisted_long: { id: 'privacy.unlisted.long', defaultMessage: 'Visible for other instances, but not in public timelines' },
+  local_only_short: { id: 'privacy.local_only.short', defaultMessage: 'Local only' },
+  local_only_long: { id: 'privacy.local_only.long', defaultMessage: 'Visible only for other users on this instance' },
+  private_short: { id: 'privacy.private.short', defaultMessage: 'Followers only' },
+  private_long: { id: 'privacy.private.long', defaultMessage: 'Visible for your followers, also on other instances' },
+  local_private_short: { id: 'privacy.local_private.short', defaultMessage: 'Local followers only' },
+  local_private_long: { id: 'privacy.local_private.long', defaultMessage: 'Visible only for your followers on this instance' },
   direct_short: { id: 'privacy.direct.short', defaultMessage: 'Direct' },
-  direct_long: { id: 'privacy.direct.long', defaultMessage: 'Visible for mentioned users only' },
+  direct_long: { id: 'privacy.direct.long', defaultMessage: 'Visible only for mentioned users' },
   change_privacy: { id: 'privacy.change', defaultMessage: 'Adjust status privacy' },
 });
 
@@ -232,12 +236,16 @@ class PrivacyDropdown extends React.PureComponent {
 
   componentWillMount () {
     const { intl: { formatMessage } } = this.props;
+    const instance = document.title;
+    const domain = window.location.origin.replace(/^[a-z]+\:\/\//, "");
 
     this.options = [
-      { icon: 'globe', value: 'public', text: formatMessage(messages.public_short), meta: formatMessage(messages.public_long) },
-      { icon: 'unlock', value: 'unlisted', text: formatMessage(messages.unlisted_short), meta: formatMessage(messages.unlisted_long) },
+      { icon: 'users', value: 'local_only', text: formatMessage(messages.local_only_short, { instance }), meta: formatMessage(messages.local_only_long, { domain }) },
+      { icon: 'user-circle', value: 'local_private', text: formatMessage(messages.local_private_short, { instance }), meta: formatMessage(messages.local_private_long, { domain }) },
       { icon: 'lock', value: 'private', text: formatMessage(messages.private_short), meta: formatMessage(messages.private_long) },
-    ];
+      { icon: 'globe', value: 'public', text: formatMessage(messages.public_short), meta: formatMessage(messages.public_long) },
+      { icon: 'eye-slash', value: 'unlisted', text: formatMessage(messages.unlisted_short), meta: formatMessage(messages.unlisted_long) },
+      ];
 
     if (!this.props.noDirect) {
       this.options.push(

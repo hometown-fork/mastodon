@@ -21,8 +21,9 @@ const messages = defineMessages({
   public_short: { id: 'privacy.public.short', defaultMessage: 'Public' },
   unlisted_short: { id: 'privacy.unlisted.short', defaultMessage: 'Unlisted' },
   private_short: { id: 'privacy.private.short', defaultMessage: 'Followers-only' },
+  local_private_short: { id: 'privacy.local_private.short', defaultMessage: 'Local followers only' },
   direct_short: { id: 'privacy.direct.short', defaultMessage: 'Direct' },
-  local_only: { id: 'status.local_only', defaultMessage: 'This post is only visible by other users of your instance' },
+  local_only_short: { id: 'privacy.local_only.short', defaultMessage: 'Local-only' },
 });
 
 export default  @injectIntl
@@ -115,7 +116,6 @@ class DetailedStatus extends ImmutablePureComponent {
     let media           = '';
     let applicationLink = '';
     let reblogLink = '';
-    let localOnly = '';
     let reblogIcon = 'retweet';
     let favouriteLink = '';
 
@@ -183,12 +183,28 @@ class DetailedStatus extends ImmutablePureComponent {
 
     const visibilityIconInfo = {
       'public': { icon: 'globe', text: intl.formatMessage(messages.public_short) },
-      'unlisted': { icon: 'unlock', text: intl.formatMessage(messages.unlisted_short) },
+      'unlisted': { icon: 'eye-slash', text: intl.formatMessage(messages.unlisted_short) },
       'private': { icon: 'lock', text: intl.formatMessage(messages.private_short) },
+      'local_private': { icon: 'user-circle', text: intl.formatMessage(messages.local_private_short, { instance: document.title }) },
       'direct': { icon: 'envelope', text: intl.formatMessage(messages.direct_short) },
+      'local_only': { icon: 'users', text: intl.formatMessage(messages.local_only_short, { instance: document.title }) },
     };
 
-    const visibilityIcon = visibilityIconInfo[status.get('visibility')];
+    let visibilityIcon = visibilityIconInfo[status.get('visibility')];
+
+    // Override visibility with local only setting when needed
+    if (status.get('local_only')) {
+      if (status.get('visibility') === 'public') {
+        visibilityIcon = visibilityIconInfo['local_only'];
+      } else if (status.get('visibility') === 'private') {
+        visibilityIcon = visibilityIconInfo['local_private'];
+      } else {
+        // This status is a more unusual combo of local only + another visibility than public
+        // To show this we add it to the tooltip (text) only
+        visibilityIcon.text += ' + ' + visibilityIconInfo['local_only'].text;
+      }
+    }
+
     const visibilityLink = <React.Fragment> · <Icon id={visibilityIcon.icon} title={visibilityIcon.text} /></React.Fragment>;
 
     if (['private', 'direct'].includes(status.get('visibility'))) {
@@ -217,10 +233,6 @@ class DetailedStatus extends ImmutablePureComponent {
           </a>
         </React.Fragment>
       );
-    }
-
-    if(status.get('local_only')) {
-      localOnly = <span> · <i className='fa fa-chain-broken' title={intl.formatMessage(messages.local_only)} /></span>;
     }
 
     if (this.context.router) {
@@ -258,7 +270,7 @@ class DetailedStatus extends ImmutablePureComponent {
           <div className='detailed-status__meta'>
             <a className='detailed-status__datetime' href={status.get('url')} target='_blank' rel='noopener noreferrer'>
               <FormattedDate value={new Date(status.get('created_at'))} hour12={false} year='numeric' month='short' day='2-digit' hour='2-digit' minute='2-digit' />
-            </a>{visibilityLink}{applicationLink}{reblogLink} · {favouriteLink}{localOnly}
+            </a>{visibilityLink}{applicationLink}{reblogLink} · {favouriteLink}
           </div>
         </div>
       </div>

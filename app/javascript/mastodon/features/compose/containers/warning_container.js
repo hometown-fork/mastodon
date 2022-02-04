@@ -32,7 +32,7 @@ const APPROX_HASHTAG_RE = buildHashtagRE();
 
 const mapStateToProps = state => ({
   needsLockWarning: state.getIn(['compose', 'privacy']) === 'private' && !state.getIn(['accounts', me, 'locked']),
-  hashtagWarning: state.getIn(['compose', 'privacy']) !== 'public' && APPROX_HASHTAG_RE.test(state.getIn(['compose', 'text'])),
+  hashtagWarning: state.getIn(['compose', 'privacy']) !== 'public' && state.getIn(['compose', 'privacy']) !== 'local_only' && APPROX_HASHTAG_RE.test(state.getIn(['compose', 'text'])),
   directMessageWarning: state.getIn(['compose', 'privacy']) === 'direct',
 });
 

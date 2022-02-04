@@ -1278,12 +1278,16 @@ en:
     title: '%{name}: "%{quote}"'
     visibilities:
       direct: Direct
-      private: Followers-only
-      private_long: Only show to followers
+      private: Followers only
+      private_long: Visible for your followers, also on other instances
+      local_private: Local followers only
+      local_private_long: Visible only for your followers on this instance
       public: Public
-      public_long: Everyone can see
+      public_long: Visible for other instances in the Fediverse
       unlisted: Unlisted
-      unlisted_long: Everyone can see, but not listed on public timelines
+      unlisted_long: Visible for other instances, but not in public timelines
+      local_only: Local only
+      local_only_long: Visible only for other users on this instance
   stream_entries:
     pinned: Pinned post
     reblogged: boosted
