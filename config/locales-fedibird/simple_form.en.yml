@@ -1,0 +1,96 @@
+---
+en:
+  simple_form:
+    hints:
+      defaults:
+        setting_enable_limited_timeline: Enable a limited home to display private and circle and direct message
+        setting_enable_reaction: Enable the reaction display on the timeline and display the reaction button
+        setting_follow_button_to_list_adder: Change the behavior of the Follow / Subscribe button, open a dialog where you can select a list to follow / subscribe, or opt out of receiving at home
+        setting_place_tab_bar_at_bottom: When using a touch device, you can operate tabs within the reach of your fingers.
+        setting_show_bookmark_button: When turned off, the bookmark call will be in Mastodon's standard position (in the menu on the action bar)
+        setting_show_follow_button_on_timeline: You can easily check the follow status and build a follow list quickly
+        setting_show_followed_by: 'The color of the follow button changes according to the follow status (gray: no follow relationship, yellow: followed, blue: following, green: mutual follow)'
+        setting_show_navigation_panel: Show the navigation panel at the right end of the advanced UI
+        setting_show_quote_button: Selects whether to display the button on the action bar. It does not enable/disable the citation function.
+        setting_show_reply_tree_button: When turned off, the "Show thread" button will only appear if the poster is replying to themselves in a series of posts
+        setting_show_subscribe_button_on_timeline: You can easily check the status of your subscriptions and quickly build a subscription list
+        setting_show_tab_bar_label: When adding a list etc. to the tab bar, it is recommended to display the label because it is not possible to distinguish by the icon alone
+        setting_show_target: Enable the function to switch between posting target and follow / subscribe target
+      domain_subscribe:
+        domain: Specify the domain name of the server you want to subscribe to
+        exclude_reblog: Exclude boosted posts from subscription
+        media_only: Target only statuses with media attached
+      follow_tag:
+        media_only: Target only statuses with media attached
+        name: Specify the name of the hashtag without '#' you want to follow
+      form_account_subscribe:
+        acct: Specify the username@domain of the account you want to subscribe
+        media_only: Target only statuses with media attached
+        show_reblogs: Show boosted posts from subscription
+      keyword_subscribe:
+        exclude_keyword: List multiple excluded keywords separated by commas (or use regular expressions)
+        ignore_block: You can prioritize keyword subscriptions while keeping the entire domain block
+        keyword: List multiple keywords separated by commas (or use regular expressions)
+        media_only: Target only statuses with media attached
+        name: Optional
+    labels:
+      defaults:
+        setting_enable_limited_timeline: Enable limited timeline
+        setting_enable_reaction: Enable reaction
+        setting_follow_button_to_list_adder: Open list add dialog with follow button
+        setting_place_tab_bar_at_bottom: Place the tab bar at the bottom
+        setting_show_bookmark_button: Show the bookmark button on the action bar
+        setting_show_follow_button_on_timeline: Show follow button on timeline
+        setting_show_followed_by: Reflect the following status on the follow button
+        setting_show_navigation_panel: Show the navigation panel
+        setting_show_quote_button: Show the quote button on the action bar
+        setting_show_reply_tree_button: Show "Show thread" button on posts that have reply tree
+        setting_show_subscribe_button_on_timeline: Show subscribe button on timeline
+        setting_show_tab_bar_label: Show labels in the tab bar
+        setting_show_target: Enable targeting features
+        setting_unsubscribe_modal: Show confirmation dialog before unsubscribing someone
+      domain_subscribe:
+        domain: Domain
+        exclude_reblog: Exclude boost
+        list_id: Target timeline
+        media_only: Media only
+        reblog: Boost
+        timeline: Timeline
+      favourite_domain:
+        name: Domain
+      favourite_tag:
+        name: Hashtag
+      follow_tag:
+        list_id: Target timeline
+        media_only: Media only
+        name: Tag name
+        timeline: Timeline
+      form_account_subscribe:
+        acct: Account
+        list_id: Target timeline
+        media_only: Media only
+        reblog: Boost
+        show_reblogs: Show boost
+        timeline: Timeline
+      keyword_subscribe:
+        disabled: Temporarily disable subscription
+        exclude_keyword: Excluded keyword list or regular expression
+        ignore_block: Ignore User's domain blocking
+        ignorecase: Ignore case
+        keyword: Keyword list or regular expression
+        list_id: Target timeline
+        media_only: Media only
+        name: Name
+        regexp: Use regular expressions for keywords
+      keyword_subscribes:
+        disabled: State
+        ignore_block: Block
+        ignorecase: Case
+        keyword: String
+        media_only: Media
+        name: Name
+        regexp: Type
+        timeline: Timeline
+      notification_emails:
+        emoji_reaction: Someone emoji reactioned you
+        reaction: Someone reactioned your post

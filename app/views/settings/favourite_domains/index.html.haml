@@ -1,0 +1,26 @@
+- content_for :page_title do
+  = t('settings.favourite_domains')
+
+%p= t('favourite_domains.hint_html')
+
+%hr.spacer/
+
+= simple_form_for @favourite_domain, url: settings_favourite_domains_path do |f|
+  = render 'shared/error_messages', object: @favourite_domain
+
+  .fields-group
+    = f.input :name, wrapper: :with_block_label, hint: false
+
+  .actions
+    = f.button :button, t('favourite_domains.add_new'), type: :submit
+
+%hr.spacer/
+
+- @favourite_domains.each do |favourite_domain|
+  .directory__domain{ class: params[:domain] == favourite_domain.name ? 'active' : nil }
+    %div
+      %h4
+        = fa_icon 'users'
+        = favourite_domain.name
+        %small
+          = table_link_to 'trash', t('filters.index.delete'), settings_favourite_domain_path(favourite_domain), method: :delete, data: { confirm: t('admin.accounts.are_you_sure') }

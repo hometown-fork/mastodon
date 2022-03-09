@@ -6,6 +6,7 @@
   - [mailers, 2]
   - [pull]
   - [scheduler]
+  - [backup]
 :scheduler:
   :listened_queues_only: true
 :schedule:
@@ -56,4 +57,8 @@
   instance_refresh_scheduler:
     cron: '0 * * * *'
     class: Scheduler::InstanceRefreshScheduler
+    queue: scheduler
+  accounts_statuses_cleanup_scheduler:
+    interval: 1 minute
+    class: Scheduler::AccountsStatusesCleanupScheduler
     queue: scheduler

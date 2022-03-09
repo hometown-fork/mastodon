@@ -1,3 +1,4 @@
+
 # frozen_string_literal: true
 
 class ActivityPub::Activity::Undo < ActivityPub::Activity
@@ -13,6 +14,8 @@ class ActivityPub::Activity::Undo < ActivityPub::Activity
       undo_like
     when 'Block'
       undo_block
+    when 'EmojiReact'
+      undo_react
     when nil
       handle_reference
     end
@@ -25,11 +28,11 @@ class ActivityPub::Activity::Undo < ActivityPub::Activity
     # global index, we have to guess what object it is.
     return if object_uri.nil?
 
-    try_undo_announce || try_undo_accept || try_undo_follow || try_undo_like || try_undo_block || delete_later!(object_uri)
+    try_undo_announce || try_undo_accept || try_undo_follow || try_undo_like || try_undo_react || try_undo_block || delete_later!(object_uri)
   end
 
   def try_undo_announce
-    status = Status.where.not(reblog_of_id: nil).find_by(uri: object_uri, account: @account)
+    status = Status.include_expired.where.not(reblog_of_id: nil).find_by(uri: object_uri, account: @account)
     if status.present?
       RemoveStatusService.new.call(status)
       true
@@ -59,6 +62,10 @@ class ActivityPub::Activity::Undo < ActivityPub::Activity
     false
   end
 
+  def try_undo_react
+    @account.emoji_reactions.find_by(uri: object_uri)&.destroy
+  end
+
   def try_undo_block
     block = @account.block_relationships.find_by(uri: object_uri)
     if block.present?
@@ -72,8 +79,8 @@ class ActivityPub::Activity::Undo < ActivityPub::Activity
   def undo_announce
     return if object_uri.nil?
 
-    status   = Status.find_by(uri: object_uri, account: @account)
-    status ||= Status.find_by(uri: @object['atomUri'], account: @account) if @object.is_a?(Hash) && @object['atomUri'].present?
+    status   = Status.include_expired.find_by(uri: object_uri, account: @account)
+    status ||= Status.include_expired.find_by(uri: @object['atomUri'], account: @account) if @object.is_a?(Hash) && @object['atomUri'].present?
 
     if status.nil?
       delete_later!(object_uri)
@@ -103,14 +110,43 @@ class ActivityPub::Activity::Undo < ActivityPub::Activity
   def undo_like
     status = status_from_uri(target_uri)
 
-    return if status.nil? || !status.account.local?
+    return if status.nil?
 
-    if @account.favourited?(status)
-      favourite = status.favourites.where(account: @account).first
-      favourite&.destroy
+    if shortcode.present?
+      emoji_tag = @object['tag'].is_a?(Array) ? @object['tag']&.first : @object['tag']
+
+      if emoji_tag.present? && emoji_tag['id'].present?
+        emoji = CustomEmoji.find_by(shortcode: shortcode, domain: @account.domain)
+      end
+
+      if @account.reacted?(status, shortcode, emoji)
+        UnEmojiReactionService.new.call(@account, status)
+      else
+        delete_later!(object_uri)
+      end
     else
-      delete_later!(object_uri)
+      if @account.favourited?(status)
+        status.favourites.where(account: @account).first&.destroy
+      else
+        delete_later!(object_uri)
+      end
     end
+  end
+
+  def shortcode
+    return @shortcode if defined?(@shortcode)
+
+    @shortcode = begin
+      if @object['_misskey_reaction'] == '⭐'
+        nil
+      else
+        @object['content']&.delete(':')
+      end
+    end
+  end
+
+  def undo_react
+    @account.emoji_reactions.find_by(uri: object_uri)&.destroy
   end
 
   def undo_block

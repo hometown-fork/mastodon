@@ -42,7 +42,11 @@ class RelationshipsController < ApplicationController
   end
 
   def mutual_relationship?
-    params[:relationship] == 'mutual'
+    params[:interrelationship] == 'mutual'
+  end
+
+  def one_way_relationship?
+    params[:interrelationship] == 'one_way'
   end
 
   def followed_by_relationship?

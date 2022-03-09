@@ -369,6 +369,8 @@ const startWorker = (workerId) => {
       return onlyMedia ? 'public:local:media' : 'public:local';
     case '/api/v1/streaming/public/remote':
       return onlyMedia ? 'public:remote:media' : 'public:remote';
+    case '/api/v1/streaming/public/domain':
+      return onlyMedia ? 'public:domain:media' : 'public:domain';
     case '/api/v1/streaming/hashtag':
       return 'hashtag';
     case '/api/v1/streaming/hashtag/local':
@@ -389,6 +391,10 @@ const startWorker = (workerId) => {
     'public:local:media',
     'public:remote',
     'public:remote:media',
+    'public:domain',
+    'public:domain:media',
+    'group',
+    'group:media',
     'hashtag',
     'hashtag:local',
   ];
@@ -778,7 +784,10 @@ const startWorker = (workerId) => {
    * @typedef StreamParams
    * @property {string} [tag]
    * @property {string} [list]
+   * @property {string} [domain]
    * @property {string} [only_media]
+   * @property {string} [id]
+   * @property {string} [tagged]
    */
 
   /**
@@ -824,6 +833,28 @@ const startWorker = (workerId) => {
       });
 
       break;
+    case 'public:domain':
+      if (!params.domain || params.domain.length === 0) {
+        reject('No domain for stream provided');
+      } else {
+        resolve({
+          channelIds: [`timeline:public:domain:${params.domain.toLowerCase()}`],
+          options: { needsFiltering: true, notificationOnly: false },
+        });
+      }
+
+      break;
+    case 'group':
+      if (!params.id || params.id.length === 0) {
+        reject('No group id for stream provided');
+      } else {
+        resolve({
+          channelIds: [`timeline:group:${params.id}${!!params.tagged && params.tagged.length !== 0 ? `:${params.tagged.toLowerCase()}` : ''}`],
+          options: { needsFiltering: true, notificationOnly: false },
+        });
+      }
+
+      break;
     case 'public:media':
       resolve({
         channelIds: ['timeline:public:media'],
@@ -843,6 +874,28 @@ const startWorker = (workerId) => {
         channelIds: ['timeline:public:remote:media'],
         options: { needsFiltering: true, notificationOnly: false },
       });
+
+      break;
+    case 'public:domain:media':
+      if (!params.domain || params.domain.length === 0) {
+        reject('No domain for stream provided');
+      } else {
+        resolve({
+          channelIds: [`timeline:public:domain:media:${params.domain.toLowerCase()}`],
+          options: { needsFiltering: true, notificationOnly: false },
+        });
+      }
+
+      break;
+    case 'group:media':
+      if (!params.id || params.id.length === 0) {
+        reject('No group id for stream provided');
+      } else {
+        resolve({
+          channelIds: [`timeline:group:media:${params.id}${!!params.tagged && params.tagged.length !== 0 ? `:${params.tagged.toLowerCase()}` : ''}`],
+          options: { needsFiltering: true, notificationOnly: false },
+        });
+      }
 
       break;
     case 'direct':
@@ -900,6 +953,10 @@ const startWorker = (workerId) => {
       return [channelName, params.list];
     } else if (['hashtag', 'hashtag:local'].includes(channelName)) {
       return [channelName, params.tag];
+    } else if (['public:domain', 'public:domain:media'].includes(channelName)) {
+      return [channelName, params.domain];
+    } else if (['group', 'group:media'].includes(channelName)) {
+      return [channelName, params.id, params.tagged];
     } else {
       return [channelName];
     }

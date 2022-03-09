@@ -4,6 +4,7 @@ class DeleteAccountService < BaseService
   include Payloadable
 
   ASSOCIATIONS_ON_SUSPEND = %w(
+    account_notes
     account_pins
     active_relationships
     aliases
@@ -34,6 +35,7 @@ class DeleteAccountService < BaseService
   # by foreign keys, making them safe to delete without loading
   # into memory
   ASSOCIATIONS_WITHOUT_SIDE_EFFECTS = %w(
+    account_notes
     account_pins
     aliases
     conversation_mutes
@@ -148,6 +150,7 @@ class DeleteAccountService < BaseService
     purge_generated_notifications!
     purge_favourites!
     purge_bookmarks!
+    purge_reactions!
     purge_feeds!
     purge_other_associations!
 
@@ -187,7 +190,7 @@ class DeleteAccountService < BaseService
     @account.favourites.in_batches do |favourites|
       ids = favourites.pluck(:status_id)
       StatusStat.where(status_id: ids).update_all('favourites_count = GREATEST(0, favourites_count - 1)')
-      Chewy.strategy.current.update(StatusesIndex::Status, ids) if Chewy.enabled?
+      Chewy.strategy.current.update(StatusesIndex, ids) if Chewy.enabled?
       Rails.cache.delete_multi(ids.map { |id| "statuses/#{id}" })
       favourites.delete_all
     end
@@ -195,8 +198,15 @@ class DeleteAccountService < BaseService
 
   def purge_bookmarks!
     @account.bookmarks.in_batches do |bookmarks|
-      Chewy.strategy.current.update(StatusesIndex::Status, bookmarks.pluck(:status_id)) if Chewy.enabled?
+      Chewy.strategy.current.update(StatusesIndex, bookmarks.pluck(:status_id)) if Chewy.enabled?
       bookmarks.delete_all
+    end
+  end
+
+  def purge_reactions!
+    @account.emoji_reactions.in_batches do |reactions|
+      Chewy.strategy.current.update(StatusesIndex, reactions.pluck(:status_id)) if Chewy.enabled?
+      reactions.delete_all
     end
   end
 
@@ -232,6 +242,7 @@ class DeleteAccountService < BaseService
     @account.statuses_count    = 0
     @account.followers_count   = 0
     @account.following_count   = 0
+    @account.subscribing_count = 0
     @account.moved_to_account  = nil
     @account.also_known_as     = []
     @account.trust_level       = :untrusted
@@ -269,7 +280,7 @@ class DeleteAccountService < BaseService
   end
 
   def delivery_inboxes
-    @delivery_inboxes ||= @account.followers.inboxes + Relay.enabled.pluck(:inbox_url)
+    @delivery_inboxes ||= @account.delivery_followers.inboxes + Relay.enabled.pluck(:inbox_url)
   end
 
   def low_priority_delivery_inboxes

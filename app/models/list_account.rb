@@ -18,6 +18,8 @@ class ListAccount < ApplicationRecord
 
   before_validation :set_follow
 
+  scope :followed_lists, ->(account) { ListAccount.includes(:follow).where(follows: { account_id: account.id }).pluck(:list_id).uniq }
+
   private
 
   def set_follow

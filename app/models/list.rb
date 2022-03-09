@@ -10,6 +10,7 @@
 #  updated_at     :datetime         not null
 #  replies_policy :integer          default("list"), not null
 #  is_exclusive   :boolean          default(FALSE)
+#  favourite      :boolean          default(FALSE), not null
 #
 
 class List < ApplicationRecord
@@ -24,6 +25,15 @@ class List < ApplicationRecord
   has_many :list_accounts, inverse_of: :list, dependent: :destroy
   has_many :accounts, through: :list_accounts
 
+  has_many :account_subscribes, inverse_of: :list, dependent: :destroy
+  has_many :subscribes, through: :account_subscribes, source: :target_account
+
+  has_many :follow_tags, inverse_of: :list, dependent: :destroy
+  has_many :tags, through: :follow_tags, source: :tag
+
+  has_many :domain_subscribes, inverse_of: :list, dependent: :destroy
+  has_many :keyword_subscribes, inverse_of: :list, dependent: :destroy
+
   validates :title, presence: true
 
   validates_each :account_id, on: :create do |record, _attr, value|
@@ -31,6 +41,20 @@ class List < ApplicationRecord
   end
 
   before_destroy :clean_feed_manager
+
+  scope :favourites,  -> { where(favourite: true) }
+
+  def favourite?
+    favourite
+  end
+
+  def favourite!
+    update!(favourite: true)
+  end
+
+  def unfavourite!
+    update!(favourite: false)
+  end
 
   private
 

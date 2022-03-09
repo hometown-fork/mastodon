@@ -86,12 +86,12 @@ class TrendingTags
 
       # Trim older items
 
-      redis.zremrangebyrank(KEY, 0, -(LIMIT + 1))
+      redis.zremrangebyrank(KEY, 0, -(LIMIT*2 + 1))
       redis.zremrangebyscore(KEY, '(0.3', '-inf')
     end
 
     def get(limit, filtered: true)
-      tag_ids = redis.zrevrange(KEY, 0, LIMIT - 1).map(&:to_i)
+      tag_ids = redis.zrevrange(KEY, 0, LIMIT*2 - 1).map(&:to_i)
 
       tags = Tag.where(id: tag_ids)
       tags = tags.trendable if filtered
@@ -102,7 +102,7 @@ class TrendingTags
 
     def trending?(tag)
       rank = redis.zrevrank(KEY, tag.id)
-      rank.present? && rank < LIMIT
+      rank.present? && rank < LIMIT*2
     end
 
     private

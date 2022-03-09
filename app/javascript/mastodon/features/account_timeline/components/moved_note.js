@@ -20,8 +20,13 @@ export default class MovedNote extends ImmutablePureComponent {
 
   handleAccountClick = e => {
     if (e.button === 0) {
+      const { to } = this.props;
       e.preventDefault();
-      this.context.router.history.push(`/accounts/${this.props.to.get('id')}`);
+      if (to.get('group')) {
+        this.context.router.history.push(`/timelines/groups/${to.get('id')}`);
+      } else {
+        this.context.router.history.push(`/accounts/${to.get('id')}`);
+      }
     }
 
     e.stopPropagation();

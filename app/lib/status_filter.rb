@@ -3,10 +3,11 @@
 class StatusFilter
   attr_reader :status, :account
 
-  def initialize(status, account, preloaded_relations = {})
-    @status              = status
-    @account             = account
-    @preloaded_relations = preloaded_relations
+  def initialize(status, account, preloaded_account_relations = {}, preloaded_status_relations = {})
+    @status                      = status
+    @account                     = account
+    @preloaded_account_relations = preloaded_account_relations
+    @preloaded_status_relations  = preloaded_status_relations
   end
 
   def filtered?
@@ -25,15 +26,15 @@ class StatusFilter
   end
 
   def blocking_account?
-    @preloaded_relations[:blocking] ? @preloaded_relations[:blocking][status.account_id] : account.blocking?(status.account_id)
+    @preloaded_account_relations[:blocking] ? @preloaded_account_relations[:blocking][status.account_id] : account.blocking?(status.account_id)
   end
 
   def blocking_domain?
-    @preloaded_relations[:domain_blocking_by_domain] ? @preloaded_relations[:domain_blocking_by_domain][status.account_domain] : account.domain_blocking?(status.account_domain)
+    @preloaded_account_relations[:domain_blocking] ? @preloaded_account_relations[:domain_blocking][status.account_id] : account.domain_blocking?(status.account_domain)
   end
 
   def muting_account?
-    @preloaded_relations[:muting] ? @preloaded_relations[:muting][status.account_id] : account.muting?(status.account_id)
+    @preloaded_account_relations[:muting] ? @preloaded_account_relations[:muting][status.account_id] : account.muting?(status.account_id)
   end
 
   def silenced_account?
@@ -45,7 +46,7 @@ class StatusFilter
   end
 
   def account_following_status_account?
-    @preloaded_relations[:following] ? @preloaded_relations[:following][status.account_id] : account&.following?(status.account_id)
+    @preloaded_account_relations[:following] ? @preloaded_account_relations[:following][status.account_id] : account&.following?(status.account_id)
   end
 
   def blocked_by_policy?
@@ -53,6 +54,6 @@ class StatusFilter
   end
 
   def policy_allows_show?
-    StatusPolicy.new(account, status, @preloaded_relations).show?
+    StatusPolicy.new(account, status, @preloaded_account_relations, @preloaded_status_relations).show?
   end
 end

@@ -20,7 +20,7 @@ module Localized
   private
 
   def default_locale
-    if ENV['DEFAULT_LOCALE'].present?
+    if ENV['FORCE_DEFAULT_LOCALE'].present?
       I18n.default_locale
     else
       request_locale || I18n.default_locale

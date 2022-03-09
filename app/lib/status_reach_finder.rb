@@ -63,9 +63,9 @@ class StatusReachFinder
 
   def followers_inboxes
     if @status.in_reply_to_local_account? && @status.distributable?
-      @status.account.followers.or(@status.thread.account.followers).inboxes
+      @status.account.delivery_followers.or(@status.thread.account.delivery_followers).inboxes
     else
-      @status.account.followers.inboxes
+      @status.account.delivery_followers.inboxes
     end
   end
 

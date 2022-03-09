@@ -8,9 +8,9 @@ import ColumnBackButtonSlim from '../../components/column_back_button_slim';
 import { fetchLists } from '../../actions/lists';
 import { defineMessages, injectIntl, FormattedMessage } from 'react-intl';
 import ImmutablePureComponent from 'react-immutable-pure-component';
-import ColumnLink from '../ui/components/column_link';
 import ColumnSubheading from '../ui/components/column_subheading';
 import NewListForm from './components/new_list_form';
+import List from './components/list';
 import { createSelector } from 'reselect';
 import ScrollableList from '../../components/scrollable_list';
 
@@ -71,9 +71,10 @@ class Lists extends ImmutablePureComponent {
           emptyMessage={emptyMessage}
           prepend={<ColumnSubheading text={intl.formatMessage(messages.subheading)} />}
           bindToDocument={!multiColumn}
+          tabIndex='-1'
         >
           {lists.map(list =>
-            <ColumnLink key={list.get('id')} to={`/timelines/list/${list.get('id')}`} icon='list-ul' text={list.get('title')} />,
+            <List key={list.get('id')} id={list.get('id')} text={list.get('title')} favourite={list.get('favourite')} animate />
           )}
         </ScrollableList>
       </Column>

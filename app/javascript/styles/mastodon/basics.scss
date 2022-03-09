@@ -47,6 +47,7 @@ body {
       position: absolute;
       width: 100%;
       height: 100%;
+      padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
     }
 
     &.with-modals--active {
@@ -111,7 +112,7 @@ body {
 
   &.admin {
     background: darken($ui-base-color, 4%);
-    padding: 0;
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
   }
 
   &.error {

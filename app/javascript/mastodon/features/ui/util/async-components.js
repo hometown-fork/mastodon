@@ -22,12 +22,24 @@ export function CommunityTimeline () {
   return import(/* webpackChunkName: "features/community_timeline" */'../../community_timeline');
 }
 
+export function DomainTimeline () {
+  return import(/* webpackChunkName: "features/domain_timeline" */'../../domain_timeline');
+}
+
+export function GroupTimeline () {
+  return import(/* webpackChunkName: "features/group_timeline" */'../../group_timeline');
+}
+
 export function HashtagTimeline () {
   return import(/* webpackChunkName: "features/hashtag_timeline" */'../../hashtag_timeline');
 }
 
 export function DirectTimeline() {
   return import(/* webpackChunkName: "features/direct_timeline" */'../../direct_timeline');
+}
+
+export function LimitedTimeline() {
+  return import(/* webpackChunkName: "features/limited_timeline" */'../../limited_timeline');
 }
 
 export function ListTimeline () {
@@ -70,12 +82,24 @@ export function Following () {
   return import(/* webpackChunkName: "features/following" */'../../following');
 }
 
+export function Subscribing () {
+  return import(/* webpackChunkName: "features/subscribing" */'../../subscribing');
+}
+
 export function Reblogs () {
   return import(/* webpackChunkName: "features/reblogs" */'../../reblogs');
 }
 
 export function Favourites () {
   return import(/* webpackChunkName: "features/favourites" */'../../favourites');
+}
+
+export function EmojiReactions () {
+  return import(/* webpackChunkName: "features/emoji_reactions" */'../../emoji_reactions');
+}
+
+export function Mentions () {
+  return import(/* webpackChunkName: "features/mentions" */'../../mentions');
 }
 
 export function FollowRequests () {
@@ -92,6 +116,10 @@ export function FavouritedStatuses () {
 
 export function BookmarkedStatuses () {
   return import(/* webpackChunkName: "features/bookmarked_statuses" */'../../bookmarked_statuses');
+}
+
+export function EmojiReactionedStatuses () {
+  return import(/* webpackChunkName: "features/emoji_reactioned_statuses" */'../../emoji_reactioned_statuses');
 }
 
 export function Blocks () {
@@ -138,6 +166,18 @@ export function ListAdder () {
   return import(/*webpackChunkName: "features/list_adder" */'../../list_adder');
 }
 
+export function Circles () {
+  return import(/* webpackChunkName: "features/circles" */'../../circles');
+}
+
+export function CircleEditor () {
+  return import(/* webpackChunkName: "features/circle_editor" */'../../circle_editor');
+}
+
+export function CircleAdder () {
+  return import(/*webpackChunkName: "features/circle_adder" */'../../circle_adder');
+}
+
 export function Search () {
   return import(/*webpackChunkName: "features/search" */'../../search');
 }
@@ -150,10 +190,22 @@ export function Audio () {
   return import(/* webpackChunkName: "features/audio" */'../../audio');
 }
 
+export function GroupDirectory () {
+  return import(/* webpackChunkName: "features/group_directory" */'../../group_directory');
+}
+
 export function Directory () {
   return import(/* webpackChunkName: "features/directory" */'../../directory');
 }
 
 export function FollowRecommendations () {
   return import(/* webpackChunkName: "features/follow_recommendations" */'../../follow_recommendations');
+}
+
+export function Trends () {
+  return import(/* webpackChunkName: "features/trends" */'../../trends');
+}
+
+export function Suggestions () {
+  return import(/* webpackChunkName: "features/suggestions" */'../../suggestions');
 }

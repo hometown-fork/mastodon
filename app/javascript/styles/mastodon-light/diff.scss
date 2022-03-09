@@ -120,7 +120,11 @@ html {
 
 .getting-started,
 .scrollable {
-  .column-link {
+  .column-link,
+  .list-favourite-button,
+  .list-edit-button,
+  .circle-edit-button,
+  .circle-delete-button {
     background: $white;
     border-bottom: 1px solid lighten($ui-base-color, 8%);
 
@@ -144,7 +148,10 @@ html {
 .compose-form__autosuggest-wrapper,
 .poll__option input[type="text"],
 .compose-form .spoiler-input__input,
+.compose-form .compose-form__datetime-wrapper select,
+.compose-form .compose-form__datetime-wrapper input,
 .compose-form__poll-wrapper select,
+.circle-dropdown,
 .search__input,
 .setting-text,
 .box-widget input[type="text"],
@@ -168,10 +175,19 @@ html {
   border-bottom: 0;
 }
 
-.compose-form__poll-wrapper select {
+.compose-form .compose-form__datetime-wrapper .datetime__schedule .datetime-dropdown .datetime-dropdown__input-invalid,
+.compose-form .compose-form__datetime-wrapper .datetime__expire .datetime-dropdown .datetime-dropdown__input-invalid {
+    background-color: darken($error-value-color, 35%);
+}
+
+.compose-form .compose-form__datetime-wrapper select,
+.compose-form__poll-wrapper select,
+.circle-dropdown__menu {
   background: $simple-background-color url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14.933 18.467' height='19.698' width='15.929'><path d='M3.467 14.967l-3.393-3.5H14.86l-3.392 3.5c-1.866 1.925-3.666 3.5-4 3.5-.335 0-2.135-1.575-4-3.5zm.266-11.234L7.467 0 11.2 3.733l3.733 3.734H0l3.733-3.734z' fill='#{hex-color(lighten($ui-base-color, 8%))}'/></svg>") no-repeat right 8px center / auto 16px;
 }
 
+.compose-form .compose-form__datetime-wrapper .datetime__schedule,
+.compose-form .compose-form__datetime-wrapper .datetime__expire,
 .compose-form__poll-wrapper,
 .compose-form__poll-wrapper .poll__footer {
   border-top-color: lighten($ui-base-color, 8%);
@@ -346,6 +362,7 @@ html {
 
 // Change the background colors of modals
 .actions-modal,
+.reaction-modal,
 .boost-modal,
 .confirmation-modal,
 .mute-modal,
@@ -365,9 +382,9 @@ html {
 }
 
 .reactions-bar__item {
-  &:hover,
-  &:focus,
-  &:active {
+  &:hover:enabled,
+  &:focus:enabled,
+  &:active:enabled {
     background-color: $ui-base-color;
   }
 }

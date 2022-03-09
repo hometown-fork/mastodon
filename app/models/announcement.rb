@@ -75,7 +75,7 @@ class Announcement < ApplicationRecord
       if account.nil?
         scope.select('name, custom_emoji_id, count(*) as count, false as me')
       else
-        scope.select("name, custom_emoji_id, count(*) as count, exists(select 1 from announcement_reactions r where r.account_id = #{account.id} and r.announcement_id = announcement_reactions.announcement_id and r.name = announcement_reactions.name) as me")
+        scope.select(ActiveRecord::Base.sanitize_sql_array(["name, custom_emoji_id, count(*) as count, exists(select 1 from announcement_reactions r where r.account_id = :account_id and r.announcement_id = announcement_reactions.announcement_id and r.name = announcement_reactions.name) as me", account_id: account.id]))
       end
     end
 

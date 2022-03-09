@@ -71,6 +71,10 @@ class Export
     account.following_count
   end
 
+  def total_subscribes
+    account.subscribing_count
+  end
+
   def total_lists
     account.owned_lists.count
   end

@@ -13,7 +13,7 @@ import { defineMessages } from 'react-intl';
 import { List as ImmutableList } from 'immutable';
 import { unescapeHTML } from '../utils/html';
 import { getFiltersRegex } from '../selectors';
-import { usePendingItems as preferPendingItems } from 'mastodon/initial_state';
+import { usePendingItems as preferPendingItems, enableReaction } from 'mastodon/initial_state';
 import compareId from 'mastodon/compare_id';
 import { searchTextFromRawStatus } from 'mastodon/actions/importer/normalizer';
 import { requestNotificationPermission } from '../utils/notifications';
@@ -46,7 +46,7 @@ defineMessages({
 });
 
 const fetchRelatedRelationships = (dispatch, notifications) => {
-  const accountIds = notifications.filter(item => item.type === 'follow').map(item => item.account.id);
+  const accountIds = notifications.map(item => item.account.id);
 
   if (accountIds.length > 0) {
     dispatch(fetchRelationships(accountIds));
@@ -120,7 +120,9 @@ export function updateNotifications(notification, intlMessages, intlLocale) {
 const excludeTypesFromSettings = state => state.getIn(['settings', 'notifications', 'shows']).filter(enabled => !enabled).keySeq().toJS();
 
 const excludeTypesFromFilter = filter => {
-  const allTypes = ImmutableList(['follow', 'follow_request', 'favourite', 'reblog', 'mention', 'poll']);
+  const allTypes = enableReaction ?
+    ImmutableList(['follow', 'follow_request', 'favourite', 'reblog', 'mention', 'poll', 'emoji_reaction']) :
+    ImmutableList(['follow', 'follow_request', 'favourite', 'reblog', 'mention', 'poll']);
   return allTypes.filterNot(item => item === filter).toJS();
 };
 

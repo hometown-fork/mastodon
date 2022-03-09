@@ -5,6 +5,8 @@ import Header from '../components/header';
 import {
   followAccount,
   unfollowAccount,
+  subscribeAccount,
+  unsubscribeAccount,
   unblockAccount,
   unmuteAccount,
   pinAccount,
@@ -20,11 +22,12 @@ import { initReport } from '../../../actions/reports';
 import { openModal } from '../../../actions/modal';
 import { blockDomain, unblockDomain } from '../../../actions/domain_blocks';
 import { defineMessages, injectIntl, FormattedMessage } from 'react-intl';
-import { unfollowModal } from '../../../initial_state';
+import { unfollowModal, unsubscribeModal } from '../../../initial_state';
 import { List as ImmutableList } from 'immutable';
 
 const messages = defineMessages({
   unfollowConfirm: { id: 'confirmations.unfollow.confirm', defaultMessage: 'Unfollow' },
+  unsubscribeConfirm: { id: 'confirmations.unsubscribe.confirm', defaultMessage: 'Unsubscribe' },
   blockDomainConfirm: { id: 'confirmations.domain_block.confirm', defaultMessage: 'Hide entire domain' },
 });
 
@@ -56,6 +59,28 @@ const mapDispatchToProps = (dispatch, { intl }) => ({
     } else {
       dispatch(followAccount(account.get('id')));
     }
+  },
+
+  onSubscribe (account) {
+    if (account.getIn(['relationship', 'subscribing', '-1'], new Map).size > 0) {
+      if (unsubscribeModal) {
+        dispatch(openModal('CONFIRM', {
+          message: <FormattedMessage id='confirmations.unsubscribe.message' defaultMessage='Are you sure you want to unsubscribe {name}?' values={{ name: <strong>@{account.get('acct')}</strong> }} />,
+          confirm: intl.formatMessage(messages.unsubscribeConfirm),
+          onConfirm: () => dispatch(unsubscribeAccount(account.get('id'))),
+        }));
+      } else {
+        dispatch(unsubscribeAccount(account.get('id')));
+      }
+    } else {
+      dispatch(subscribeAccount(account.get('id')));
+    }
+  },
+
+  onAddToList (account){
+    dispatch(openModal('LIST_ADDER', {
+      accountId: account.get('id'),
+    }));
   },
 
   onBlock (account) {
@@ -124,6 +149,12 @@ const mapDispatchToProps = (dispatch, { intl }) => ({
 
   onAddToList(account){
     dispatch(openModal('LIST_ADDER', {
+      accountId: account.get('id'),
+    }));
+  },
+
+  onAddToCircle(account){
+    dispatch(openModal('CIRCLE_ADDER', {
       accountId: account.get('id'),
     }));
   },

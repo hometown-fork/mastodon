@@ -6,6 +6,8 @@ import Account from '../components/account';
 import {
   followAccount,
   unfollowAccount,
+  subscribeAccount,
+  unsubscribeAccount,
   blockAccount,
   unblockAccount,
   muteAccount,
@@ -13,10 +15,11 @@ import {
 } from '../actions/accounts';
 import { openModal } from '../actions/modal';
 import { initMuteModal } from '../actions/mutes';
-import { unfollowModal } from '../initial_state';
+import { unfollowModal, unsubscribeModal } from '../initial_state';
 
 const messages = defineMessages({
   unfollowConfirm: { id: 'confirmations.unfollow.confirm', defaultMessage: 'Unfollow' },
+  unsubscribeConfirm: { id: 'confirmations.unsubscribe.confirm', defaultMessage: 'Unsubscribe' },
 });
 
 const makeMapStateToProps = () => {
@@ -45,6 +48,28 @@ const mapDispatchToProps = (dispatch, { intl }) => ({
     } else {
       dispatch(followAccount(account.get('id')));
     }
+  },
+
+  onSubscribe (account) {
+    if (account.getIn(['relationship', 'subscribing', '-1'], new Map).size > 0) {
+      if (unsubscribeModal) {
+        dispatch(openModal('CONFIRM', {
+          message: <FormattedMessage id='confirmations.unsubscribe.message' defaultMessage='Are you sure you want to unsubscribe {name}?' values={{ name: <strong>@{account.get('acct')}</strong> }} />,
+          confirm: intl.formatMessage(messages.unsubscribeConfirm),
+          onConfirm: () => dispatch(unsubscribeAccount(account.get('id'))),
+        }));
+      } else {
+        dispatch(unsubscribeAccount(account.get('id')));
+      }
+    } else {
+      dispatch(subscribeAccount(account.get('id')));
+    }
+  },
+
+  onAddToList (account){
+    dispatch(openModal('LIST_ADDER', {
+      accountId: account.get('id'),
+    }));
   },
 
   onBlock (account) {

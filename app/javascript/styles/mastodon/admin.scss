@@ -409,6 +409,10 @@ body,
   display: flex;
   flex-wrap: wrap;
 
+  &.wide {
+    margin-right: -40px;
+  }
+
   .filter-subset {
     flex: 0 0 auto;
     margin: 0 40px 20px 0;
@@ -939,4 +943,8 @@ a.name-tag,
 
 .dashboard__counters.admin-account-counters {
   margin-top: 10px;
+}
+
+.exclude-keyword {
+  color: $error-value-color;
 }

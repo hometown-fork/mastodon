@@ -6,7 +6,8 @@ class REST::InstanceSerializer < ActiveModel::Serializer
   attributes :uri, :title, :short_description, :description, :email,
              :version, :urls, :stats, :thumbnail, :max_toot_chars,
              :languages, :registrations, :approval_required, :invites_enabled,
-             :configuration
+             :configuration,
+             :feature_quote, :fedibird_capabilities
 
   has_one :contact_account, serializer: REST::AccountSerializer
 
@@ -64,6 +65,9 @@ class REST::InstanceSerializer < ActiveModel::Serializer
         max_characters: StatusLengthValidator::MAX_CHARS,
         max_media_attachments: 4,
         characters_reserved_per_url: StatusLengthValidator::URL_PLACEHOLDER_CHARS,
+        min_expiration: TimeLimit::VALID_DURATION.min,
+        max_expiration: TimeLimit::VALID_DURATION.max,
+        supported_expires_actions: StatusExpire::actions.keys,
       },
 
       media_attachments: {
@@ -98,6 +102,32 @@ class REST::InstanceSerializer < ActiveModel::Serializer
 
   def invites_enabled
     Setting.min_invite_role == 'user'
+  end
+
+  def feature_quote
+    true
+  end
+
+  def fedibird_capabilities
+    [
+      :favourite_hashtag,
+      :favourite_domain,
+      :favourite_list,
+      :status_expire,
+      :follow_no_delivery,
+      :follow_hashtag,
+      :subscribe_account,
+      :subscribe_domain,
+      :subscribe_keyword,
+      :timeline_home_visibility,
+      :timeline_no_local,
+      :timeline_domain,
+      :timeline_group,
+      :timeline_group_directory,
+      :visibility_mutual,
+      :visibility_limited,
+      :emoji_reaction,
+    ]
   end
 
   private

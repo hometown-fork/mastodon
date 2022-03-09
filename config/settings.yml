@@ -20,6 +20,7 @@ defaults: &defaults
   default_federation: true
   hide_network: false
   unfollow_modal: false
+  unsubscribe_modal: false
   boost_modal: false
   delete_modal: true
   auto_play_gif: false
@@ -39,10 +40,24 @@ defaults: &defaults
   trends: true
   trendable_by_default: false
   crop_images: true
+  show_follow_button_on_timeline: false
+  show_subscribe_button_on_timeline: false
+  show_followed_by: false
+  follow_button_to_list_adder: false
+  show_navigation_panel: true
+  show_bookmark_button: true
+  show_quote_button: true
+  show_target: false
+  place_tab_bar_at_bottom: false
+  show_tab_bar_label: false
+  enable_limited_timeline: false
+  enable_reaction: true
+  show_reply_tree_button: true
   notification_emails:
     follow: false
     reblog: false
     favourite: false
+    emoji_reaction: false
     mention: false
     follow_request: true
     digest: true

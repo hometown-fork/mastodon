@@ -407,15 +407,11 @@
   }
 
   thead th {
-    text-align: center;
+    text-align: left;
     text-transform: uppercase;
     color: $darker-text-color;
     font-weight: 700;
     padding: 10px;
-
-    &:first-child {
-      text-align: left;
-    }
   }
 
   tbody td {

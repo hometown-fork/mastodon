@@ -25,6 +25,7 @@ class Notification < ApplicationRecord
     'FollowRequest' => :follow_request,
     'Favourite'     => :favourite,
     'Poll'          => :poll,
+    'EmojiReaction' => :emoji_reaction,
   }.freeze
 
   TYPES = %i(
@@ -35,6 +36,7 @@ class Notification < ApplicationRecord
     follow_request
     favourite
     poll
+    emoji_reaction
   ).freeze
 
   TARGET_STATUS_INCLUDES_BY_TYPE = {
@@ -43,6 +45,7 @@ class Notification < ApplicationRecord
     mention: [mention: :status],
     favourite: [favourite: :status],
     poll: [poll: :status],
+    emoji_reaction: [emoji_reaction: :status],
   }.freeze
 
   belongs_to :account, optional: true
@@ -55,8 +58,10 @@ class Notification < ApplicationRecord
   belongs_to :follow_request, foreign_key: 'activity_id', optional: true
   belongs_to :favourite,      foreign_key: 'activity_id', optional: true
   belongs_to :poll,           foreign_key: 'activity_id', optional: true
+  belongs_to :emoji_reaction, foreign_key: 'activity_id', optional: true
 
   validates :type, inclusion: { in: TYPES }
+  validates :activity_id, uniqueness: { scope: [:account_id, :type] }, if: -> { type.to_sym == :status }
 
   scope :without_suspended, -> { joins(:from_account).merge(Account.without_suspended) }
 
@@ -86,7 +91,13 @@ class Notification < ApplicationRecord
       mention&.status
     when :poll
       poll&.status
+    when :emoji_reaction
+      emoji_reaction&.status
     end
+  end
+
+  def reblog_visibility
+    type == :reblog ? status.visibility : :public
   end
 
   class << self
@@ -120,6 +131,8 @@ class Notification < ApplicationRecord
           notification.mention.status = cached_status
         when :poll
           notification.poll.status = cached_status
+        when :emoji_reaction
+          notification.emoji_reaction.status = cached_status
         end
       end
 
@@ -136,7 +149,7 @@ class Notification < ApplicationRecord
     return unless new_record?
 
     case activity_type
-    when 'Status', 'Follow', 'Favourite', 'FollowRequest', 'Poll'
+    when 'Status', 'Follow', 'Favourite', 'FollowRequest', 'Poll', 'EmojiReaction'
       self.from_account_id = activity&.account_id
     when 'Mention'
       self.from_account_id = activity&.status&.account_id

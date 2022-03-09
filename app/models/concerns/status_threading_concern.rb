@@ -81,12 +81,12 @@ module StatusThreadingConcern
   end
 
   def find_statuses_from_tree_path(ids, account, promote: false)
-    statuses    = Status.with_accounts(ids).to_a
-    account_ids = statuses.map(&:account_id).uniq
-    domains     = statuses.filter_map(&:account_domain).uniq
-    relations   = relations_map_for_account(account, account_ids, domains)
+    statuses          = Status.with_accounts(ids).to_a
+    account_ids       = statuses.map(&:account_id).uniq
+    account_relations = relations_map_for_account(account, account_ids)
+    status_relations  = relations_map_for_status(account, statuses)
 
-    statuses.reject! { |status| StatusFilter.new(status, account, relations).filtered? }
+    statuses.reject! { |status| StatusFilter.new(status, account, account_relations, status_relations).filtered? }
 
     # Order ancestors/descendants by tree path
     statuses.sort_by! { |status| ids.index(status.id) }
@@ -114,15 +114,31 @@ module StatusThreadingConcern
     arr
   end
 
-  def relations_map_for_account(account, account_ids, domains)
+  def relations_map_for_account(account, account_ids)
     return {} if account.nil?
 
+    presenter = AccountRelationshipsPresenter.new(account_ids, account)
     {
-      blocking: Account.blocking_map(account_ids, account.id),
-      blocked_by: Account.blocked_by_map(account_ids, account.id),
-      muting: Account.muting_map(account_ids, account.id),
-      following: Account.following_map(account_ids, account.id),
-      domain_blocking_by_domain: Account.domain_blocking_map_by_domain(domains, account.id),
+      blocking: presenter.blocking,
+      blocked_by: presenter.blocked_by,
+      muting: presenter.muting,
+      following: presenter.following,
+      subscribing: presenter.subscribing,
+      domain_blocking: presenter.domain_blocking,
+    }
+  end
+
+  def relations_map_for_status(account, statuses)
+    return {} if account.nil?
+
+    presenter = StatusRelationshipsPresenter.new(statuses, account)
+    {
+      reblogs_map: presenter.reblogs_map,
+      favourites_map: presenter.favourites_map,
+      bookmarks_map: presenter.bookmarks_map,
+      emoji_reactions_map: presenter.emoji_reactions_map,
+      mutes_map: presenter.mutes_map,
+      pins_map: presenter.pins_map,
     }
   end
 end

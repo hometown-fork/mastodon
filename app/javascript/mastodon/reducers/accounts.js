@@ -8,6 +8,7 @@ const normalizeAccount = (state, account) => {
 
   delete account.followers_count;
   delete account.following_count;
+  delete account.subscribing_count;
   delete account.statuses_count;
 
   return state.set(account.id, fromJS(account));

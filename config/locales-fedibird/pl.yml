@@ -1,0 +1,18 @@
+---
+pl:
+  account_subscribes:
+    edit:
+      title: Edytuj
+  domain_subscribes:
+    edit:
+      title: Edytuj
+  follow_tags:
+    edit:
+      title: Edytuj
+  keyword_subscribes:
+    disabled: Wyłączone
+    edit:
+      title: Edytuj
+    enabled: Włączone
+  preferences:
+    fedibird_features: Funkcje Fedibird

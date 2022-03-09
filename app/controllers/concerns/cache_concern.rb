@@ -25,7 +25,7 @@ module CacheConcern
   end
 
   def set_cache_headers
-    response.headers['Vary'] = public_fetch_mode? ? 'Accept' : 'Accept, Signature'
+    response.headers['Vary'] = public_fetch_mode? ? 'Accept, Authorization' : 'Accept, Signature, Authorization'
   end
 
   def cache_collection(raw, klass)
@@ -40,7 +40,7 @@ module CacheConcern
     klass.reload_stale_associations!(cached_keys_with_value.values) if klass.respond_to?(:reload_stale_associations!)
 
     unless uncached_ids.empty?
-      uncached = klass.where(id: uncached_ids).with_includes.index_by(&:id)
+      uncached = klass.unscoped.where(id: uncached_ids).with_includes.index_by(&:id)
 
       uncached.each_value do |item|
         Rails.cache.write(item, item)

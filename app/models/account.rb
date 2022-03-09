@@ -104,6 +104,7 @@ class Account < ApplicationRecord
   scope :without_suspended, -> { where(suspended_at: nil) }
   scope :without_silenced, -> { where(silenced_at: nil) }
   scope :without_instance_actor, -> { where.not(id: -99) }
+  scope :without_groups, -> { where.not(actor_type: 'Group') }
   scope :recent, -> { reorder(id: :desc) }
   scope :bots, -> { where(actor_type: %w(Application Service)) }
   scope :groups, -> { where(actor_type: 'Group') }
@@ -458,9 +459,9 @@ class Account < ApplicationRecord
       records
     end
 
-    def advanced_search_for(terms, account, limit = 10, following = false, offset = 0)
+    def advanced_search_for(terms, account, limit = 10, offset = 0, options = {})
       tsquery = generate_query_for_search(terms)
-      sql = advanced_search_for_sql_template(following)
+      sql = advanced_search_for_sql_template(options[:following])
       records = find_by_sql([sql, id: account.id, limit: limit, offset: offset, tsquery: tsquery])
       ActiveRecord::Associations::Preloader.new.preload(records, :account_stat)
       records

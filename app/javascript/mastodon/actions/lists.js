@@ -27,6 +27,14 @@ export const LIST_DELETE_REQUEST = 'LIST_DELETE_REQUEST';
 export const LIST_DELETE_SUCCESS = 'LIST_DELETE_SUCCESS';
 export const LIST_DELETE_FAIL    = 'LIST_DELETE_FAIL';
 
+export const LIST_FAVOURITE_REQUEST = 'LIST_FAVOURITE_REQUEST';
+export const LIST_FAVOURITE_SUCCESS = 'LIST_FAVOURITE_SUCCESS';
+export const LIST_FAVOURITE_FAIL    = 'LIST_FAVOURITE_FAIL';
+
+export const LIST_UNFAVOURITE_REQUEST = 'LIST_UNFAVOURITE_REQUEST';
+export const LIST_UNFAVOURITE_SUCCESS = 'LIST_UNFAVOURITE_SUCCESS';
+export const LIST_UNFAVOURITE_FAIL    = 'LIST_UNFAVOURITE_FAIL';
+
 export const LIST_ACCOUNTS_FETCH_REQUEST = 'LIST_ACCOUNTS_FETCH_REQUEST';
 export const LIST_ACCOUNTS_FETCH_SUCCESS = 'LIST_ACCOUNTS_FETCH_SUCCESS';
 export const LIST_ACCOUNTS_FETCH_FAIL    = 'LIST_ACCOUNTS_FETCH_FAIL';
@@ -209,6 +217,54 @@ export const deleteListSuccess = id => ({
 
 export const deleteListFail = (id, error) => ({
   type: LIST_DELETE_FAIL,
+  id,
+  error,
+});
+
+export const favouriteList = id => (dispatch, getState) => {
+  dispatch(favouriteListRequest(id));
+
+  api(getState).post(`/api/v1/lists/${id}/favourite`)
+    .then(({ data }) => dispatch(favouriteListSuccess(data)))
+    .catch(err => dispatch(favouriteListFail(id, err)));
+};
+
+export const favouriteListRequest = id => ({
+  type: LIST_FAVOURITE_REQUEST,
+  id,
+});
+
+export const favouriteListSuccess = list => ({
+  type: LIST_FAVOURITE_SUCCESS,
+  list,
+});
+
+export const favouriteListFail = (id, error) => ({
+  type: LIST_FAVOURITE_FAIL,
+  id,
+  error,
+});
+
+export const unfavouriteList = id => (dispatch, getState) => {
+  dispatch(unfavouriteListRequest(id));
+
+  api(getState).post(`/api/v1/lists/${id}/unfavourite`)
+    .then(({ data }) => dispatch(unfavouriteListSuccess(data)))
+    .catch(err => dispatch(unfavouriteListFail(id, err)));
+};
+
+export const unfavouriteListRequest = id => ({
+  type: LIST_UNFAVOURITE_REQUEST,
+  id,
+});
+
+export const unfavouriteListSuccess = list => ({
+  type: LIST_UNFAVOURITE_SUCCESS,
+  list,
+});
+
+export const unfavouriteListFail = (id, error) => ({
+  type: LIST_UNFAVOURITE_FAIL,
   id,
   error,
 });

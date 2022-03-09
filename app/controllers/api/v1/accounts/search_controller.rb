@@ -17,7 +17,9 @@ class Api::V1::Accounts::SearchController < Api::BaseController
       current_account,
       limit: limit_param(DEFAULT_ACCOUNTS_LIMIT),
       resolve: truthy_param?(:resolve),
+      followers: truthy_param?(:followers),
       following: truthy_param?(:following),
+      group_only: truthy_param?(:group_only),
       offset: params[:offset]
     )
   end

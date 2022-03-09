@@ -34,6 +34,47 @@
   .fields-group
     = f.input :setting_show_application, as: :boolean, wrapper: :with_label, recommended: true
 
+  %h4= t 'preferences.fedibird_features'
+
+  .fields-group
+    = f.input :setting_show_follow_button_on_timeline, as: :boolean, wrapper: :with_label
+
+  .fields-group
+    = f.input :setting_show_subscribe_button_on_timeline, as: :boolean, wrapper: :with_label
+
+  .fields-group
+    = f.input :setting_show_followed_by, as: :boolean, wrapper: :with_label
+
+  .fields-group
+    = f.input :setting_follow_button_to_list_adder, as: :boolean, wrapper: :with_label
+
+  .fields-group
+    = f.input :setting_show_navigation_panel, as: :boolean, wrapper: :with_label
+
+  .fields-group
+    = f.input :setting_show_quote_button, as: :boolean, wrapper: :with_label
+
+  .fields-group
+    = f.input :setting_show_bookmark_button, as: :boolean, wrapper: :with_label
+
+  .fields-group
+    = f.input :setting_place_tab_bar_at_bottom, as: :boolean, wrapper: :with_label
+
+  .fields-group
+    = f.input :setting_show_tab_bar_label, as: :boolean, wrapper: :with_label
+
+  .fields-group
+    = f.input :setting_enable_limited_timeline, as: :boolean, wrapper: :with_label
+
+  .fields-group
+    = f.input :setting_enable_reaction, as: :boolean, wrapper: :with_label
+
+  .fields-group
+    = f.input :setting_show_reply_tree_button, as: :boolean, wrapper: :with_label
+
+  -# .fields-group
+  -#   = f.input :setting_show_target, as: :boolean, wrapper: :with_label
+
   %h4= t 'preferences.public_timelines'
 
   .fields-group

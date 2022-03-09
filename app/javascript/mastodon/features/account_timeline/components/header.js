@@ -3,6 +3,7 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import PropTypes from 'prop-types';
 import InnerHeader from '../../account/components/header';
 import ImmutablePureComponent from 'react-immutable-pure-component';
+import { follow_button_to_list_adder } from 'mastodon/initial_state';
 import MovedNote from './moved_note';
 import { FormattedMessage } from 'react-intl';
 import { NavLink } from 'react-router-dom';
@@ -13,6 +14,8 @@ export default class Header extends ImmutablePureComponent {
     account: ImmutablePropTypes.map,
     identity_proofs: ImmutablePropTypes.list,
     onFollow: PropTypes.func.isRequired,
+    onSubscribe: PropTypes.func.isRequired,
+    onAddToList: PropTypes.func.isRequired,
     onBlock: PropTypes.func.isRequired,
     onMention: PropTypes.func.isRequired,
     onDirect: PropTypes.func.isRequired,
@@ -23,6 +26,7 @@ export default class Header extends ImmutablePureComponent {
     onUnblockDomain: PropTypes.func.isRequired,
     onEndorseToggle: PropTypes.func.isRequired,
     onAddToList: PropTypes.func.isRequired,
+    onAddToCircle: PropTypes.func.isRequired,
     hideTabs: PropTypes.bool,
     domain: PropTypes.string.isRequired,
   };
@@ -31,8 +35,20 @@ export default class Header extends ImmutablePureComponent {
     router: PropTypes.object,
   };
 
-  handleFollow = () => {
-    this.props.onFollow(this.props.account);
+  handleFollow = (e) => {
+    if ((e && e.shiftKey) ^ !follow_button_to_list_adder) {
+      this.props.onFollow(this.props.account);
+    } else {
+      this.props.onAddToList(this.props.account);
+    }
+  }
+
+  handleSubscribe = (e) => {
+    if ((e && e.shiftKey) ^ !follow_button_to_list_adder) {
+      this.props.onSubscribe(this.props.account);
+    } else {
+      this.props.onAddToList(this.props.account);
+    }
   }
 
   handleBlock = () => {
@@ -87,6 +103,10 @@ export default class Header extends ImmutablePureComponent {
     this.props.onAddToList(this.props.account);
   }
 
+  handleAddToCircle = () => {
+    this.props.onAddToCircle(this.props.account);
+  }
+
   handleEditAccountNote = () => {
     this.props.onEditAccountNote(this.props.account);
   }
@@ -106,6 +126,7 @@ export default class Header extends ImmutablePureComponent {
           account={account}
           identity_proofs={identity_proofs}
           onFollow={this.handleFollow}
+          onSubscribe={this.handleSubscribe}
           onBlock={this.handleBlock}
           onMention={this.handleMention}
           onDirect={this.handleDirect}
@@ -117,6 +138,7 @@ export default class Header extends ImmutablePureComponent {
           onUnblockDomain={this.handleUnblockDomain}
           onEndorseToggle={this.handleEndorseToggle}
           onAddToList={this.handleAddToList}
+          onAddToCircle={this.handleAddToCircle}
           onEditAccountNote={this.handleEditAccountNote}
           domain={this.props.domain}
         />

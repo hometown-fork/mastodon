@@ -1,0 +1,9 @@
+- content_for :page_title do
+  = t('follow_tags.edit.title')
+
+= simple_form_for @follow_tag, url: settings_follow_tag_path(@follow_tag), method: :put do |f|
+  = render 'shared/error_messages', object: @follow_tag
+  = render 'fields', f: f
+
+  .actions
+    = f.button :button, t('generic.save_changes'), type: :submit

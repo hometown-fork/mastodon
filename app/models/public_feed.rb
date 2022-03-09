@@ -25,11 +25,13 @@ class PublicFeed
     scope.merge!(without_reblogs_scope) unless with_reblogs?
     scope.merge!(local_only_scope) if local_only?
     scope.merge!(remote_only_scope) if remote_only?
+    scope.merge!(domain_only_scope) if domain_only?
     if account?
       scope.merge!(account_filters_scope)
     else
       scope.merge!(instance_only_statuses_scope)
     end
+    scope.merge!(account_filters_scope) if account?
     scope.merge!(media_only_scope) if media_only?
 
     scope.cache_ids.to_a_paginated_by_id(limit, max_id: max_id, since_id: since_id, min_id: min_id)
@@ -55,12 +57,20 @@ class PublicFeed
     options[:remote]
   end
 
+  def domain_only?
+    @options[:domain].present?
+  end
+
   def account?
     account.present?
   end
 
   def media_only?
     options[:only_media]
+  end
+
+  def domain
+    @options[:domain]
   end
 
   def public_scope
@@ -73,6 +83,10 @@ class PublicFeed
 
   def remote_only_scope
     Status.remote
+  end
+
+  def domain_only_scope
+    Status.joins(:account).merge(Account.where(domain: domain))
   end
 
   def without_replies_scope

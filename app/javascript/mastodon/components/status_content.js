@@ -6,7 +6,7 @@ import Permalink from './permalink';
 import classnames from 'classnames';
 import PollContainer from 'mastodon/containers/poll_container';
 import Icon from 'mastodon/components/icon';
-import { autoPlayGif } from 'mastodon/initial_state';
+import { autoPlayGif, show_reply_tree_button } from 'mastodon/initial_state';
 
 const MAX_HEIGHT = 642; // 20px * 32 (+ 2px padding at the top)
 
@@ -24,6 +24,7 @@ export default class StatusContent extends React.PureComponent {
     onClick: PropTypes.func,
     collapsable: PropTypes.bool,
     onCollapsedToggle: PropTypes.func,
+    quote: PropTypes.bool,
   };
 
   state = {
@@ -49,7 +50,11 @@ export default class StatusContent extends React.PureComponent {
       let mention = this.props.status.get('mentions').find(item => link.href === item.get('url'));
 
       if (mention) {
-        link.addEventListener('click', this.onMentionClick.bind(this, mention), false);
+        if (mention.get('group', false)) {
+          link.addEventListener('click', this.onGroupMentionClick.bind(this, mention), false);
+        } else {
+          link.addEventListener('click', this.onMentionClick.bind(this, mention), false);
+        }
         link.setAttribute('title', mention.get('acct'));
       } else if (link.textContent[0] === '#' || (link.previousSibling && link.previousSibling.textContent && link.previousSibling.textContent[link.previousSibling.textContent.length - 1] === '#')) {
         link.addEventListener('click', this.onHashtagClick.bind(this, link.text), false);
@@ -116,12 +121,28 @@ export default class StatusContent extends React.PureComponent {
     }
   }
 
+  onGroupMentionClick = (mention, e) => {
+    if (this.context.router && e.button === 0 && !(e.ctrlKey || e.metaKey)) {
+      e.preventDefault();
+      this.context.router.history.push(`/timelines/groups/${mention.get('id')}`);
+    }
+  }
+
   onHashtagClick = (hashtag, e) => {
     hashtag = hashtag.replace(/^#/, '');
 
     if (this.context.router && e.button === 0 && !(e.ctrlKey || e.metaKey)) {
       e.preventDefault();
       this.context.router.history.push(`/timelines/tag/${hashtag}`);
+    }
+  }
+
+  onQuoteClick = (statusId, e) => {
+    let statusUrl = `/statuses/${statusId}`;
+
+    if (this.context.router && e.button === 0) {
+      e.preventDefault();
+      this.context.router.history.push(statusUrl);
     }
   }
 
@@ -168,11 +189,15 @@ export default class StatusContent extends React.PureComponent {
   }
 
   render () {
-    const { status } = this.props;
+    const { status, quote } = this.props;
 
     const hidden = this.props.onExpandedToggle ? !this.props.expanded : this.state.hidden;
     const renderReadMore = this.props.onClick && status.get('collapsed');
-    const renderViewThread = this.props.showThread && status.get('in_reply_to_id') && status.get('in_reply_to_account_id') === status.getIn(['account', 'id']);
+    const renderViewThread = this.props.showThread && (
+      status.get('in_reply_to_id') && status.get('in_reply_to_account_id') === status.getIn(['account', 'id']) ||
+      show_reply_tree_button && (status.get('in_reply_to_id') || !!status.get('replies_count'))
+    );
+    const renderShowPoll = !!status.get('poll');
 
     const content = { __html: status.get('contentHtml') };
     const spoilerContent = { __html: status.get('spoilerHtml') };
@@ -200,11 +225,21 @@ export default class StatusContent extends React.PureComponent {
       </button>
     );
 
+    const showPollButton = (
+      <button className='status__content__read-more-button' onClick={this.props.onClick} key='show-poll'>
+        <FormattedMessage id='status.show_poll' defaultMessage='Show poll' /><Icon id='angle-right' fixedWidth />
+      </button>
+    );
+
+    const pollContainer = (
+      <PollContainer pollId={status.get('poll')} />
+    );
+
     if (status.get('spoiler_text').length > 0) {
       let mentionsPlaceholder = '';
 
       const mentionLinks = status.get('mentions').map(item => (
-        <Permalink to={`/accounts/${item.get('id')}`} href={item.get('url')} key={item.get('id')} className='mention'>
+        <Permalink to={`${(item.get('group', false)) ? '/timelines/groups/' : '/accounts/'}${item.get('id')}`} href={item.get('url')} key={item.get('id')} className='mention'>
           @<span>{item.get('username')}</span>
         </Permalink>
       )).reduce((aggregate, item) => [...aggregate, item, ' '], []);
@@ -227,7 +262,8 @@ export default class StatusContent extends React.PureComponent {
 
           <div tabIndex={!hidden ? 0 : null} className={`status__content__text ${!hidden ? 'status__content__text--visible' : ''} translate`} dangerouslySetInnerHTML={content} />
 
-          {!hidden && !!status.get('poll') && <PollContainer pollId={status.get('poll')} />}
+          {!hidden && renderShowPoll && quote ? showPollButton : pollContainer}
+
           {renderViewThread && showThreadButton}
         </div>,
       ];
@@ -242,7 +278,7 @@ export default class StatusContent extends React.PureComponent {
         <div className={classNames} ref={this.setRef} tabIndex='0' onMouseDown={this.handleMouseDown} onMouseUp={this.handleMouseUp} key='status-content' onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave}>
           <div className='status__content__text status__content__text--visible translate' dangerouslySetInnerHTML={content} />
 
-          {!!status.get('poll') && <PollContainer pollId={status.get('poll')} />}
+          {renderShowPoll && quote ? showPollButton : pollContainer}
 
           {renderViewThread && showThreadButton}
         </div>,
@@ -258,7 +294,7 @@ export default class StatusContent extends React.PureComponent {
         <div className={classNames} ref={this.setRef} tabIndex='0' onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave}>
           <div className='status__content__text status__content__text--visible translate' dangerouslySetInnerHTML={content} />
 
-          {!!status.get('poll') && <PollContainer pollId={status.get('poll')} />}
+          {renderShowPoll && quote ? showPollButton : pollContainer}
 
           {renderViewThread && showThreadButton}
         </div>

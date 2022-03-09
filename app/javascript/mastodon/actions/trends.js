@@ -8,7 +8,7 @@ export const fetchTrends = () => (dispatch, getState) => {
   dispatch(fetchTrendsRequest());
 
   api(getState)
-    .get('/api/v1/trends')
+    .get('/api/v1/trends', { params: { limit: 20 } })
     .then(({ data }) => dispatch(fetchTrendsSuccess(data)))
     .catch(err => dispatch(fetchTrendsFail(err)));
 };

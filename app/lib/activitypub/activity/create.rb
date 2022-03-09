@@ -1,5 +1,33 @@
 # frozen_string_literal: true
 
+class Handler < ::Ox::Sax
+  attr_reader :srcs
+  attr_reader :alts
+  def initialize(block)
+    @stack = []
+    @srcs = []
+    @alts = {}
+  end
+
+  def start_element(element_name)
+    @stack << [element_name, {}]
+  end
+
+  def end_element(element_name)
+    self_name, self_attributes = @stack[-1]
+    if self_name == :img && !self_attributes[:src].nil?
+      @srcs << self_attributes[:src]
+      @alts[self_attributes[:src]] = self_attributes[:alt]
+    end
+    @stack.pop
+  end
+
+  def attr(attribute_name, attribute_value)
+    _name, attributes = @stack.last
+    attributes[attribute_name] = attribute_value
+  end
+end
+
 class ActivityPub::Activity::Create < ActivityPub::Activity
   def perform
     dereference_object!
@@ -74,7 +102,9 @@ class ActivityPub::Activity::Create < ActivityPub::Activity
     @params   = {}
 
     process_inline_images if @object['content'].present? && @object['type'] == 'Article'
+    process_quote
     process_status_params
+    process_expiry_params
     process_tags
     process_audience
 
@@ -86,7 +116,9 @@ class ActivityPub::Activity::Create < ActivityPub::Activity
     resolve_thread(@status)
     fetch_replies(@status)
     distribute(@status)
+    forward_for_conversation
     forward_for_reply
+    expire_queue_action
   end
 
   def find_existing_status
@@ -110,39 +142,12 @@ class ActivityPub::Activity::Create < ActivityPub::Activity
         sensitive: @account.sensitized? || @object['sensitive'] || false,
         visibility: visibility_from_audience,
         thread: replied_to_status,
-        conversation: conversation_from_uri(@object['conversation']),
+        conversation: conversation_from_context,
         media_attachment_ids: process_attachments.take(4).map(&:id),
         poll: process_poll,
-        activity_pub_type: @object['type']
+        activity_pub_type: @object['type'],
+        quote: quote
       }
-    end
-  end
-
-  class Handler < ::Ox::Sax
-    attr_reader :srcs
-    attr_reader :alts
-    def initialize(block)
-      @stack = []
-      @srcs = []
-      @alts = {}
-    end
-
-    def start_element(element_name)
-      @stack << [element_name, {}]
-    end
-
-    def end_element(element_name)
-      self_name, self_attributes = @stack[-1]
-      if self_name == :img && !self_attributes[:src].nil?
-        @srcs << self_attributes[:src]
-        @alts[self_attributes[:src]] = self_attributes[:alt]
-      end
-      @stack.pop
-    end
-
-    def attr(attribute_name, attribute_value)
-      _name, attributes = @stack.last
-      attributes[attribute_name] = attribute_value
     end
   end
 
@@ -171,46 +176,24 @@ class ActivityPub::Activity::Create < ActivityPub::Activity
   def process_audience
     (audience_to + audience_cc).uniq.each do |audience|
       next if ActivityPub::TagManager.instance.public_collection?(audience)
-
-      # Unlike with tags, there is no point in resolving accounts we don't already
-      # know here, because silent mentions would only be used for local access
-      # control anyway
-      account = account_from_uri(audience)
-
-      next if account.nil? || @mentions.any? { |mention| mention.account_id == account.id }
-
-      @mentions << Mention.new(account: account, silent: true)
-
-      # If there is at least one silent mention, then the status can be considered
-      # as a limited-audience status, and not strictly a direct message, but only
-      # if we considered a direct message in the first place
-      next unless @params[:visibility] == :direct
-
-      @params[:visibility] = :limited
     end
-
-    # If the payload was delivered to a specific inbox, the inbox owner must have
-    # access to it, unless they already have access to it anyway
-    return if @options[:delivered_to_account_id].nil? || @mentions.any? { |mention| mention.account_id == @options[:delivered_to_account_id] }
-
-    @mentions << Mention.new(account_id: @options[:delivered_to_account_id], silent: true)
-
-    return unless @params[:visibility] == :direct
-
-    @params[:visibility] = :limited
   end
 
-  def postprocess_audience_and_deliver
-    return if @status.mentions.find_by(account_id: @options[:delivered_to_account_id])
+  def process_expiry_params
+    expiry = @object['expiry']&.to_time
 
-    delivered_to_account = Account.find(@options[:delivered_to_account_id])
-
-    @status.mentions.create(account: delivered_to_account, silent: true)
-    @status.update(visibility: :limited) if @status.direct_visibility?
-
-    return unless delivered_to_account.following?(@account)
-
-    FeedInsertWorker.perform_async(@status.id, delivered_to_account.id, :home)
+    if expiry.nil?
+      @params
+    elsif expiry <= Time.now.utc + PostStatusService::MIN_EXPIRE_OFFSET
+      @params.merge!({
+        expired_at: @object['expiry']
+      })
+    else
+      @params.merge!({
+        expires_at: @object['expiry'],
+        expires_action: :mark,
+      })
+    end
   end
 
   def attach_tags(status)
@@ -275,8 +258,8 @@ class ActivityPub::Activity::Create < ActivityPub::Activity
     emoji ||= CustomEmoji.new(domain: @account.domain, shortcode: shortcode, uri: uri)
     emoji.image_remote_url = image_url
     emoji.save
-  rescue Seahorse::Client::NetworkingError
-    nil
+  rescue Seahorse::Client::NetworkingError => e
+    Rails.logger.warn "Error storing emoji: #{e}"
   end
 
   def process_attachments
@@ -299,8 +282,8 @@ class ActivityPub::Activity::Create < ActivityPub::Activity
         media_attachment.save
       rescue Mastodon::UnexpectedResponseError, HTTP::TimeoutError, HTTP::ConnectionError, OpenSSL::SSL::SSLError
         RedownloadMediaWorker.perform_in(rand(30..600).seconds, media_attachment.id)
-      rescue Seahorse::Client::NetworkingError
-        nil
+      rescue Seahorse::Client::NetworkingError => e
+        Rails.logger.warn "Error storing media attachment: #{e}"
       end
     end
 
@@ -387,32 +370,47 @@ class ActivityPub::Activity::Create < ActivityPub::Activity
     ActivityPub::FetchRepliesWorker.perform_async(status.id, uri) unless uri.nil?
   end
 
-  def conversation_from_uri(uri)
-    return nil if uri.nil?
-    return Conversation.find_by(id: OStatus::TagManager.instance.unique_tag_to_local_id(uri, 'Conversation')) if OStatus::TagManager.instance.local_id?(uri)
+  def conversation_from_context
+    atom_uri = @object['conversation']
 
-    begin
-      Conversation.find_or_create_by!(uri: uri)
-    rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotUnique
-      retry
+    conversation = begin
+      if atom_uri.present? && OStatus::TagManager.instance.local_id?(atom_uri)
+        Conversation.find_by(id: OStatus::TagManager.instance.unique_tag_to_local_id(atom_uri, 'Conversation'))
+      elsif atom_uri.present? && @object['context'].present?
+        Conversation.find_by(uri: atom_uri)
+      elsif atom_uri.present?
+        begin
+          Conversation.find_or_create_by!(uri: atom_uri)
+        rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotUnique
+          retry
+        end
+      end
     end
-  end
 
-  def visibility_from_audience
-    if audience_to.any? { |to| ActivityPub::TagManager.instance.public_collection?(to) }
-      :public
-    elsif audience_cc.any? { |cc| ActivityPub::TagManager.instance.public_collection?(cc) }
-      :unlisted
-    elsif audience_to.include?(@account.followers_url)
-      :private
-    else
-      :direct
+    return conversation if @object['context'].nil?
+
+    uri                  = value_or_id(@object['context'])
+    context_conversation = ActivityPub::TagManager.instance.uri_to_resource(uri, Conversation)
+    conversation       ||= context_conversation
+
+    return conversation if (conversation.present? && (conversation.local? || conversation.uri == uri)) || !uri.start_with?('https://')
+
+    conversation_json = begin
+      if @object['context'].is_a?(Hash) && !invalid_origin?(uri)
+        @object['context']
+      else
+        fetch_resource(uri, true)
+      end
     end
-  end
 
-  def audience_includes?(account)
-    uri = ActivityPub::TagManager.instance.uri_for(account)
-    audience_to.include?(uri) || audience_cc.include?(uri)
+    return conversation if conversation_json.blank?
+
+    conversation = context_conversation if context_conversation.present?
+    conversation ||= Conversation.new
+    conversation.uri = uri
+    conversation.inbox_url = conversation_json['inbox']
+    conversation.save! if conversation.changed?
+    conversation
   end
 
   def replied_to_status
@@ -436,7 +434,9 @@ class ActivityPub::Activity::Create < ActivityPub::Activity
 
     return Formatter.instance.format_article(@object['content']) if @object['content'].present? && @object['type'] == 'Article'
 
-    if @object['content'].present?
+    if @object['quoteUrl'].blank? && @object['_misskey_quote'].present?
+      Formatter.instance.linkify(@object['_misskey_content'])
+    elsif @object['content'].present?
       @object['content']
     elsif content_language_map?
       @object['contentMap'].values.first
@@ -541,10 +541,25 @@ class ActivityPub::Activity::Create < ActivityPub::Activity
     Tombstone.exists?(uri: object_uri)
   end
 
+  def forward_for_conversation
+    return unless audience_to.include?(value_or_id(@object['context'])) && @json['signature'].present? && @status.conversation.local?
+
+    ActivityPub::ForwardDistributionWorker.perform_async(@status.conversation_id, Oj.dump(@json))
+  end
+
   def forward_for_reply
     return unless @status.distributable? && @json['signature'].present? && reply_to_local?
 
     ActivityPub::RawDistributionWorker.perform_async(Oj.dump(@json), replied_to_status.account_id, [@account.preferred_inbox_url])
+  end
+
+  def expire_queue_action
+    @status.status_expire.queue_action if expires_soon?
+  end
+
+  def expires_soon?
+    expires_at = @status&.status_expire&.expires_at
+    expires_at.present? && expires_at <= Time.now.utc + PostStatusService::MIN_SCHEDULE_OFFSET
   end
 
   def increment_voters_count!
@@ -557,5 +572,25 @@ class ActivityPub::Activity::Create < ActivityPub::Activity
   rescue ActiveRecord::StaleObjectError
     poll.reload
     retry
+  end
+
+  def quote
+    @quote ||= quote_from_url(@object['quoteUrl'] || @object['_misskey_quote'])
+  end
+
+  def process_quote
+    if quote.nil? && md = @object['content']&.match(/QT:\s*\[<a href=\"([^\"]+).*?\]/)
+      @quote = quote_from_url(md[1])
+      @object['content'] = @object['content'].sub(/QT:\s*\[.*?\]/, '<span class="quote-inline"><br/>\1</span>')
+    end
+  end
+
+  def quote_from_url(url)
+    return nil if url.nil?
+
+    quote = ResolveURLService.new.call(url)
+    status_from_uri(quote.uri) if quote
+  rescue
+    nil
   end
 end

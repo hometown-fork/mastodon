@@ -28,8 +28,21 @@ class ReblogService < BaseService
       end
     end
 
-    reblog = account.statuses.create!(reblog: reblogged_status, text: '', visibility: visibility, rate_limit: options[:with_rate_limit])
+    circle = begin
+      if visibility == 'mutual'
+        visibility = 'limited'
+        account
+      else
+        options[:circle]
+      end
+    end
 
+    ApplicationRecord.transaction do
+      reblog = account.statuses.create!(reblog: reblogged_status, text: '', visibility: visibility, rate_limit: options[:with_rate_limit])
+      reblog.capability_tokens.create! if reblog.limited_visibility?
+    end
+
+    ProcessMentionsService.new.call(reblog, circle)
     DistributionWorker.perform_async(reblog.id)
     unless reblogged_status.local_only?
       ActivityPub::DistributionWorker.perform_async(reblog.id)

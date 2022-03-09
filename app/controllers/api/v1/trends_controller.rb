@@ -10,6 +10,6 @@ class Api::V1::TrendsController < Api::BaseController
   private
 
   def set_tags
-    @tags = TrendingTags.get(limit_param(10))
+    @tags = TrendingTags.get(limit_param(TrendingTags::LIMIT))
   end
 end

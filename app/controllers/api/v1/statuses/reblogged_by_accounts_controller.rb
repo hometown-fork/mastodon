@@ -61,7 +61,7 @@ class Api::V1::Statuses::RebloggedByAccountsController < Api::BaseController
   end
 
   def set_status
-    @status = Status.find(params[:status_id])
+    @status = Status.include_expired.find(params[:status_id])
     authorize @status, :show?
   rescue Mastodon::NotPermittedError
     not_found

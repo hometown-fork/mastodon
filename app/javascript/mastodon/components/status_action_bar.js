@@ -6,13 +6,16 @@ import IconButton from './icon_button';
 import DropdownMenuContainer from '../containers/dropdown_menu_container';
 import { defineMessages, injectIntl } from 'react-intl';
 import ImmutablePureComponent from 'react-immutable-pure-component';
-import { me, isStaff } from '../initial_state';
+import { me, isStaff, show_bookmark_button, show_quote_button, enableReaction } from '../initial_state';
 import classNames from 'classnames';
+
+import ReactionPickerDropdownContainer from '../containers/reaction_picker_dropdown_container';
 
 const messages = defineMessages({
   delete: { id: 'status.delete', defaultMessage: 'Delete' },
   redraft: { id: 'status.redraft', defaultMessage: 'Delete & re-draft' },
   direct: { id: 'status.direct', defaultMessage: 'Direct message @{name}' },
+  showMemberList: { id: 'status.show_member_list', defaultMessage: 'Show member list' },
   mention: { id: 'status.mention', defaultMessage: 'Mention @{name}' },
   mute: { id: 'account.mute', defaultMessage: 'Mute @{name}' },
   block: { id: 'account.block', defaultMessage: 'Block @{name}' },
@@ -23,11 +26,14 @@ const messages = defineMessages({
   reblog: { id: 'status.reblog', defaultMessage: 'Boost' },
   reblog_private: { id: 'status.reblog_private', defaultMessage: 'Boost with original visibility' },
   cancel_reblog_private: { id: 'status.cancel_reblog_private', defaultMessage: 'Unboost' },
+  cannot_quote: { id: 'status.cannot_quote', defaultMessage: 'This post cannot be quoted' },
   cannot_reblog: { id: 'status.cannot_reblog', defaultMessage: 'This post cannot be boosted' },
   local_only: { id: 'status.local_only', defaultMessage: 'This post is only visible by other users of your instance' },
+  quote: { id: 'status.quote', defaultMessage: 'Quote' },
   favourite: { id: 'status.favourite', defaultMessage: 'Favourite' },
   bookmark: { id: 'status.bookmark', defaultMessage: 'Bookmark' },
   removeBookmark: { id: 'status.remove_bookmark', defaultMessage: 'Remove bookmark' },
+  emoji_reaction: { id: 'status.emoji_reaction', defaultMessage: 'Emoji reaction' },
   open: { id: 'status.open', defaultMessage: 'Expand this status' },
   report: { id: 'status.report', defaultMessage: 'Report @{name}' },
   muteConversation: { id: 'status.mute_conversation', defaultMessage: 'Mute conversation' },
@@ -40,6 +46,7 @@ const messages = defineMessages({
   copy: { id: 'status.copy', defaultMessage: 'Copy link to status' },
   blockDomain: { id: 'account.block_domain', defaultMessage: 'Block domain {domain}' },
   unblockDomain: { id: 'account.unblock_domain', defaultMessage: 'Unblock domain {domain}' },
+  openDomainTimeline: { id: 'account.open_domain_timeline', defaultMessage: 'Open {domain} timeline' },
   unmute: { id: 'account.unmute', defaultMessage: 'Unmute @{name}' },
   unblock: { id: 'account.unblock', defaultMessage: 'Unblock @{name}' },
 });
@@ -58,12 +65,15 @@ class StatusActionBar extends ImmutablePureComponent {
 
   static propTypes = {
     status: ImmutablePropTypes.map.isRequired,
+    expired: PropTypes.bool,
     relationship: ImmutablePropTypes.map,
     onReply: PropTypes.func,
     onFavourite: PropTypes.func,
     onReblog: PropTypes.func,
+    onQuote: PropTypes.func,
     onDelete: PropTypes.func,
     onDirect: PropTypes.func,
+    onMemberList: PropTypes.func,
     onMention: PropTypes.func,
     onMute: PropTypes.func,
     onUnmute: PropTypes.func,
@@ -79,6 +89,12 @@ class StatusActionBar extends ImmutablePureComponent {
     withDismiss: PropTypes.bool,
     scrollKey: PropTypes.string,
     intl: PropTypes.object.isRequired,
+    addEmojiReaction: PropTypes.func,
+    removeEmojiReaction: PropTypes.func,
+  };
+
+  static defaultProps = {
+    expired: false,
   };
 
   // Avoid checking props that are functions (and whose equality will always
@@ -130,6 +146,10 @@ class StatusActionBar extends ImmutablePureComponent {
     this.props.onBookmark(this.props.status);
   }
 
+  handleQuoteClick = () => {
+    this.props.onQuote(this.props.status, this.context.router.history);
+  }
+
   handleDeleteClick = () => {
     this.props.onDelete(this.props.status, this.context.router.history);
   }
@@ -148,6 +168,10 @@ class StatusActionBar extends ImmutablePureComponent {
 
   handleDirectClick = () => {
     this.props.onDirect(this.props.status.get('account'), this.context.router.history);
+  }
+
+  handleMemberListClick = () => {
+    this.props.onMemberList(this.props.status, this.context.router.history);
   }
 
   handleMuteClick = () => {
@@ -186,6 +210,13 @@ class StatusActionBar extends ImmutablePureComponent {
     onUnblockDomain(account.get('acct').split('@')[1]);
   }
 
+  handleOpenDomainTimeline = () => {
+    const { status } = this.props;
+    const account = status.get('account');
+
+    this.context.router.history.push(`/timelines/public/domain/${account.get('acct').split('@')[1]}`);
+  }
+
   handleOpen = () => {
     this.context.router.history.push(`/statuses/${this.props.status.get('id')}`);
   }
@@ -221,8 +252,18 @@ class StatusActionBar extends ImmutablePureComponent {
     }
   }
 
+  handleEmojiPick = data => {
+    const { addEmojiReaction, status } = this.props;
+    addEmojiReaction(status, data.native.replace(/:/g, ''), null, null, null);
+  }
+
+  handleEmojiRemove = () => {
+    const { removeEmojiReaction, status } = this.props;
+    removeEmojiReaction(status);
+  }
+
   render () {
-    const { status, relationship, intl, withDismiss, scrollKey } = this.props;
+    const { status, relationship, intl, withDismiss, scrollKey, expired } = this.props;
 
     const anonymousAccess    = !me;
     const publicStatus       = ['public', 'unlisted'].includes(status.get('visibility'));
@@ -230,27 +271,37 @@ class StatusActionBar extends ImmutablePureComponent {
     const account            = status.get('account');
     const federated          = !status.get('local_only');
     const writtenByMe        = status.getIn(['account', 'id']) === me;
+    const limitedByMe        = status.get('visibility') === 'limited' && status.get('circle_id');
 
     let menu = [];
 
     menu.push({ text: intl.formatMessage(messages.open), action: this.handleOpen });
 
-    if (publicStatus) {
+    if (publicStatus && !expired) {
       menu.push({ text: intl.formatMessage(messages.copy), action: this.handleCopy });
       menu.push({ text: intl.formatMessage(messages.embed), action: this.handleEmbed });
     }
 
     menu.push(null);
 
-    menu.push({ text: intl.formatMessage(status.get('bookmarked') ? messages.removeBookmark : messages.bookmark), action: this.handleBookmarkClick });
+    if (!show_bookmark_button || writtenByMe && publicStatus && !expired) {
+      if (!show_bookmark_button) {
+        menu.push({ text: intl.formatMessage(status.get('bookmarked') ? messages.removeBookmark : messages.bookmark), action: this.handleBookmarkClick });
+      }
 
-    if (writtenByMe && publicStatus) {
-      menu.push({ text: intl.formatMessage(status.get('pinned') ? messages.unpin : messages.pin), action: this.handlePinClick });
+      if (writtenByMe && publicStatus && !expired) {
+        menu.push({ text: intl.formatMessage(status.get('pinned') ? messages.unpin : messages.pin), action: this.handlePinClick });
+      }
+
+      menu.push(null);
     }
 
-    menu.push(null);
+    if (writtenByMe && limitedByMe) {
+      menu.push({ text: intl.formatMessage(messages.showMemberList), action: this.handleMemberListClick });
+      menu.push(null);
+    }
 
-    if (writtenByMe || withDismiss) {
+    if ((writtenByMe || withDismiss) && !expired) {
       menu.push({ text: intl.formatMessage(mutingConversation ? messages.unmuteConversation : messages.muteConversation), action: this.handleConversationMuteClick });
       menu.push(null);
     }
@@ -287,6 +338,7 @@ class StatusActionBar extends ImmutablePureComponent {
         } else {
           menu.push({ text: intl.formatMessage(messages.blockDomain, { domain }), action: this.handleBlockDomain });
         }
+        menu.push({ text: intl.formatMessage(messages.openDomainTimeline, { domain }), action: this.handleOpenDomainTimeline });
       }
 
       if (isStaff) {
@@ -320,17 +372,35 @@ class StatusActionBar extends ImmutablePureComponent {
     }
 
     const shareButton = ('share' in navigator) && publicStatus && federated && (
-      <IconButton className='status__action-bar-button' title={intl.formatMessage(messages.share)} icon='share-alt' onClick={this.handleShareClick} />
+      <IconButton className='status__action-bar-button' disabled={expired} title={intl.formatMessage(messages.share)} icon='share-alt' onClick={this.handleShareClick} />
     );
 
     return (
       <div className='status__action-bar'>
-        <IconButton className='status__action-bar-button' title={replyTitle} icon={status.get('in_reply_to_account_id') === status.getIn(['account', 'id']) ? 'reply' : replyIcon} onClick={this.handleReplyClick} counter={status.get('replies_count')} obfuscateCount />
-        <IconButton className={classNames('status__action-bar-button', { reblogPrivate })} disabled={!publicStatus && !reblogPrivate}  active={status.get('reblogged')} pressed={status.get('reblogged')} title={reblogTitle} icon='retweet' onClick={this.handleReblogClick} />
-        <IconButton className='status__action-bar-button star-icon' animate active={status.get('favourited')} pressed={status.get('favourited')} title={intl.formatMessage(messages.favourite)} icon='star' onClick={this.handleFavouriteClick} />
-
+        <IconButton className='status__action-bar-button' disabled={expired} title={replyTitle} icon={status.get('in_reply_to_account_id') === status.getIn(['account', 'id']) ? 'reply' : replyIcon} onClick={this.handleReplyClick} counter={status.get('replies_count')} obfuscateCount />
+        <IconButton className={classNames('status__action-bar-button', { reblogPrivate })} disabled={!publicStatus && !reblogPrivate || expired}  active={status.get('reblogged')} pressed={status.get('reblogged')} title={reblogTitle} icon='retweet' onClick={this.handleReblogClick} />
+        <IconButton className='status__action-bar-button star-icon' animate disabled={!status.get('favourited') && expired} active={status.get('favourited')} pressed={status.get('favourited')} title={intl.formatMessage(messages.favourite)} icon='star' onClick={this.handleFavouriteClick} />
+        {show_quote_button && <IconButton className='status__action-bar-button' disabled={anonymousAccess || !publicStatus || expired} title={!publicStatus ? intl.formatMessage(messages.cannot_quote) : intl.formatMessage(messages.quote)} icon='quote-right' onClick={this.handleQuoteClick} />}
         {shareButton}
-        <IconButton className='status__action-bar-button bookmark-icon' disabled={anonymousAccess} active={status.get('bookmarked')} pressed={status.get('bookmarked')} title={intl.formatMessage(messages.bookmark)} icon='bookmark' onClick={this.handleBookmarkClick} />
+        {show_bookmark_button && <IconButton className='status__action-bar-button bookmark-icon' disabled={anonymousAccess || !status.get('bookmarked') && expired} active={status.get('bookmarked')} pressed={status.get('bookmarked')} title={intl.formatMessage(status.get('bookmarked') ? messages.removeBookmark : messages.bookmark)} icon='bookmark' onClick={this.handleBookmarkClick} />}
+
+        {enableReaction && <div className='status__action-bar-dropdown'>
+          <ReactionPickerDropdownContainer
+            scrollKey={scrollKey}
+            disabled={expired}
+            active={status.get('emoji_reactioned')}
+            pressed={status.get('emoji_reactioned')}
+            className='status__action-bar-button'
+            disabled={anonymousAccess}
+            status={status}
+            title={intl.formatMessage(messages.emoji_reaction)}
+            icon='smile-o'
+            size={18}
+            direction='right'
+            onPickEmoji={this.handleEmojiPick}
+            onRemoveEmoji={this.handleEmojiRemove}
+          />
+        </div>}
 
         <div className='status__action-bar-dropdown'>
           <DropdownMenuContainer

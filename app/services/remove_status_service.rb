@@ -10,19 +10,25 @@ class RemoveStatusService < BaseService
   # @option  [Boolean] :redraft
   # @option  [Boolean] :immediate
   # @option  [Boolean] :original_removed
+  # @option  [Boolean] :mark_expired
   def call(status, **options)
-    @payload  = Oj.dump(event: :delete, payload: status.id.to_s)
-    @status   = status
-    @account  = status.account
-    @options  = options
+    @status        = status
+    @account       = status.account
+    @options       = options
+    @status_expire = status.status_expire
+    @payload       = Oj.dump(event: mark_expired? ? :expire : :delete, payload: status.id.to_s)
 
-    @status.discard
+    return if mark_expired? && @status_expire.nil?
+
+    @status.discard unless mark_expired?
 
     RedisLock.acquire(lock_options) do |lock|
       if lock.acquired?
         remove_from_self if @account.local?
         remove_from_followers
         remove_from_lists
+        remove_from_subscribers
+        remove_from_subscribers_lists
 
         # There is no reason to send out Undo activities when the
         # cause is that the original object has been removed, since
@@ -38,12 +44,20 @@ class RemoveStatusService < BaseService
           remove_from_mentions
           remove_reblogs
           remove_from_hashtags
+          remove_from_group if status.account.group?
           remove_from_public
           remove_from_media if @status.media_attachments.any?
-          remove_media
+          remove_media unless mark_expired?
         end
 
-        @status.destroy! if @options[:immediate] || !@status.reported?
+        if mark_expired?
+          UnpinService.new.call(@account, @status)
+          @status.update!(expired_at: @status_expire.expires_at)
+          @status_expire.destroy
+        else
+          @status_expire&.destroy
+          @status.destroy! if @options[:immediate] || !@status.reported?
+        end
       else
         raise Mastodon::RaceConditionError
       end
@@ -52,19 +66,35 @@ class RemoveStatusService < BaseService
 
   private
 
+  def mark_expired?
+    @options[:mark_expired]
+  end
+
   def remove_from_self
-    FeedManager.instance.unpush_from_home(@account, @status)
+    FeedManager.instance.unpush_from_home(@account, @status, **@options)
   end
 
   def remove_from_followers
-    @account.followers_for_local_distribution.reorder(nil).find_each do |follower|
-      FeedManager.instance.unpush_from_home(follower, @status)
+    @account.followers_for_local_distribution.includes(:user).reorder(nil).find_each do |follower|
+      FeedManager.instance.unpush_from_home(follower, @status, **@options)
     end
   end
 
   def remove_from_lists
-    @account.lists_for_local_distribution.select(:id, :account_id).reorder(nil).find_each do |list|
-      FeedManager.instance.unpush_from_list(list, @status)
+    @account.lists_for_local_distribution.select(:id, :account_id).includes(account: :user).reorder(nil).find_each do |list|
+      FeedManager.instance.unpush_from_list(list, @status, **@options)
+    end
+  end
+
+  def remove_from_subscribers
+    @account.subscribers_for_local_distribution.with_reblog(@status.reblog?).with_media(@status.proper).includes(account: :user).reorder(nil).find_each do |subscribing|
+      FeedManager.instance.unpush_from_home(subscribing.account, @status, **@options)
+    end
+  end
+
+  def remove_from_subscribers_lists
+    @account.list_subscribers_for_local_distribution.with_reblog(@status.reblog?).with_media(@status.proper).includes(account: :user).reorder(nil).find_each do |subscribing|
+      FeedManager.instance.unpush_from_list(subscribing.list, @status, **@options)
     end
   end
 
@@ -94,7 +124,7 @@ class RemoveStatusService < BaseService
   end
 
   def signed_activity_json
-    @signed_activity_json ||= Oj.dump(serialize_payload(@status, @status.reblog? ? ActivityPub::UndoAnnounceSerializer : ActivityPub::DeleteSerializer, signer: @account))
+    @signed_activity_json ||= Oj.dump(serialize_payload(@status, @status.reblog? ? ActivityPub::UndoAnnounceSerializer : ActivityPub::DeleteSerializer, signer: @account, expiry: mark_expired? ? @status.expiry : nil))
   end
 
   def remove_reblogs
@@ -102,7 +132,7 @@ class RemoveStatusService < BaseService
     # because once original status is gone, reblogs will disappear
     # without us being able to do all the fancy stuff
 
-    @status.reblogs.includes(:account).find_each do |reblog|
+    @status.reblogs.includes(:account).reorder(nil).find_each do |reblog|
       RemoveStatusService.new.call(reblog, original_removed: true)
     end
   end
@@ -120,18 +150,46 @@ class RemoveStatusService < BaseService
     end
   end
 
+  def remove_from_group
+    payload = @status.reblog? ? Oj.dump(event: :delete, payload: @status.reblog.id.to_s) : @payload
+
+    redis.publish("timeline:group:#{@status.account.id}", payload)
+
+    @status.tags.map(&:name).each do |hashtag|
+      redis.publish("timeline:group:#{@status.account.id}:#{hashtag.mb_chars.downcase}", payload)
+    end
+
+    if @status.media_attachments.any?
+      redis.publish("timeline:group:media:#{@status.account.id}", payload)
+
+      @status.tags.map(&:name).each do |hashtag|
+        redis.publish("timeline:group:media:#{@status.account.id}:#{hashtag.mb_chars.downcase}", payload)
+      end
+    end
+  end
+
   def remove_from_public
     return unless @status.public_visibility?
 
     redis.publish('timeline:public', @payload)
-    redis.publish(@status.local? ? 'timeline:public:local' : 'timeline:public:remote', @payload)
+    if @status.local?
+      redis.publish('timeline:public:local', @payload)
+    else
+      redis.publish('timeline:public:remote', @payload)
+      redis.publish("timeline:public:domain:#{@account.domain.mb_chars.downcase}", @payload)
+    end
   end
 
   def remove_from_media
     return unless @status.public_visibility?
 
     redis.publish('timeline:public:media', @payload)
-    redis.publish(@status.local? ? 'timeline:public:local:media' : 'timeline:public:remote:media', @payload)
+    if @status.local?
+      redis.publish('timeline:public:local:media', @payload)
+    else
+      redis.publish('timeline:public:remote:media', @payload)
+      redis.publish("timeline:public:domain:media:#{@account.domain.mb_chars.downcase}", @payload)
+    end
   end
 
   def remove_media

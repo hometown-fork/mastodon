@@ -13,6 +13,8 @@ import {
   unfavourite,
   pin,
   unpin,
+  addEmojiReaction,
+  removeEmojiReaction,
 } from '../../../actions/interactions';
 import {
   muteStatus,
@@ -20,6 +22,8 @@ import {
   deleteStatus,
   hideStatus,
   revealStatus,
+  hideQuote,
+  revealQuote,
 } from '../../../actions/statuses';
 import { initMuteModal } from '../../../actions/mutes';
 import { initBlockModal } from '../../../actions/blocks';
@@ -29,6 +33,9 @@ import { openModal } from '../../../actions/modal';
 import { defineMessages, injectIntl } from 'react-intl';
 import { boostModal, deleteModal } from '../../../initial_state';
 import { showAlertForError } from '../../../actions/alerts';
+
+import { createSelector } from 'reselect';
+import { Map as ImmutableMap } from 'immutable';
 
 const messages = defineMessages({
   deleteConfirm: { id: 'confirmations.delete.confirm', defaultMessage: 'Delete' },
@@ -42,11 +49,13 @@ const messages = defineMessages({
 const makeMapStateToProps = () => {
   const getStatus = makeGetStatus();
   const getPictureInPicture = makeGetPictureInPicture();
+  const customEmojiMap = createSelector([state => state.get('custom_emojis')], items => items.reduce((map, emoji) => map.set(emoji.get('shortcode'), emoji), ImmutableMap()));
 
   const mapStateToProps = (state, props) => ({
     status: getStatus(state, props),
     domain: state.getIn(['meta', 'domain']),
     pictureInPicture: getPictureInPicture(state, props),
+    emojiMap: customEmojiMap(state),
   });
 
   return mapStateToProps;
@@ -77,7 +86,7 @@ const mapDispatchToProps = (dispatch, { intl }) => ({
     if (status.get('reblogged')) {
       dispatch(unreblog(status));
     } else {
-      if (e.shiftKey || !boostModal) {
+      if (e.shiftKey ^ !boostModal) {
         this.onModalReblog(status);
       } else {
         dispatch(initBoostModal({ status, onReblog: this.onModalReblog }));
@@ -136,6 +145,14 @@ const mapDispatchToProps = (dispatch, { intl }) => ({
     dispatch(openModal('VIDEO', { media, options }));
   },
 
+  onOpenMediaQuote (media, index) {
+    dispatch(openModal('MEDIA', { media, index }));
+  },
+
+  onOpenVideoQuote (media, options) {
+    dispatch(openModal('VIDEO', { media, options }));
+  },
+
   onBlock (status) {
     const account = status.get('account');
     dispatch(initBlockModal(account));
@@ -163,6 +180,22 @@ const mapDispatchToProps = (dispatch, { intl }) => ({
     } else {
       dispatch(hideStatus(status.get('id')));
     }
+  },
+
+  onQuoteToggleHidden (status) {
+    if (status.get('quote_hidden')) {
+      dispatch(revealQuote(status.get('id')));
+    } else {
+      dispatch(hideQuote(status.get('id')));
+    }
+  },
+
+  addEmojiReaction (status, name, domain, url, static_url) {
+    dispatch(addEmojiReaction(status, name, domain, url, static_url));
+  },
+
+  removeEmojiReaction (status) {
+    dispatch(removeEmojiReaction(status));
   },
 
 });

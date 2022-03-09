@@ -1,5 +1,5 @@
 import { PICTURE_IN_PICTURE_DEPLOY, PICTURE_IN_PICTURE_REMOVE } from 'mastodon/actions/picture_in_picture';
-import { TIMELINE_DELETE } from '../actions/timelines';
+import { TIMELINE_DELETE, TIMELINE_EXPIRE } from '../actions/timelines';
 
 const initialState = {
   statusId: null,
@@ -18,6 +18,7 @@ export default function pictureInPicture(state = initialState, action) {
   case PICTURE_IN_PICTURE_REMOVE:
     return { ...initialState };
   case TIMELINE_DELETE:
+  case TIMELINE_EXPIRE:
     return (state.statusId === action.id) ? { ...initialState } : state;
   default:
     return state;

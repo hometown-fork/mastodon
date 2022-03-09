@@ -1,0 +1,26 @@
+- content_for :page_title do
+  = t('settings.favourite_tags')
+
+%p= t('favourite_tags.hint_html')
+
+%hr.spacer/
+
+= simple_form_for @favourite_tag, url: settings_favourite_tags_path do |f|
+  = render 'shared/error_messages', object: @favourite_tag
+
+  .fields-group
+    = f.input :name, wrapper: :with_block_label, hint: false
+
+  .actions
+    = f.button :button, t('favourite_tags.add_new'), type: :submit
+
+%hr.spacer/
+
+- @favourite_tags.each do |favourite_tag|
+  .directory__tag{ class: params[:tag] == favourite_tag.name ? 'active' : nil }
+    %div
+      %h4
+        = fa_icon 'hashtag'
+        = favourite_tag.name
+        %small
+          = table_link_to 'trash', t('filters.index.delete'), settings_favourite_tag_path(favourite_tag), method: :delete, data: { confirm: t('admin.accounts.are_you_sure') }

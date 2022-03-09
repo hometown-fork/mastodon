@@ -100,8 +100,10 @@ module ApplicationHelper
       fa_icon('globe', title: I18n.t('statuses.visibilities.public'))
     elsif status.unlisted_visibility?
       fa_icon('unlock', title: I18n.t('statuses.visibilities.unlisted'))
-    elsif status.private_visibility? || status.limited_visibility?
+    elsif status.private_visibility?
       fa_icon('lock', title: I18n.t('statuses.visibilities.private'))
+    elsif status.limited_visibility?
+      fa_icon('user-circle', title: I18n.t('statuses.visibilities.limited'))
     elsif status.direct_visibility?
       fa_icon('envelope', title: I18n.t('statuses.visibilities.direct'))
     end
@@ -176,7 +178,7 @@ module ApplicationHelper
       text: [params[:title], params[:text], params[:url]].compact.join(' '),
     }
 
-    permit_visibilities = %w(public unlisted private direct)
+    permit_visibilities = %w(public unlisted private mutual direct)
     default_privacy     = current_account&.user&.setting_default_privacy
     permit_visibilities.shift(permit_visibilities.index(default_privacy) + 1) if default_privacy.present?
     state_params[:visibility] = params[:visibility] if permit_visibilities.include? params[:visibility]

@@ -21,7 +21,9 @@ class Tag < ApplicationRecord
   has_and_belongs_to_many :statuses
   has_and_belongs_to_many :accounts
 
+  has_many :favourite_tags, dependent: :destroy, inverse_of: :tag
   has_many :featured_tags, dependent: :destroy, inverse_of: :tag
+  has_many :follow_tags, dependent: :destroy, inverse_of: :tag
 
   HASHTAG_SEPARATORS = "_\u00B7\u200c"
   HASHTAG_NAME_RE    = "([[:word:]_][[:word:]#{HASHTAG_SEPARATORS}]*[[:alpha:]#{HASHTAG_SEPARATORS}][[:word:]#{HASHTAG_SEPARATORS}]*[[:word:]_])|([[:word:]_]*[[:alpha:]][[:word:]_]*)"
@@ -39,7 +41,9 @@ class Tag < ApplicationRecord
   scope :recently_used, ->(account) { joins(:statuses).where(statuses: { id: account.statuses.select(:id).limit(1000) }).group(:id).order(Arel.sql('count(*) desc')) }
   scope :matches_name, ->(term) { where(arel_table[:name].lower.matches(arel_table.lower("#{sanitize_sql_like(Tag.normalize(term))}%"), nil, true)) } # Search with case-sensitive to use B-tree index
 
-  update_index('tags#tag', :self)
+  before_save :set_unlistable, if: :force_unlistable?
+
+  update_index('tags', :self)
 
   def to_param
     name
@@ -62,6 +66,10 @@ class Tag < ApplicationRecord
   end
 
   alias trendable? trendable
+
+  def force_unlistable?
+    name.end_with?('_')
+  end
 
   def requires_review?
     reviewed_at.nil?
@@ -145,6 +153,10 @@ class Tag < ApplicationRecord
   end
 
   private
+
+  def set_unlistable
+    self.listable = false
+  end
 
   def validate_name_change
     errors.add(:name, I18n.t('tags.does_not_match_previous_name')) unless name_was.mb_chars.casecmp(name.mb_chars).zero?

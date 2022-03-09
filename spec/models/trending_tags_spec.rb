@@ -52,11 +52,11 @@ RSpec.describe TrendingTags do
     let(:tag) { Fabricate(:tag) }
 
     before do
-      10.times { |i| Redis.current.zadd('trending_tags', i + 1, Fabricate(:tag).id) }
+      20.times { |i| Redis.current.zadd('trending_tags', i + 1, Fabricate(:tag).id) }
     end
 
     it 'returns true if the hashtag is within limit' do
-      Redis.current.zadd('trending_tags', 11, tag.id)
+      Redis.current.zadd('trending_tags', 21, tag.id)
       expect(described_class.trending?(tag)).to be true
     end
 

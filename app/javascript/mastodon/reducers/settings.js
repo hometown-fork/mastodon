@@ -20,6 +20,23 @@ const initialState = ImmutableMap({
     shows: ImmutableMap({
       reblog: true,
       reply: true,
+      private: false,
+      limited: false,
+      direct: false,
+    }),
+
+    regex: ImmutableMap({
+      body: '',
+    }),
+  }),
+
+  limited: ImmutableMap({
+    shows: ImmutableMap({
+      reblog: true,
+      reply: true,
+      private: true,
+      limited: true,
+      direct: true,
     }),
 
     regex: ImmutableMap({
@@ -36,6 +53,7 @@ const initialState = ImmutableMap({
       mention: false,
       poll: false,
       status: false,
+      emoji_reaction: false,
     }),
 
     quickFilter: ImmutableMap({
@@ -55,6 +73,7 @@ const initialState = ImmutableMap({
       mention: true,
       poll: true,
       status: true,
+      emoji_reaction: true,
     }),
 
     sounds: ImmutableMap({
@@ -65,10 +84,23 @@ const initialState = ImmutableMap({
       mention: true,
       poll: true,
       status: true,
+      emoji_reaction: true,
     }),
   }),
 
   community: ImmutableMap({
+    regex: ImmutableMap({
+      body: '',
+    }),
+  }),
+
+  domain: ImmutableMap({
+    regex: ImmutableMap({
+      body: '',
+    }),
+  }),
+
+  group: ImmutableMap({
     regex: ImmutableMap({
       body: '',
     }),

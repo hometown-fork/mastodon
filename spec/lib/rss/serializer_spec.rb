@@ -24,7 +24,7 @@ describe RSS::Serializer do
       let(:text) { "This toot's text is longer than the allowed number of characters" }
 
       it 'truncates toot text appropriately' do
-        expect(subject).to eq "#{account.acct}: “This toot's text is longer tha…”"
+        expect(subject).to eq "#{account.acct}: “This toot's text is longer than the allowed number of charac…”"
       end
     end
 

@@ -56,6 +56,8 @@ class ActivityPub::Activity
         ActivityPub::Activity::Remove
       when 'Move'
         ActivityPub::Activity::Move
+      when 'EmojiReact'
+        ActivityPub::Activity::EmojiReact
       end
     end
   end
@@ -153,7 +155,9 @@ class ActivityPub::Activity
 
     return status unless status.nil?
 
-    # If the boosted toot is embedded and it is a self-boost, handle it like a Create
+    dereference_object!
+
+    # If the boosted toot is embedded and it is a self-boost or dereferenced, handle it like a Create
     unless unsupported_object_type?
       actor_id = value_or_id(first_of_value(@object['attributedTo']))
 
@@ -165,11 +169,16 @@ class ActivityPub::Activity
     fetch_remote_original_status
   end
 
+  def dereferenced?
+    @dereferenced
+  end
+
   def dereference_object!
     return unless @object.is_a?(String)
 
     dereferencer = ActivityPub::Dereferencer.new(@object, permitted_origin: @account.uri, signature_account: signed_fetch_account)
 
+    @dereferenced = !dereferencer.object.nil?
     @object = dereferencer.object unless dereferencer.object.nil?
   end
 
@@ -204,7 +213,12 @@ class ActivityPub::Activity
   def fetch_remote_original_status
     if object_uri.start_with?('http')
       return if ActivityPub::TagManager.instance.local_uri?(object_uri)
-      ActivityPub::FetchRemoteStatusService.new.call(object_uri, id: true, on_behalf_of: @account.followers.local.first)
+
+      if dereferenced?
+        ActivityPub::FetchRemoteStatusService.new.call(object_uri, id: true, prefetched_body: @object)
+      else
+        ActivityPub::FetchRemoteStatusService.new.call(object_uri, id: true, on_behalf_of: @account.followers.local.first)
+      end
     elsif @object['url'].present?
       ::FetchRemoteStatusService.new.call(@object['url'])
     end
@@ -241,5 +255,73 @@ class ActivityPub::Activity
   def reject_payload!
     Rails.logger.info("Rejected #{@json['type']} activity #{@json['id']} from #{@account.uri}#{@options[:relayed_through_account] && "via #{@options[:relayed_through_account].uri}"}")
     nil
+  end
+
+  def audience_to
+    as_array(@json['to']).map { |x| value_or_id(x) }
+  end
+
+  def audience_cc
+    as_array(@json['cc']).map { |x| value_or_id(x) }
+  end
+
+  def process_audience
+    conversation_uri = value_or_id(@object['context'])
+
+    (audience_to + audience_cc).uniq.each do |audience|
+      next if ActivityPub::TagManager.instance.public_collection?(audience) || audience == conversation_uri
+
+      # Unlike with tags, there is no point in resolving accounts we don't already
+      # know here, because silent mentions would only be used for local access
+      # control anyway
+      account = account_from_uri(audience)
+
+      next if account.nil? || @mentions.any? { |mention| mention.account_id == account.id }
+
+      @mentions << Mention.new(account: account, silent: true)
+
+      # If there is at least one silent mention, then the status can be considered
+      # as a limited-audience status, and not strictly a direct message, but only
+      # if we considered a direct message in the first place
+      @params[:visibility] = :limited if @params[:visibility] == :direct
+    end
+
+    # If the payload was delivered to a specific inbox, the inbox owner must have
+    # access to it, unless they already have access to it anyway
+    return if @options[:delivered_to_account_id].nil? || @mentions.any? { |mention| mention.account_id == @options[:delivered_to_account_id] }
+
+    @mentions << Mention.new(account_id: @options[:delivered_to_account_id], silent: true)
+
+    @params[:visibility] = :limited if @params[:visibility] == :direct
+  end
+
+  def postprocess_audience_and_deliver
+    return if @status.mentions.find_by(account_id: @options[:delivered_to_account_id])
+
+    delivered_to_account = Account.find(@options[:delivered_to_account_id])
+
+    @status.mentions.create(account: delivered_to_account, silent: true)
+    @status.update(visibility: :limited) if @status.direct_visibility?
+
+    return unless delivered_to_account.following?(@account)
+
+    FeedInsertWorker.perform_async(@status.id, delivered_to_account.id, :home)
+  end
+
+  def visibility_from_audience
+    if audience_to.any? { |to| ActivityPub::TagManager.instance.public_collection?(to) }
+      :public
+    elsif audience_cc.any? { |cc| ActivityPub::TagManager.instance.public_collection?(cc) }
+      :unlisted
+    elsif audience_to.include?(@account.followers_url)
+      :private
+    else
+      :direct
+    end
+  end
+
+  def audience_includes?(account)
+    uri = ActivityPub::TagManager.instance.uri_for(account)
+    audience_to.include?(uri) || audience_cc.include?(uri)
   end
 end

@@ -1,0 +1,9 @@
+- content_for :page_title do
+  = t('account_subscribes.edit.title')
+
+= simple_form_for @form_account_subscribing, url: settings_account_subscribe_path(@form_account_subscribing.id), method: :put do |f|
+  = render 'shared/error_messages', object: @form_account_subscribing
+  = render 'fields', f: f
+
+  .actions
+    = f.button :button, t('generic.save_changes'), type: :submit

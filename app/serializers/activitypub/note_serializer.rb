@@ -1,16 +1,21 @@
 # frozen_string_literal: true
 
 class ActivityPub::NoteSerializer < ActivityPub::Serializer
-  context_extensions :atom_uri, :conversation, :sensitive, :voters_count
+  context_extensions :atom_uri, :conversation, :sensitive, :voters_count, :expiry
 
   attributes :id, :type, :summary,
              :in_reply_to, :published, :url,
              :attributed_to, :to, :cc, :sensitive,
              :atom_uri, :in_reply_to_atom_uri,
-             :conversation
+             :conversation, :context
 
+  attribute :quote_url, if: -> { object.quote? }
+  attribute :misskey_quote, key: :_misskey_quote, if: -> { object.quote? }
+  attribute :misskey_content, key: :_misskey_content, if: -> { object.quote? }
   attribute :content
   attribute :content_map, if: :language?
+
+  attribute :expiry, if: :has_expiry?
 
   has_many :media_attachments, key: :attachment
   has_many :virtual_tags, key: :tag
@@ -79,6 +84,14 @@ class ActivityPub::NoteSerializer < ActivityPub::Serializer
     object.created_at.iso8601
   end
 
+  def has_expiry?
+    object.expiry.present?
+  end
+
+  def expiry
+    object.expiry.iso8601
+  end
+
   def url
     ActivityPub::TagManager.instance.url_for(object)
   end
@@ -123,6 +136,22 @@ class ActivityPub::NoteSerializer < ActivityPub::Serializer
     else
       OStatus::TagManager.instance.unique_tag(object.conversation.created_at, object.conversation.id, 'Conversation')
     end
+  end
+
+  def quote_url
+    ActivityPub::TagManager.instance.uri_for(object.quote) if object.quote?
+  end
+
+  alias misskey_quote quote_url
+
+  def misskey_content
+    object.text if object.quote?
+  end
+
+  def context
+    return if object.conversation.nil?
+
+    ActivityPub::TagManager.instance.uri_for(object.conversation)
   end
 
   def local?

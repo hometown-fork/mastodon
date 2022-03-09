@@ -17,6 +17,11 @@ export default class IntersectionObserverArticle extends React.Component {
     cachedHeight: PropTypes.number,
     onHeightChange: PropTypes.func,
     children: PropTypes.node,
+    tabIndex: PropTypes.string,
+  };
+
+  static defaultProps = {
+    tabIndex: '0',
   };
 
   state = {
@@ -102,7 +107,7 @@ export default class IntersectionObserverArticle extends React.Component {
   }
 
   render () {
-    const { children, id, index, listLength, cachedHeight } = this.props;
+    const { children, id, index, listLength, cachedHeight, tabIndex } = this.props;
     const { isIntersecting, isHidden } = this.state;
 
     if (!isIntersecting && (isHidden || cachedHeight)) {
@@ -113,7 +118,7 @@ export default class IntersectionObserverArticle extends React.Component {
           aria-setsize={listLength}
           style={{ height: `${this.height || cachedHeight}px`, opacity: 0, overflow: 'hidden' }}
           data-id={id}
-          tabIndex='0'
+          tabIndex={tabIndex}
         >
           {children && React.cloneElement(children, { hidden: true })}
         </article>
@@ -121,7 +126,7 @@ export default class IntersectionObserverArticle extends React.Component {
     }
 
     return (
-      <article ref={this.handleRef} aria-posinset={index + 1} aria-setsize={listLength} data-id={id} tabIndex='0'>
+      <article ref={this.handleRef} aria-posinset={index + 1} aria-setsize={listLength} data-id={id} tabIndex={tabIndex}>
         {children && React.cloneElement(children, { hidden: false })}
       </article>
     );

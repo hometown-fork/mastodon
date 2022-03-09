@@ -1,0 +1,9 @@
+- content_for :page_title do
+  = t('keyword_subscribes.edit.title')
+
+= simple_form_for @keyword_subscribe, url: settings_keyword_subscribe_path(@keyword_subscribe), method: :put do |f|
+  = render 'shared/error_messages', object: @keyword_subscribe
+  = render 'fields', f: f
+
+  .actions
+    = f.button :button, t('generic.save_changes'), type: :submit

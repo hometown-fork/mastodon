@@ -8,8 +8,16 @@ class Api::V1::ListsController < Api::BaseController
   before_action :set_list, except: [:index, :create]
 
   def index
-    @lists = List.where(account: current_account).all
+    @lists = load_lists.all
     render json: @lists, each_serializer: REST::ListSerializer
+  end
+
+  def load_lists
+    if list_params[:favourite]
+      List.where(account: current_account).where(favourite: true)
+    else
+      List.where(account: current_account)
+    end
   end
 
   def show
@@ -31,6 +39,16 @@ class Api::V1::ListsController < Api::BaseController
     render_empty
   end
 
+  def favourite
+    @list.favourite!
+    render json: @list, serializer: REST::ListSerializer
+  end
+
+  def unfavourite
+    @list.unfavourite!
+    render json: @list, serializer: REST::ListSerializer
+  end
+
   private
 
   def set_list
@@ -38,6 +56,6 @@ class Api::V1::ListsController < Api::BaseController
   end
 
   def list_params
-    params.permit(:title, :replies_policy, :is_exclusive)
+    params.permit(:title, :replies_policy, :is_exclusive, :favourite)
   end
 end

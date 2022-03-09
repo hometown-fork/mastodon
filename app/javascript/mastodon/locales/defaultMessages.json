@@ -152,6 +152,10 @@
       {
         "defaultMessage": "{count, plural, one {{counter} Follower} other {{counter} Followers}}",
         "id": "account.followers_counter"
+      },
+      {
+        "defaultMessage": "{count, plural, one {{counter} Subscriber} other {{counter} Subscribers}}",
+        "id": "account.subscribers_counter"
       }
     ],
     "path": "app/javascript/mastodon/components/common_counter.json"
@@ -452,6 +456,18 @@
       {
         "defaultMessage": "This post is only visible by other users of your instance",
         "id": "status.local_only"
+      },
+      {
+        "defaultMessage": "Quote",
+        "id": "status.quote"
+      },
+      {
+        "defaultMessage": "Unlisted quote",
+        "id": "status.unlisted_quote"
+      },
+      {
+        "defaultMessage": "Muted quote",
+        "id": "status.muted_quote"
       },
       {
         "defaultMessage": "Favourite",
@@ -1262,6 +1278,15 @@
     "descriptors": [
       {
         "defaultMessage": "Cancel",
+        "id": "quote_indicator.cancel"
+      }
+    ],
+    "path": "app/javascript/mastodon/features/compose/components/quote_indicator.json"
+  },
+  {
+    "descriptors": [
+      {
+        "defaultMessage": "Cancel",
         "id": "reply_indicator.cancel"
       }
     ],
@@ -1869,6 +1894,69 @@
       }
     ],
     "path": "app/javascript/mastodon/features/getting_started/index.json"
+  },
+  {
+    "descriptors": [
+      {
+        "defaultMessage": "Follow",
+        "id": "account.follow"
+      },
+      {
+        "defaultMessage": "Unfollow",
+        "id": "account.unfollow"
+      },
+      {
+        "defaultMessage": "Awaiting approval",
+        "id": "account.requested"
+      },
+      {
+        "defaultMessage": "Unblock @{name}",
+        "id": "account.unblock"
+      },
+      {
+        "defaultMessage": "Unmute @{name}",
+        "id": "account.unmute"
+      },
+      {
+        "defaultMessage": "Unfollow",
+        "id": "confirmations.unfollow.confirm"
+      },
+      {
+        "defaultMessage": "Are you sure you want to unfollow {name}?",
+        "id": "confirmations.unfollow.message"
+      }
+    ],
+    "path": "app/javascript/mastodon/features/group_timeline/components/account_card.json"
+  },
+  {
+    "descriptors": [
+      {
+        "defaultMessage": "Media only",
+        "id": "group.column_settings.media_only"
+      }
+    ],
+    "path": "app/javascript/mastodon/features/group_timeline/components/column_settings.json"
+  },
+  {
+    "descriptors": [
+      {
+        "defaultMessage": "Group timeline",
+        "id": "column.group"
+      },
+      {
+        "defaultMessage": "Show group detail",
+        "id": "home.show_group_detail"
+      },
+      {
+        "defaultMessage": "Hide group detail",
+        "id": "home.hide_group_detail"
+      },
+      {
+        "defaultMessage": "The group timeline is empty. When members of this group post new toots, they will appear here.",
+        "id": "empty_column.group"
+      }
+    ],
+    "path": "app/javascript/mastodon/features/group_timeline/index.json"
   },
   {
     "descriptors": [

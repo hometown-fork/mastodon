@@ -152,6 +152,17 @@ export default class ColumnSettings extends React.PureComponent {
             <SettingToggle prefix='notifications' settings={settings} settingPath={['sounds', 'status']} onChange={onChange} label={soundStr} />
           </div>
         </div>
+
+        <div role='group' aria-labelledby='notifications-reaction'>
+          <span id='notifications-reaction' className='column-settings__section'><FormattedMessage id='notifications.column_settings.emoji_reaction' defaultMessage='Reactions:' /></span>
+
+          <div className='column-settings__row'>
+            <SettingToggle disabled={browserPermission === 'denied'} prefix='notifications_desktop' settings={settings} settingPath={['alerts', 'emoji_reaction']} onChange={onChange} label={alertStr} />
+            {showPushSettings && <SettingToggle prefix='notifications_push' settings={pushSettings} settingPath={['alerts', 'emoji_reaction']} onChange={this.onPushChange} label={pushStr} />}
+            <SettingToggle prefix='notifications' settings={settings} settingPath={['shows', 'emoji_reaction']} onChange={onChange} label={showStr} />
+            <SettingToggle prefix='notifications' settings={settings} settingPath={['sounds', 'emoji_reaction']} onChange={onChange} label={soundStr} />
+          </div>
+        </div>
       </div>
     );
   }

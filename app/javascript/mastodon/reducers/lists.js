@@ -5,6 +5,8 @@ import {
   LIST_CREATE_SUCCESS,
   LIST_UPDATE_SUCCESS,
   LIST_DELETE_SUCCESS,
+  LIST_FAVOURITE_SUCCESS,
+  LIST_UNFAVOURITE_SUCCESS,
 } from '../actions/lists';
 import { Map as ImmutableMap, fromJS } from 'immutable';
 
@@ -25,6 +27,8 @@ export default function lists(state = initialState, action) {
   case LIST_FETCH_SUCCESS:
   case LIST_CREATE_SUCCESS:
   case LIST_UPDATE_SUCCESS:
+  case LIST_FAVOURITE_SUCCESS:
+  case LIST_UNFAVOURITE_SUCCESS:
     return normalizeList(state, action.list);
   case LISTS_FETCH_SUCCESS:
     return normalizeLists(state, action.lists);

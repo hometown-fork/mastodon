@@ -1,0 +1,22 @@
+- content_for :page_title do
+  = t('settings.follow_tags')
+
+%p= t('follow_tags.hint_html')
+
+= link_to t('follow_tags.new.title'), new_settings_follow_tag_path, class: 'button'
+
+%hr.spacer/
+
+- if @follow_tags.empty?
+  = nothing_here 'nothing-here--under-tabs'
+- else
+  .table-wrapper
+    %table.table
+      %thead
+        %tr
+          %th= t('simple_form.labels.follow_tag.name')
+          %th.nowrap.symbol= t('simple_form.labels.follow_tag.media_only')
+          %th.nowrap= t('simple_form.labels.follow_tag.timeline')
+          %th.nowrap
+      %tbody
+        = render partial: 'follow_tag', collection: @follow_tags

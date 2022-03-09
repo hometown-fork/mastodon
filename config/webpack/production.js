@@ -43,7 +43,7 @@ module.exports = merge(sharedConfig, {
 
   plugins: [
     new CompressionPlugin({
-      filename: '[path].gz[query]',
+      filename: '[path][base].gz[query]',
       cache: true,
       test: /\.(js|css|html|json|ico|svg|eot|otf|ttf|map)$/,
     }),
@@ -73,7 +73,7 @@ module.exports = merge(sharedConfig, {
       },
       externals: [
         '/emoji/1f602.svg', // used for emoji picker dropdown
-        '/emoji/sheet_10.png', // used in emoji-mart
+        '/emoji/sheet_13.png', // used in emoji-mart
       ],
       excludes: [
         '**/*.gz',

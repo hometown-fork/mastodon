@@ -1,12 +1,16 @@
+import { fetchRelationships } from './accounts';
 import { importFetchedStatus, importFetchedStatuses } from './importer';
 import { submitMarkers } from './markers';
 import api, { getLinks } from 'mastodon/api';
 import { Map as ImmutableMap, List as ImmutableList } from 'immutable';
 import compareId from 'mastodon/compare_id';
 import { usePendingItems as preferPendingItems } from 'mastodon/initial_state';
+import { getHomeVisibilities, getLimitedVisibilities } from 'mastodon/selectors';
+import { uniq } from '../utils/uniq';
 
 export const TIMELINE_UPDATE  = 'TIMELINE_UPDATE';
 export const TIMELINE_DELETE  = 'TIMELINE_DELETE';
+export const TIMELINE_EXPIRE  = 'TIMELINE_EXPIRE';
 export const TIMELINE_CLEAR   = 'TIMELINE_CLEAR';
 
 export const TIMELINE_EXPAND_REQUEST = 'TIMELINE_EXPAND_REQUEST';
@@ -39,16 +43,32 @@ export function updateTimeline(timeline, status, accept) {
     }
 
     dispatch(importFetchedStatus(status));
+    dispatch(fetchRelationships([status.reblog ? status.reblog.account.id : status.account.id, status.quote ? status.quote.account.id : null].filter(function(e){return e})));
 
-    dispatch({
-      type: TIMELINE_UPDATE,
-      timeline,
-      status,
-      usePendingItems: preferPendingItems,
-    });
+    const insertTimeline = timeline => {
+      dispatch({
+        type: TIMELINE_UPDATE,
+        timeline,
+        status,
+        usePendingItems: preferPendingItems,
+      });
+    };
+
+    const visibility = status.visibility_ex || status.visibility
+    const homeVisibilities = getHomeVisibilities(getState());
+    const limitedVisibilities = getLimitedVisibilities(getState());
 
     if (timeline === 'home') {
-      dispatch(submitMarkers());
+      if (homeVisibilities.length == 0 || homeVisibilities.includes(visibility)) {
+        insertTimeline('home');
+        dispatch(submitMarkers());
+      }
+
+      if (limitedVisibilities.includes(visibility)) {
+        insertTimeline('limited');
+      }
+    } else {
+      insertTimeline(timeline);
     }
   };
 };
@@ -57,14 +77,30 @@ export function deleteFromTimelines(id) {
   return (dispatch, getState) => {
     const accountId  = getState().getIn(['statuses', id, 'account']);
     const references = getState().get('statuses').filter(status => status.get('reblog') === id).map(status => status.get('id'));
-    const reblogOf   = getState().getIn(['statuses', id, 'reblog'], null);
+    const quotes     = getState().get('statuses').filter(status => status.get('quote_id') === id).map(status => status.get('id'));
 
     dispatch({
       type: TIMELINE_DELETE,
       id,
       accountId,
       references,
-      reblogOf,
+      quotes,
+    });
+  };
+};
+
+export function expireFromTimelines(id) {
+  return (dispatch, getState) => {
+    const accountId  = getState().getIn(['statuses', id, 'account']);
+    const references = getState().get('statuses').filter(status => status.get('reblog') === id).map(status => status.get('id'));
+    const quotes     = getState().get('statuses').filter(status => status.get('quote_id') === id).map(status => status.get('id'));
+
+    dispatch({
+      type: TIMELINE_EXPIRE,
+      id,
+      accountId,
+      references,
+      quotes,
     });
   };
 };
@@ -111,6 +147,7 @@ export function expandTimeline(timelineId, path, params = {}, done = noOp) {
     api(getState).get(path, { params }).then(response => {
       const next = getLinks(response).refs.find(link => link.rel === 'next');
       dispatch(importFetchedStatuses(response.data));
+      dispatch(fetchRelationships(uniq(response.data.map(item => item.reblog ? item.reblog.account.id : item.account.id).concat(response.data.map(item => item.quote ? item.quote.account.id : null)).filter(function(e){return e}))));
       dispatch(expandTimelineSuccess(timelineId, response.data, next ? next.uri : null, response.status === 206, isLoadingRecent, isLoadingMore, isLoadingRecent && preferPendingItems));
 
       if (timelineId === 'home') {
@@ -124,9 +161,12 @@ export function expandTimeline(timelineId, path, params = {}, done = noOp) {
   };
 };
 
-export const expandHomeTimeline            = ({ maxId } = {}, done = noOp) => expandTimeline('home', '/api/v1/timelines/home', { max_id: maxId }, done);
+export const expandHomeTimeline            = ({ maxId, visibilities } = {}, done = noOp) => expandTimeline('home', '/api/v1/timelines/home', { max_id: maxId, visibilities: visibilities}, done);
+export const expandLimitedTimeline         = ({ maxId, visibilities } = {}, done = noOp) => expandTimeline('limited', '/api/v1/timelines/home', { max_id: maxId, visibilities: visibilities}, done);
 export const expandPublicTimeline          = ({ maxId, onlyMedia, onlyRemote } = {}, done = noOp) => expandTimeline(`public${onlyRemote ? ':remote' : ''}${onlyMedia ? ':media' : ''}`, '/api/v1/timelines/public', { remote: !!onlyRemote, max_id: maxId, only_media: !!onlyMedia }, done);
 export const expandCommunityTimeline       = ({ maxId, onlyMedia } = {}, done = noOp) => expandTimeline(`community${onlyMedia ? ':media' : ''}`, '/api/v1/timelines/public', { local: true, max_id: maxId, only_media: !!onlyMedia }, done);
+export const expandDomainTimeline          = (domain, { maxId, onlyMedia } = {}, done = noOp) => expandTimeline(`domain${onlyMedia ? ':media' : ''}:${domain}`, '/api/v1/timelines/public', { local: false, domain: domain, max_id: maxId, only_media: !!onlyMedia }, done);
+export const expandGroupTimeline           = (id, { maxId, onlyMedia, tagged } = {}, done = noOp) => expandTimeline(`group:${id}${onlyMedia ? ':media' : ''}${tagged ? `:${tagged}` : ''}`, `/api/v1/timelines/group/${id}`, { max_id: maxId, only_media: !!onlyMedia, tagged: tagged }, done);
 export const expandAccountTimeline         = (accountId, { maxId, withReplies } = {}) => expandTimeline(`account:${accountId}${withReplies ? ':with_replies' : ''}`, `/api/v1/accounts/${accountId}/statuses`, { exclude_replies: !withReplies, max_id: maxId });
 export const expandAccountFeaturedTimeline = accountId => expandTimeline(`account:${accountId}:pinned`, `/api/v1/accounts/${accountId}/statuses`, { pinned: true });
 export const expandAccountMediaTimeline    = (accountId, { maxId } = {}) => expandTimeline(`account:${accountId}:media`, `/api/v1/accounts/${accountId}/statuses`, { max_id: maxId, only_media: true, limit: 40 });

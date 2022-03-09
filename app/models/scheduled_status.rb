@@ -26,7 +26,7 @@ class ScheduledStatus < ApplicationRecord
   private
 
   def validate_future_date
-    errors.add(:scheduled_at, I18n.t('scheduled_statuses.too_soon')) if scheduled_at.present? && scheduled_at <= Time.now.utc + PostStatusService::MIN_SCHEDULE_OFFSET
+    errors.add(:scheduled_at, I18n.t('scheduled_statuses.too_soon')) if scheduled_at.present? && scheduled_at <= Time.now.utc + PostStatusService::MIN_SCHEDULE_OFFSET - 20.seconds
   end
 
   def validate_total_limit

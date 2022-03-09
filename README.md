@@ -1,3 +1,6 @@
+TODO: FIXME
+
+<<<<<<< HEAD
 # Hometown: a Mastodon fork
 
 <img width="300" src="https://live.staticflickr.com/7005/26777339042_b32cef4e1f_b.jpg" alt="photo of a village of stone huts nestled in a lush green valley">
@@ -41,6 +44,54 @@ Hometown is microblogging for _writing_, but its goal is to accept many content 
 For Hometown this means if you subscribe to a service that sends out `Article` objects over ActivityPub (such as a blog on [Write As](https://write.as)), then those full articles render in your home timeline, behind a cut for length. Also, Hometown will render a variety of rich text like _italic_ and **bold**.
 
 Click on this GIF for a brief video demo:
+=======
+Fedibird
+========
+
+[![GitHub release](https://img.shields.io/github/release/fedibird/mastodon.svg)][releases]
+[![Build Status](https://img.shields.io/circleci/project/github/fedibird/mastodon.svg)][circleci]
+[![Code Climate](https://img.shields.io/codeclimate/maintainability/fedibird/mastodon.svg)][code_climate]
+[![Crowdin](https://badges.crowdin.net/fedibird/localized.svg)][crowdin]
+
+[releases]: https://github.com/fedibird/mastodon/releases
+[circleci]: https://circleci.com/gh/fedibird/mastodon
+[code_climate]: https://codeclimate.com/github/fedibird/mastodon
+[crowdin]: https://crowdin.com/project/fedibird
+
+Fedibird is a **free, open-source social network server** based on ActivityPub, which is a fork of Mastodon arranged with features maintained by Takeshi Umeda (noellabo). For the official version of Mastodon, please visit the [official website](https://joinmastodon.org) and the [upstream repository](https://github.com/mastodon/mastodon).
+
+This document describes the differences from Mastodon. Please also refer to the upstream [README.md](https://github.com/mastodon/mastodon/blob/main/README.md).
+
+## Mission
+
+Fedibird's mission is to expand the possibilities of Mastodon and the Fediverse by providing features that the official Mastodon is unable to adopt for various reasons.
+
+Some features are intentionally left out of the official Mastodon. Some features also bring a different user experience. Some features are simply in an experimental status.
+
+Fedibird will follow the official Mastodon and provide feedback on the results obtained here.
+
+## Highlighted features
+
+### Subscriptions
+
+Feeds information of interest to your timeline in a different way than following. Accounts, hashtags, keywords, domains, and more.
+
+### Emoji Reactions
+
+Emoji reactions are available, compatible with Misskey and Pleroma.
+
+### Quotes
+
+Allows quotes that are reachable to the original post, not dead copies.
+
+### Groups
+
+Allows you to create[WIP] and manage[WIP] groups, discover groups, a timeline dedicated to groups, and post to groups. You can join a group from your existing Fediverse account.
+
+### Posts expiry
+
+Posts can be made private when they expire. People who have favorited, bookmarked, or emoji-reacted to your posts will still be able to see them.
+>>>>>>> acdaa86ab682b27a2a7baaccf2a476e0ac407185
 
 <img src="http://tinysubversions.com/pics/hometown-article.gif" alt="Video demo of someone clicking 'read article' on an incoming article post, which then renders a full article.">
 
@@ -50,6 +101,7 @@ This is based on rich text work by [Claire Girka](https://sitedethib.com), and m
 
 Reading more content types also helps make the fediverse better. ActivityPub supports all kinds of content, but most ActivityPub servers shoehorn all their content into `Note` because that's the type that Mastodon treats as first-class. This has important implications for the fediverse and also on your day to do user experience.
 
+<<<<<<< HEAD
 Take the "quote tweet" debate for example.
 
 Twitter has a feature called "quote tweeting" that lets you embed what someone else tweets, with your own comment right next to it. It's really useful for provide commentary in context, like this, where I point people to a sale and they can read both my comment on the sale and the original tweet about the sale in one post:
@@ -85,10 +137,27 @@ Hometown uses [semantic versioning](https://semver.org) and follows a versioning
 ## Contributing to Hometown
 
 Setting up your Hometown development environment is [exactly like setting up your Mastodon development environment](https://docs.joinmastodon.org/dev/overview/). Pull requests should be made to the `hometown-dev` branch, which is our default branch in Github.
+=======
+- **PostgreSQL** 10+ (Note: Requires a newer version than Mastodon)
+- **Redis** 4+
+- **Ruby** 2.5+
+- **Node.js** 12+
+
+## Contributing
+
+Fedibird is **free, open-source software** licensed under **AGPLv3**.
+
+However, if you are not targeting Fedibird-specific features, please consider contributing to the upstream first; see Mastodon's [CONTRIBUTING.md](CONTRIBUTING.md). If you want to make an issue or pull request to Fedibird, please do so to the default branch of fedibird/mastodon.
+
+### Translations
+
+The translation specific to Fedibird has been separated from Mastodon. You can submit translations via [Fedibird translation in Crowdin](https://crowdin.com/project/fedibird). They are periodically merged into the codebase.
+>>>>>>> acdaa86ab682b27a2a7baaccf2a476e0ac407185
 
 ## License
 
-Copyright (C) 2016-2021 Eugen Rochko & other Mastodon contributors (see [AUTHORS.md](AUTHORS.md))
+Copyright (C) 2018-2021 Takeshi Umeda  
+based on code by Mastodon Copyright (C) 2016-2021 Eugen Rochko & other Mastodon contributors (see [AUTHORS.md](AUTHORS.md))
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 

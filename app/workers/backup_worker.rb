@@ -3,7 +3,7 @@
 class BackupWorker
   include Sidekiq::Worker
 
-  sidekiq_options queue: 'pull', backtrace: true, retry: 5, dead: false
+  sidekiq_options queue: 'backup', backtrace: true, retry: 5, dead: true
 
   sidekiq_retries_exhausted do |msg|
     backup_id = msg['args'].first

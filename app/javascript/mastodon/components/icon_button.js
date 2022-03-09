@@ -16,6 +16,8 @@ export default class IconButton extends React.PureComponent {
     onKeyPress: PropTypes.func,
     size: PropTypes.number,
     active: PropTypes.bool,
+    passive: PropTypes.bool,
+    no_delivery: PropTypes.bool,
     pressed: PropTypes.bool,
     expanded: PropTypes.bool,
     style: PropTypes.object,
@@ -32,6 +34,8 @@ export default class IconButton extends React.PureComponent {
   static defaultProps = {
     size: 18,
     active: false,
+    passive: false,
+    no_delivery: false,
     disabled: false,
     animate: false,
     overlay: false,
@@ -92,11 +96,13 @@ export default class IconButton extends React.PureComponent {
     const {
       active,
       className,
+      no_delivery,
       disabled,
       expanded,
       icon,
       inverted,
       overlay,
+      passive,
       pressed,
       tabIndex,
       title,
@@ -111,6 +117,8 @@ export default class IconButton extends React.PureComponent {
 
     const classes = classNames(className, 'icon-button', {
       active,
+      passive,
+      no_delivery,
       disabled,
       inverted,
       activate,

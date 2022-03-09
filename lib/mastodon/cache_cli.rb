@@ -20,6 +20,7 @@ module Mastodon
 
     option :concurrency, type: :numeric, default: 5, aliases: [:c]
     option :verbose, type: :boolean, aliases: [:v]
+    option :reaction_only, type: :boolean
     desc 'recount TYPE', 'Update hard-cached counters'
     long_desc <<~LONG_DESC
       Update hard-cached counters of TYPE by counting referenced
@@ -32,19 +33,24 @@ module Mastodon
       case type
       when 'accounts'
         processed, = parallelize_with_progress(Account.local.includes(:account_stat)) do |account|
-          account_stat                 = account.account_stat
-          account_stat.following_count = account.active_relationships.count
-          account_stat.followers_count = account.passive_relationships.count
-          account_stat.statuses_count  = account.statuses.where.not(visibility: :direct).count
+          account_stat                   = account.account_stat
+          account_stat.following_count   = account.active_relationships.count
+          account_stat.followers_count   = account.passive_relationships.count
+          account_stat.subscribing_count = account.active_subscribes.count
+          account_stat.statuses_count    = account.statuses.where.not(visibility: :direct).count
 
           account_stat.save if account_stat.changed?
         end
       when 'statuses'
-        processed, = parallelize_with_progress(Status.includes(:status_stat)) do |status|
-          status_stat                  = status.status_stat
-          status_stat.replies_count    = status.replies.where.not(visibility: :direct).count
-          status_stat.reblogs_count    = status.reblogs.count
-          status_stat.favourites_count = status.favourites.count
+        statuses = Status.includes(:status_stat)
+        statuses = statuses.joins(:emoji_reactions).distinct if options[:reaction_only]
+
+        processed, = parallelize_with_progress(statuses) do |status|
+          status_stat                       = status.status_stat
+          status_stat.replies_count         = status.replies.where.not(visibility: :direct).count
+          status_stat.reblogs_count         = status.reblogs.count
+          status_stat.favourites_count      = status.favourites.count
+          status_stat.emoji_reactions_cache = status.generate_grouped_emoji_reactions
 
           status_stat.save if status_stat.changed?
         end

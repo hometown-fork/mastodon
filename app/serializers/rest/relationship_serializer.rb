@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class REST::RelationshipSerializer < ActiveModel::Serializer
-  attributes :id, :following, :showing_reblogs, :notifying, :followed_by,
+  attributes :id, :following, :delivery_following, :showing_reblogs, :notifying, :followed_by, :account_subscribing,
              :blocking, :blocked_by, :muting, :muting_notifications, :requested,
              :domain_blocking, :endorsed, :note
 
@@ -13,20 +13,24 @@ class REST::RelationshipSerializer < ActiveModel::Serializer
     instance_options[:relationships].following[object.id] ? true : false
   end
 
+  def delivery_following
+    instance_options[:relationships].delivery_following[object.id] ? true : false
+  end
+
   def showing_reblogs
-    (instance_options[:relationships].following[object.id] || {})[:reblogs] ||
-      (instance_options[:relationships].requested[object.id] || {})[:reblogs] ||
-      false
+    instance_options[:relationships].showing_reblogs[object.id] ? true : false
   end
 
   def notifying
-    (instance_options[:relationships].following[object.id] || {})[:notify] ||
-      (instance_options[:relationships].requested[object.id] || {})[:notify] ||
-      false
+    instance_options[:relationships].notifying[object.id] ? true : false
   end
 
   def followed_by
     instance_options[:relationships].followed_by[object.id] || false
+  end
+
+  def account_subscribing
+    instance_options[:relationships].subscribing[object.id] || {}
   end
 
   def blocking
@@ -42,7 +46,7 @@ class REST::RelationshipSerializer < ActiveModel::Serializer
   end
 
   def muting_notifications
-    (instance_options[:relationships].muting[object.id] || {})[:notifications] || false
+    instance_options[:relationships].muting_notifications[object.id] ? true : false
   end
 
   def requested

@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import PropTypes from 'prop-types';
 import { defineMessages, injectIntl, FormattedMessage } from 'react-intl';
 import Button from 'mastodon/components/button';
 import ImmutablePureComponent from 'react-immutable-pure-component';
-import { autoPlayGif, me, isStaff } from 'mastodon/initial_state';
+import { autoPlayGif, me, isStaff, show_followed_by, follow_button_to_list_adder } from 'mastodon/initial_state';
 import classNames from 'classnames';
 import Icon from 'mastodon/components/icon';
 import IconButton from 'mastodon/components/icon_button';
@@ -18,6 +18,8 @@ import AccountNoteContainer from '../containers/account_note_container';
 const messages = defineMessages({
   unfollow: { id: 'account.unfollow', defaultMessage: 'Unfollow' },
   follow: { id: 'account.follow', defaultMessage: 'Follow' },
+  unsubscribe: { id: 'account.unsubscribe', defaultMessage: 'Unsubscribe' },
+  subscribe: { id: 'account.subscribe', defaultMessage: 'Subscribe' },
   cancel_follow_request: { id: 'account.cancel_follow_request', defaultMessage: 'Cancel follow request' },
   requested: { id: 'account.requested', defaultMessage: 'Awaiting approval. Click to cancel follow request' },
   unblock: { id: 'account.unblock', defaultMessage: 'Unblock @{name}' },
@@ -43,12 +45,14 @@ const messages = defineMessages({
   follow_requests: { id: 'navigation_bar.follow_requests', defaultMessage: 'Follow requests' },
   favourites: { id: 'navigation_bar.favourites', defaultMessage: 'Favourites' },
   lists: { id: 'navigation_bar.lists', defaultMessage: 'Lists' },
+  circles: { id: 'navigation_bar.circles', defaultMessage: 'Circles' },
   blocks: { id: 'navigation_bar.blocks', defaultMessage: 'Blocked users' },
   domain_blocks: { id: 'navigation_bar.domain_blocks', defaultMessage: 'Blocked domains' },
   mutes: { id: 'navigation_bar.mutes', defaultMessage: 'Muted users' },
   endorse: { id: 'account.endorse', defaultMessage: 'Feature on profile' },
   unendorse: { id: 'account.unendorse', defaultMessage: 'Don\'t feature on profile' },
   add_or_remove_from_list: { id: 'account.add_or_remove_from_list', defaultMessage: 'Add or Remove from lists' },
+  add_or_remove_from_circle: { id: 'account.add_or_remove_from_circle', defaultMessage: 'Add or Remove from circles' },
   admin_account: { id: 'status.admin_account', defaultMessage: 'Open moderation interface for @{name}' },
 });
 
@@ -68,6 +72,8 @@ class Header extends ImmutablePureComponent {
     account: ImmutablePropTypes.map,
     identity_props: ImmutablePropTypes.list,
     onFollow: PropTypes.func.isRequired,
+    onSubscribe: PropTypes.func.isRequired,
+    onAddToList: PropTypes.func.isRequired,
     onBlock: PropTypes.func.isRequired,
     onMention: PropTypes.func.isRequired,
     onDirect: PropTypes.func.isRequired,
@@ -120,6 +126,26 @@ class Header extends ImmutablePureComponent {
       let emoji = emojis[i];
       emoji.src = emoji.getAttribute('data-static');
     }
+  }
+
+  handleFollow = (e) => {
+    if ((e && e.shiftKey) ^ !follow_button_to_list_adder) {
+      this.props.onFollow(this.props.account);
+    } else {
+      this.props.onAddToList(this.props.account);
+    }
+  }
+
+  handleSubscribe = (e) => {
+    if ((e && e.shiftKey) ^ !follow_button_to_list_adder) {
+      this.props.onSubscribe(this.props.account);
+    } else {
+      this.props.onAddToList(this.props.account);
+    }
+  }
+
+  setRef = (c) => {
+    this.node = c;
   }
 
   render () {
@@ -194,6 +220,7 @@ class Header extends ImmutablePureComponent {
       menu.push({ text: intl.formatMessage(messages.follow_requests), to: '/follow_requests' });
       menu.push({ text: intl.formatMessage(messages.favourites), to: '/favourites' });
       menu.push({ text: intl.formatMessage(messages.lists), to: '/lists' });
+      menu.push({ text: intl.formatMessage(messages.circles), to: '/circles' });
       menu.push(null);
       menu.push({ text: intl.formatMessage(messages.mutes), to: '/mutes' });
       menu.push({ text: intl.formatMessage(messages.blocks), to: '/blocks' });
@@ -209,7 +236,13 @@ class Header extends ImmutablePureComponent {
         }
 
         menu.push({ text: intl.formatMessage(account.getIn(['relationship', 'endorsed']) ? messages.unendorse : messages.endorse), action: this.props.onEndorseToggle });
-        menu.push({ text: intl.formatMessage(messages.add_or_remove_from_list), action: this.props.onAddToList });
+        menu.push(null);
+      }
+      menu.push({ text: intl.formatMessage(messages.add_or_remove_from_list), action: this.props.onAddToList });
+      menu.push(null);
+
+      if (account.getIn(['relationship', 'followed_by'])) {
+        menu.push({ text: intl.formatMessage(messages.add_or_remove_from_circle), action: this.props.onAddToCircle });
         menu.push(null);
       }
 
@@ -260,6 +293,46 @@ class Header extends ImmutablePureComponent {
       badge = null;
     }
 
+    const following        = account.getIn(['relationship', 'following']);
+    const delivery         = account.getIn(['relationship', 'delivery_following']);
+    const followed_by      = account.getIn(['relationship', 'followed_by']) && show_followed_by;
+    const subscribing      = account.getIn(['relationship', 'subscribing'], new Map).size > 0;
+    const subscribing_home = account.getIn(['relationship', 'subscribing', '-1'], new Map).size > 0;
+    const blockd_by        = account.getIn(['relationship', 'blocked_by']);
+    let buttons;
+
+    if(me !== account.get('id') && !blockd_by) {
+      let following_buttons, subscribing_buttons;
+      if(!account.get('moved') || subscribing) {
+        subscribing_buttons = (
+          <IconButton
+            icon='rss-square'
+            title={intl.formatMessage(
+              subscribing ? messages.unsubscribe : messages.subscribe
+            )}
+            onClick={this.handleSubscribe}
+            active={subscribing}
+            no_delivery={subscribing && !subscribing_home}
+          />
+        );
+      }
+      if(!account.get('moved') || following) {
+        following_buttons = (
+          <IconButton
+            icon={following ? 'user-times' : 'user-plus'}
+            title={intl.formatMessage(
+              following ? messages.unfollow : messages.follow
+            )}
+            onClick={this.handleFollow}
+            active={following}
+            passive={followed_by}
+            no_delivery={following && !delivery}
+          />
+        );
+      }
+      buttons = <Fragment>{subscribing_buttons}{following_buttons}</Fragment>;
+    }
+
     return (
       <div className={classNames('account__header', { inactive: !!account.get('moved') })} onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave}>
         <div className='account__header__image'>
@@ -293,6 +366,9 @@ class Header extends ImmutablePureComponent {
               <span dangerouslySetInnerHTML={displayNameHtml} /> {badge}
               <small>@{acct} {lockedIcon}</small>
             </h1>
+            <div className='account__header__tabs__name__relationship account__relationship'>
+              {buttons}
+            </div>
           </div>
 
           <div className='account__header__extra'>
@@ -352,6 +428,15 @@ class Header extends ImmutablePureComponent {
                     renderer={counterRenderer('followers')}
                   />
                 </NavLink>
+
+                { (me === account.get('id')) && (
+                  <NavLink exact activeClassName='active' to={`/accounts/${account.get('id')}/subscribing`} title={intl.formatNumber(account.get('subscribing_count'))}>
+                    <ShortNumber
+                      value={account.get('subscribing_count')}
+                      renderer={counterRenderer('subscribers')}
+                    />
+                  </NavLink>
+                )}
               </div>
             )}
           </div>

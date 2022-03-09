@@ -12,6 +12,7 @@ import BoostModal from './boost_modal';
 import AudioModal from './audio_modal';
 import ConfirmationModal from './confirmation_modal';
 import FocalPointModal from './focal_point_modal';
+import CalendarModal from './calendar_modal';
 import {
   MuteModal,
   BlockModal,
@@ -19,7 +20,10 @@ import {
   EmbedModal,
   ListEditor,
   ListAdder,
+  CircleEditor,
+  CircleAdder,
 } from '../../../features/ui/util/async-components';
+import ReactionModal from './reaction_modal';
 
 const MODAL_COMPONENTS = {
   'MEDIA': () => Promise.resolve({ default: MediaModal }),
@@ -34,7 +38,11 @@ const MODAL_COMPONENTS = {
   'EMBED': EmbedModal,
   'LIST_EDITOR': ListEditor,
   'FOCAL_POINT': () => Promise.resolve({ default: FocalPointModal }),
-  'LIST_ADDER':ListAdder,
+  'LIST_ADDER': ListAdder,
+  'CIRCLE_EDITOR': CircleEditor,
+  'CIRCLE_ADDER': CircleAdder,
+  'CALENDAR': () => Promise.resolve({ default: CalendarModal }),
+  'REACTION': () => Promise.resolve({ default: ReactionModal }),
 };
 
 export default class ModalRoot extends React.PureComponent {
@@ -68,7 +76,7 @@ export default class ModalRoot extends React.PureComponent {
   }
 
   renderLoading = modalId => () => {
-    return ['MEDIA', 'VIDEO', 'BOOST', 'CONFIRM', 'ACTIONS'].indexOf(modalId) === -1 ? <ModalLoading /> : null;
+    return ['MEDIA', 'VIDEO', 'BOOST', 'CONFIRM', 'ACTIONS', 'CALENDAR', 'REACTION'].indexOf(modalId) === -1 ? <ModalLoading /> : null;
   }
 
   renderError = (props) => {
@@ -77,16 +85,33 @@ export default class ModalRoot extends React.PureComponent {
     return <BundleModalError {...props} onClose={onClose} />;
   }
 
+  handleClose = () => {
+    const { onClose } = this.props;
+    let message = null;
+    try {
+      message = this._modal?.getWrappedInstance?.().getCloseConfirmationMessage?.();
+    } catch (_) {
+      // injectIntl defines `getWrappedInstance` but errors out if `withRef`
+      // isn't set.
+      // This would be much smoother with react-intl 3+ and `forwardRef`.
+    }
+    onClose(message);
+  }
+
+  setModalRef = (c) => {
+    this._modal = c;
+  }
+
   render () {
-    const { type, props, onClose } = this.props;
+    const { type, props } = this.props;
     const { backgroundColor } = this.state;
     const visible = !!type;
 
     return (
-      <Base backgroundColor={backgroundColor} onClose={onClose}>
+      <Base backgroundColor={backgroundColor} onClose={this.handleClose}>
         {visible && (
           <BundleContainer fetchComponent={MODAL_COMPONENTS[type]} loading={this.renderLoading(type)} error={this.renderError} renderDelay={200}>
-            {(SpecificComponent) => <SpecificComponent {...props} onChangeBackgroundColor={this.setBackgroundColor} onClose={onClose} />}
+            {(SpecificComponent) => <SpecificComponent {...props} onChangeBackgroundColor={this.setBackgroundColor} onClose={this.handleClose} ref={this.setModalRef} />}
           </BundleContainer>
         )}
       </Base>

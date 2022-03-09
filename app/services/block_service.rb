@@ -9,6 +9,8 @@ class BlockService < BaseService
     UnfollowService.new.call(account, target_account) if account.following?(target_account)
     UnfollowService.new.call(target_account, account) if target_account.following?(account)
     RejectFollowService.new.call(target_account, account) if target_account.requested?(account)
+    UnsubscribeAccountService.new.call(account, target_account, list_id: :all)
+    UnsubscribeAccountService.new.call(target_account, account, list_id: :all)
 
     block = account.block!(target_account)
 

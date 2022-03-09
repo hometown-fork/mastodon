@@ -11,6 +11,7 @@
 #  show_reblogs      :boolean          default(TRUE), not null
 #  uri               :string
 #  notify            :boolean          default(FALSE), not null
+#  delivery          :boolean          default(TRUE), not null
 #
 
 class FollowRequest < ApplicationRecord
@@ -29,8 +30,8 @@ class FollowRequest < ApplicationRecord
   validates :account_id, uniqueness: { scope: :target_account_id }
 
   def authorize!
-    account.follow!(target_account, reblogs: show_reblogs, notify: notify, uri: uri, bypass_limit: true)
-    MergeWorker.perform_async(target_account.id, account.id) if account.local?
+    account.follow!(target_account, reblogs: show_reblogs, notify: notify, delivery: delivery, uri: uri, bypass_limit: true)
+    MergeWorker.perform_async(target_account.id, account.id) if account.local? && delivery?
     destroy!
   end
 

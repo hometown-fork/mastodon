@@ -7,9 +7,12 @@ import { useEmoji } from './emojis';
 import resizeImage from '../utils/resize_image';
 import { importFetchedAccounts } from './importer';
 import { updateTimeline } from './timelines';
+import { getHomeVisibilities, getLimitedVisibilities } from 'mastodon/selectors';
 import { showAlertForError } from './alerts';
 import { showAlert } from './alerts';
+import { openModal } from './modal';
 import { defineMessages } from 'react-intl';
+import { addYears, addMonths, addDays, addHours, addMinutes, addSeconds, millisecondsToSeconds, set, parseISO, formatISO } from 'date-fns';
 
 let cancelFetchComposeSuggestionsAccounts, cancelFetchComposeSuggestionsTags;
 
@@ -20,6 +23,8 @@ export const COMPOSE_SUBMIT_FAIL     = 'COMPOSE_SUBMIT_FAIL';
 export const COMPOSE_REPLY           = 'COMPOSE_REPLY';
 export const COMPOSE_REPLY_CANCEL    = 'COMPOSE_REPLY_CANCEL';
 export const COMPOSE_DIRECT          = 'COMPOSE_DIRECT';
+export const COMPOSE_QUOTE           = 'COMPOSE_QUOTE';
+export const COMPOSE_QUOTE_CANCEL    = 'COMPOSE_QUOTE_CANCEL';
 export const COMPOSE_MENTION         = 'COMPOSE_MENTION';
 export const COMPOSE_RESET           = 'COMPOSE_RESET';
 export const COMPOSE_UPLOAD_REQUEST  = 'COMPOSE_UPLOAD_REQUEST';
@@ -33,9 +38,9 @@ export const THUMBNAIL_UPLOAD_SUCCESS  = 'THUMBNAIL_UPLOAD_SUCCESS';
 export const THUMBNAIL_UPLOAD_FAIL     = 'THUMBNAIL_UPLOAD_FAIL';
 export const THUMBNAIL_UPLOAD_PROGRESS = 'THUMBNAIL_UPLOAD_PROGRESS';
 
-export const COMPOSE_SUGGESTIONS_CLEAR = 'COMPOSE_SUGGESTIONS_CLEAR';
-export const COMPOSE_SUGGESTIONS_READY = 'COMPOSE_SUGGESTIONS_READY';
-export const COMPOSE_SUGGESTION_SELECT = 'COMPOSE_SUGGESTION_SELECT';
+export const COMPOSE_SUGGESTIONS_CLEAR      = 'COMPOSE_SUGGESTIONS_CLEAR';
+export const COMPOSE_SUGGESTIONS_READY      = 'COMPOSE_SUGGESTIONS_READY';
+export const COMPOSE_SUGGESTION_SELECT      = 'COMPOSE_SUGGESTION_SELECT';
 export const COMPOSE_SUGGESTION_TAGS_UPDATE = 'COMPOSE_SUGGESTION_TAGS_UPDATE';
 
 export const COMPOSE_TAG_HISTORY_UPDATE = 'COMPOSE_TAG_HISTORY_UPDATE';
@@ -43,19 +48,20 @@ export const COMPOSE_TAG_HISTORY_UPDATE = 'COMPOSE_TAG_HISTORY_UPDATE';
 export const COMPOSE_MOUNT   = 'COMPOSE_MOUNT';
 export const COMPOSE_UNMOUNT = 'COMPOSE_UNMOUNT';
 
-export const COMPOSE_SENSITIVITY_CHANGE = 'COMPOSE_SENSITIVITY_CHANGE';
-export const COMPOSE_SPOILERNESS_CHANGE = 'COMPOSE_SPOILERNESS_CHANGE';
+export const COMPOSE_SENSITIVITY_CHANGE  = 'COMPOSE_SENSITIVITY_CHANGE';
+export const COMPOSE_SPOILERNESS_CHANGE  = 'COMPOSE_SPOILERNESS_CHANGE';
 export const COMPOSE_SPOILER_TEXT_CHANGE = 'COMPOSE_SPOILER_TEXT_CHANGE';
-export const COMPOSE_VISIBILITY_CHANGE  = 'COMPOSE_VISIBILITY_CHANGE';
+export const COMPOSE_VISIBILITY_CHANGE   = 'COMPOSE_VISIBILITY_CHANGE';
+export const COMPOSE_CIRCLE_CHANGE       = 'COMPOSE_CIRCLE_CHANGE';
 export const COMPOSE_FEDERATION_CHANGE  = 'COMPOSE_FEDERATION_CHANGE';
-export const COMPOSE_LISTABILITY_CHANGE = 'COMPOSE_LISTABILITY_CHANGE';
-export const COMPOSE_COMPOSING_CHANGE = 'COMPOSE_COMPOSING_CHANGE';
+export const COMPOSE_LISTABILITY_CHANGE  = 'COMPOSE_LISTABILITY_CHANGE';
+export const COMPOSE_COMPOSING_CHANGE    = 'COMPOSE_COMPOSING_CHANGE';
 
 export const COMPOSE_EMOJI_INSERT = 'COMPOSE_EMOJI_INSERT';
 
-export const COMPOSE_UPLOAD_CHANGE_REQUEST     = 'COMPOSE_UPLOAD_UPDATE_REQUEST';
-export const COMPOSE_UPLOAD_CHANGE_SUCCESS     = 'COMPOSE_UPLOAD_UPDATE_SUCCESS';
-export const COMPOSE_UPLOAD_CHANGE_FAIL        = 'COMPOSE_UPLOAD_UPDATE_FAIL';
+export const COMPOSE_UPLOAD_CHANGE_REQUEST = 'COMPOSE_UPLOAD_UPDATE_REQUEST';
+export const COMPOSE_UPLOAD_CHANGE_SUCCESS = 'COMPOSE_UPLOAD_UPDATE_SUCCESS';
+export const COMPOSE_UPLOAD_CHANGE_FAIL    = 'COMPOSE_UPLOAD_UPDATE_FAIL';
 
 export const COMPOSE_POLL_ADD             = 'COMPOSE_POLL_ADD';
 export const COMPOSE_POLL_REMOVE          = 'COMPOSE_POLL_REMOVE';
@@ -63,6 +69,17 @@ export const COMPOSE_POLL_OPTION_ADD      = 'COMPOSE_POLL_OPTION_ADD';
 export const COMPOSE_POLL_OPTION_CHANGE   = 'COMPOSE_POLL_OPTION_CHANGE';
 export const COMPOSE_POLL_OPTION_REMOVE   = 'COMPOSE_POLL_OPTION_REMOVE';
 export const COMPOSE_POLL_SETTINGS_CHANGE = 'COMPOSE_POLL_SETTINGS_CHANGE';
+
+export const INIT_MEDIA_EDIT_MODAL = 'INIT_MEDIA_EDIT_MODAL';
+
+export const COMPOSE_CHANGE_MEDIA_DESCRIPTION = 'COMPOSE_CHANGE_MEDIA_DESCRIPTION';
+export const COMPOSE_CHANGE_MEDIA_FOCUS       = 'COMPOSE_CHANGE_MEDIA_FOCUS';
+
+export const COMPOSE_DATETIME_FORM_OPEN    = 'COMPOSE_DATETIME_FORM_OPEN';
+export const COMPOSE_DATETIME_FORM_CLOSE   = 'COMPOSE_DATETIME_FORM_CLOSE';
+export const COMPOSE_SCHEDULED_CHANGE      = 'COMPOSE_SCHEDULED_CHANGE';
+export const COMPOSE_EXPIRES_CHANGE        = 'COMPOSE_EXPIRES_CHANGE';
+export const COMPOSE_EXPIRES_ACTION_CHANGE = 'COMPOSE_EXPIRES_ACTION_CHANGE';
 
 const messages = defineMessages({
   uploadErrorLimit: { id: 'upload_error.limit', defaultMessage: 'File upload limit exceeded.' },
@@ -101,6 +118,23 @@ export function cancelReplyCompose() {
   };
 };
 
+export function quoteCompose(status, routerHistory) {
+  return (dispatch, getState) => {
+    dispatch({
+      type: COMPOSE_QUOTE,
+      status: status,
+    });
+
+    ensureComposeIsVisible(getState, routerHistory);
+  };
+};
+
+export function cancelQuoteCompose() {
+  return {
+    type: COMPOSE_QUOTE_CANCEL,
+  };
+};
+
 export function resetCompose() {
   return {
     type: COMPOSE_RESET,
@@ -129,10 +163,56 @@ export function directCompose(account, routerHistory) {
   };
 };
 
+const parseSimpleDurationFormat = (value, origin = new Date()) => {
+  if (!value || typeof value !== 'string') {
+    return null;
+  }
+
+  const [_, year = 0, month = 0, day = 0, hour = 0, minite = 0] = value.match(/^(?:(\d+)y)?(?:(\d+)m(?=[\do])o?)?(?:(\d+)d)?(?:(\d+)h)?(?:(\d+)m)?$/) ?? [];
+  const duration = millisecondsToSeconds(addMinutes(addHours(addDays(addMonths(addYears(origin, year), month), day), hour), minite) - origin);
+
+  return duration == 0 ? null : duration;
+};
+
+export const getDateTimeFromText = (value, origin = new Date()) => {
+  const duration = parseSimpleDurationFormat(value, origin);
+  const datetime = (() => {
+    if (duration) {
+      return addSeconds(origin, duration);
+    }
+
+    if (typeof value !== 'string') {
+      return value;
+    }
+
+    if (value.length >= 7) {
+      const isoDateTime = parseISO(value);
+
+      if (isoDateTime.toString() === "Invalid Date") {
+        return null;
+      } else {
+        return isoDateTime;
+      }
+    }
+
+    return null
+  })();
+
+  return {
+    in: duration,
+    at: datetime,
+  };
+};
+
 export function submitCompose(routerHistory) {
   return function (dispatch, getState) {
     const status = getState().getIn(['compose', 'text'], '');
     const media  = getState().getIn(['compose', 'media_attachments']);
+    const homeVisibilities = getHomeVisibilities(getState());
+    const limitedVisibilities = getLimitedVisibilities(getState());
+    const { in: scheduled_in = null, at: scheduled_at = null } = getDateTimeFromText(getState().getIn(['compose', 'scheduled']), new Date());
+    const { in: expires_in = null, at: expires_at = null } = getDateTimeFromText(getState().getIn(['compose', 'expires']), scheduled_at ?? new Date());
+    const expires_action = getState().getIn(['compose', 'expires_action']);
 
     if ((!status || !status.length) && media.size === 0) {
       return;
@@ -147,14 +227,24 @@ export function submitCompose(routerHistory) {
       sensitive: getState().getIn(['compose', 'sensitive']),
       spoiler_text: getState().getIn(['compose', 'spoiler']) ? getState().getIn(['compose', 'spoiler_text'], '') : '',
       visibility: getState().getIn(['compose', 'privacy']),
+      circle_id: getState().getIn(['compose', 'circle_id']),
       poll: getState().getIn(['compose', 'poll'], null),
       local_only: !getState().getIn(['compose', 'federation']),
+      quote_id: getState().getIn(['compose', 'quote_from'], null),
+      scheduled_at: !scheduled_in && scheduled_at ? formatISO(set(scheduled_at, { seconds: 0 })) : null,
+      scheduled_in: scheduled_in,
+      expires_at: !expires_in && expires_at ? formatISO(set(expires_at, { seconds: 59 })) : null,
+      expires_in: expires_in,
+      expires_action: expires_action,
     }, {
       headers: {
         'Idempotency-Key': getState().getIn(['compose', 'idempotencyKey']),
       },
     }).then(function (response) {
-      if (routerHistory && routerHistory.location.pathname === '/statuses/new' && window.history.state) {
+      if (response.data.scheduled_at !== null && response.data.scheduled_at !== undefined) {
+        dispatch(submitComposeSuccess({ ...response.data }));
+        return;
+      } else if (routerHistory && routerHistory.location.pathname === '/statuses/new' && window.history.state) {
         routerHistory.goBack();
       }
 
@@ -171,8 +261,12 @@ export function submitCompose(routerHistory) {
         }
       };
 
-      if (response.data.visibility !== 'direct') {
+      if (homeVisibilities.length == 0 || homeVisibilities.includes(response.data.visibility)) {
         insertIfOnline('home');
+      }
+
+      if (limitedVisibilities.includes(response.data.visibility)) {
+        insertIfOnline('limited');
       }
 
       if (response.data.in_reply_to_id === null && response.data.visibility === 'public') {
@@ -308,6 +402,32 @@ export const uploadThumbnailFail = error => ({
   skipLoading: true,
 });
 
+export function initMediaEditModal(id) {
+  return dispatch => {
+    dispatch({
+      type: INIT_MEDIA_EDIT_MODAL,
+      id,
+    });
+
+    dispatch(openModal('FOCAL_POINT', { id }));
+  };
+};
+
+export function onChangeMediaDescription(description) {
+  return {
+    type: COMPOSE_CHANGE_MEDIA_DESCRIPTION,
+    description,
+  };
+};
+
+export function onChangeMediaFocus(focusX, focusY) {
+  return {
+    type: COMPOSE_CHANGE_MEDIA_FOCUS,
+    focusX,
+    focusY,
+  };
+};
+
 export function changeUploadCompose(id, params) {
   return (dispatch, getState) => {
     dispatch(changeUploadComposeRequest());
@@ -402,9 +522,11 @@ const fetchComposeSuggestionsAccounts = throttle((dispatch, getState, token) => 
     }),
 
     params: {
-      q: token.slice(1),
+      q: token.replace(/^@@?/, ''),
       resolve: false,
       limit: 4,
+      following: token.startsWith('@@'),
+      group_only: token.startsWith('@@'),
     },
   }).then(response => {
     dispatch(importFetchedAccounts(response.data));
@@ -601,6 +723,13 @@ export function changeComposeFederation(value) {
   };
 };
 
+export function changeComposeCircle(value) {
+  return {
+    type: COMPOSE_CIRCLE_CHANGE,
+    value,
+  };
+};
+
 export function insertEmojiCompose(position, emoji, needsSpace) {
   return {
     type: COMPOSE_EMOJI_INSERT,
@@ -656,5 +785,38 @@ export function changePollSettings(expiresIn, isMultiple) {
     type: COMPOSE_POLL_SETTINGS_CHANGE,
     expiresIn,
     isMultiple,
+  };
+};
+
+export function addDateTime() {
+  return {
+    type: COMPOSE_DATETIME_FORM_OPEN,
+  };
+};
+
+export function removeDateTime() {
+  return {
+    type: COMPOSE_DATETIME_FORM_CLOSE,
+  };
+};
+
+export function changeScheduled(value) {
+  return {
+    type: COMPOSE_SCHEDULED_CHANGE,
+    value: value,
+  };
+};
+
+export function changeExpires(value) {
+  return {
+    type: COMPOSE_EXPIRES_CHANGE,
+    value: value,
+  };
+};
+
+export function changeExpiresAction(value) {
+  return {
+    type: COMPOSE_EXPIRES_ACTION_CHANGE,
+    value: value,
   };
 };

@@ -25,7 +25,7 @@ class ActivityPub::ReplyDistributionWorker
   private
 
   def inboxes
-    @inboxes ||= @account.followers.inboxes
+    @inboxes ||= @account.delivery_followers.inboxes
   end
 
   def payload

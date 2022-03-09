@@ -4,13 +4,19 @@
 - content_for :header_tags do
   = javascript_pack_tag 'admin', async: true, crossorigin: 'anonymous'
 
-.filters
+.filters.wide
   .filter-subset
     %strong= t 'relationships.relationship'
     %ul
       %li= filter_link_to t('relationships.following'), relationship: nil
       %li= filter_link_to t('relationships.followers'), relationship: 'followed_by'
-      %li= filter_link_to t('relationships.mutual'), relationship: 'mutual'
+
+  .filter-subset
+    %strong= t 'relationships.interrelationship'
+    %ul
+      %li= filter_link_to t('generic.all'), interrelationship: nil
+      %li= filter_link_to t('relationships.mutual'), interrelationship: 'mutual'
+      %li= filter_link_to t('relationships.one_way'), interrelationship: 'one_way'
 
   .filter-subset
     %strong= t 'relationships.status'

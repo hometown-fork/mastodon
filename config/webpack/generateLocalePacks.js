@@ -33,6 +33,41 @@ locales.forEach(locale => {
     '../../node_modules/react-intl/locale-data/en.js',
   ].filter(filename => fs.existsSync(path.join(outPath, filename)))
     .map(filename => filename.replace(/..\/..\/node_modules\//, ''))[0];
+  const dateFnsLocaleDataPath = [
+    // first try date-fns
+    `../../node_modules/date-fns/locale/${locale}/index.js`,
+    // first try date-fns
+    `../../node_modules/date-fns/locale/${baseLocale}/index.js`,
+    // fall back to English (this is what date-fns does anyway)
+    '../../node_modules/date-fns/locale/en-US/index.js',
+  ].filter(filename => fs.existsSync(path.join(outPath, filename)))
+    .map(filename => filename.replace(/..\/..\/node_modules\//, ''))[0];
+
+  let fedibirdInject = `
+const mergedMessages = messages;
+`;
+
+  const fedibirdSourcePath = '../../app/javascript/mastodon/locales-fedibird/en.json';
+  const fedibirdPath = `../../app/javascript/mastodon/locales-fedibird/${locale}.json`;
+  fedibirdInject = `
+let mergedMessages = messages;
+`;
+  if (fedibirdSourcePath !== fedibirdPath && fs.existsSync(path.join(outPath, fedibirdSourcePath))) {
+    fedibirdInject += `
+import fedibirdSourceMessages from ${JSON.stringify(fedibirdSourcePath)};
+Object.keys(fedibirdSourceMessages).forEach(function (key) {
+    mergedMessages[key] = fedibirdSourceMessages[key];
+});
+`;
+  }
+  if (fs.existsSync(path.join(outPath, fedibirdPath))) {
+    fedibirdInject += `
+import fedibirdMessages from ${JSON.stringify(fedibirdPath)};
+Object.keys(fedibirdMessages).forEach(function (key) {
+    mergedMessages[key] = fedibirdMessages[key];
+});
+`;
+  }
 
   const localeContent = `//
 // locale_${locale}.js
@@ -41,7 +76,12 @@ locales.forEach(locale => {
 import messages from '../../app/javascript/mastodon/locales/${locale}.json';
 import localeData from ${JSON.stringify(localeDataPath)};
 import { setLocale } from '../../app/javascript/mastodon/locales';
-setLocale({messages, localeData});
+import dateFnsLocaleDate from ${JSON.stringify(dateFnsLocaleDataPath)};
+import { registerLocale, setDefaultLocale } from 'react-datepicker';
+registerLocale('${locale}', dateFnsLocaleDate)
+setDefaultLocale('${locale}');
+${fedibirdInject}
+setLocale({messages: mergedMessages, localeData: localeData});
 `;
   fs.writeFileSync(localePath, localeContent, 'utf8');
   outPaths.push(localePath);

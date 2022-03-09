@@ -6,11 +6,13 @@ class Api::V1::Timelines::HomeController < Api::BaseController
   after_action :insert_pagination_headers, unless: -> { @statuses.empty? }
 
   def show
-    @statuses = load_statuses
+    @statuses  = load_statuses
+    accountIds = @statuses.filter(&:quote?).map { |status| status.quote.account_id }.uniq
 
     render json: @statuses,
            each_serializer: REST::StatusSerializer,
            relationships: StatusRelationshipsPresenter.new(@statuses, current_user&.account_id),
+           account_relationships: AccountRelationshipsPresenter.new(accountIds, current_user&.account_id),
            status: account_home_feed.regenerating? ? 206 : 200
   end
 
@@ -29,7 +31,8 @@ class Api::V1::Timelines::HomeController < Api::BaseController
       limit_param(DEFAULT_STATUSES_LIMIT),
       params[:max_id],
       params[:since_id],
-      params[:min_id]
+      params[:min_id],
+      visibilities
     )
   end
 
@@ -59,5 +62,11 @@ class Api::V1::Timelines::HomeController < Api::BaseController
 
   def pagination_since_id
     @statuses.first.id
+  end
+
+  def visibilities
+    val = params.permit(visibilities: [])[:visibilities] || []
+    val = [val] unless val.is_a?(Enumerable)
+    val
   end
 end

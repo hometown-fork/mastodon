@@ -7,12 +7,17 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import ImmutablePureComponent from 'react-immutable-pure-component';
-import { me, profile_directory, showTrends } from '../../initial_state';
+import { me, profile_directory, showTrends, enable_limited_timeline } from '../../initial_state';
 import { fetchFollowRequests } from 'mastodon/actions/accounts';
+import { fetchFavouriteDomains } from 'mastodon/actions/favourite_domains';
+import { fetchFavouriteTags } from 'mastodon/actions/favourite_tags';
 import { List as ImmutableList } from 'immutable';
 import NavigationContainer from '../compose/containers/navigation_container';
 import Icon from 'mastodon/components/icon';
 import LinkFooter from 'mastodon/features/ui/components/link_footer';
+import { getOrderedLists } from 'mastodon/features/ui/components/list_panel';
+import { getOrderedDomains } from 'mastodon/features/ui/components/favourite_domain_panel';
+import { getOrderedTags } from 'mastodon/features/ui/components/favourite_tag_panel';
 import TrendsContainer from './containers/trends_container';
 
 const messages = defineMessages({
@@ -26,26 +31,40 @@ const messages = defineMessages({
   preferences: { id: 'navigation_bar.preferences', defaultMessage: 'Preferences' },
   follow_requests: { id: 'navigation_bar.follow_requests', defaultMessage: 'Follow requests' },
   favourites: { id: 'navigation_bar.favourites', defaultMessage: 'Favourites' },
+  emoji_reactions: { id: 'navigation_bar.emoji_reactions', defaultMessage: 'Emoji reactions' },
   blocks: { id: 'navigation_bar.blocks', defaultMessage: 'Blocked users' },
   domain_blocks: { id: 'navigation_bar.domain_blocks', defaultMessage: 'Hidden domains' },
   mutes: { id: 'navigation_bar.mutes', defaultMessage: 'Muted users' },
   pins: { id: 'navigation_bar.pins', defaultMessage: 'Pinned posts' },
+  limited_timeline: { id: 'navigation_bar.limited_timeline', defaultMessage: 'Limited home' },
   lists: { id: 'navigation_bar.lists', defaultMessage: 'Lists' },
+  circles: { id: 'navigation_bar.circles', defaultMessage: 'Circles' },
   discover: { id: 'navigation_bar.discover', defaultMessage: 'Discover' },
   personal: { id: 'navigation_bar.personal', defaultMessage: 'Personal' },
   security: { id: 'navigation_bar.security', defaultMessage: 'Security' },
   menu: { id: 'getting_started.heading', defaultMessage: 'Getting started' },
+  group_directory: { id: 'getting_started.group_directory', defaultMessage: 'Group directory' },
   profile_directory: { id: 'getting_started.directory', defaultMessage: 'Profile directory' },
+  suggestions: { id: 'navigation_bar.suggestions', defaultMessage: 'Suggestions' },
+  trends: { id: 'navigation_bar.trends', defaultMessage: 'Trends' },
+  lists_subheading: { id: 'column_subheading.favourite_lists', defaultMessage: 'Favourite Lists' },
+  favourite_domains_subheading: { id: 'column_subheading.favourite_domains', defaultMessage: 'Favourite domains' },
+  favourite_tags_subheading: { id: 'column_subheading.favourite_tags', defaultMessage: 'Favourite tags' },
 });
 
 const mapStateToProps = state => ({
   myAccount: state.getIn(['accounts', me]),
   columns: state.getIn(['settings', 'columns']),
   unreadFollowRequests: state.getIn(['user_lists', 'follow_requests', 'items'], ImmutableList()).size,
+  lists: getOrderedLists(state),
+  favourite_domains: getOrderedDomains(state),
+  favourite_tags: getOrderedTags(state),
 });
 
 const mapDispatchToProps = dispatch => ({
   fetchFollowRequests: () => dispatch(fetchFollowRequests()),
+  fetchFavouriteDomains: () => dispatch(fetchFavouriteDomains()),
+  fetchFavouriteTags: () => dispatch(fetchFavouriteTags()),
 });
 
 const badgeDisplay = (number, limit) => {
@@ -74,12 +93,17 @@ class GettingStarted extends ImmutablePureComponent {
     columns: ImmutablePropTypes.list,
     multiColumn: PropTypes.bool,
     fetchFollowRequests: PropTypes.func.isRequired,
+    fetchFavouriteDomains: PropTypes.func.isRequired,
+    fetchFavouriteTags: PropTypes.func.isRequired,
     unreadFollowRequests: PropTypes.number,
     unreadNotifications: PropTypes.number,
+    lists: ImmutablePropTypes.list,
+    favourite_domains: ImmutablePropTypes.list,
+    favourite_tags: ImmutablePropTypes.list,
   };
 
   componentDidMount () {
-    const { fetchFollowRequests, multiColumn } = this.props;
+    const { fetchFollowRequests, fetchFavouriteDomains, fetchFavouriteTags, multiColumn } = this.props;
 
     if (!multiColumn && window.innerWidth >= NAVIGATION_PANEL_BREAKPOINT) {
       this.context.router.history.replace('/timelines/home');
@@ -87,10 +111,12 @@ class GettingStarted extends ImmutablePureComponent {
     }
 
     fetchFollowRequests();
+    fetchFavouriteDomains();
+    fetchFavouriteTags();
   }
 
   render () {
-    const { intl, myAccount, columns, multiColumn, unreadFollowRequests } = this.props;
+    const { intl, myAccount, columns, multiColumn, unreadFollowRequests, lists, favourite_domains, favourite_tags } = this.props;
 
     const navItems = [];
     let height = (multiColumn) ? 0 : 60;
@@ -104,6 +130,12 @@ class GettingStarted extends ImmutablePureComponent {
 
       height += 34 + 48*2;
 
+      navItems.push(
+        <ColumnLink key='group_directory' icon='address-book' text={intl.formatMessage(messages.group_directory)} to='/group_directory' />,
+      );
+
+      height += 48;
+
       if (profile_directory) {
         navItems.push(
           <ColumnLink key='directory' icon='address-book' text={intl.formatMessage(messages.profile_directory)} to='/directory' />,
@@ -113,16 +145,38 @@ class GettingStarted extends ImmutablePureComponent {
       }
 
       navItems.push(
-        <ColumnSubheading key='header-personal' text={intl.formatMessage(messages.personal)} />,
+        <ColumnLink key='suggestions' icon='user-plus' text={intl.formatMessage(messages.suggestions)} to='/suggestions' />,
+        <ColumnLink key='trends' icon='line-chart' text={intl.formatMessage(messages.trends)} to='/trends' />,
+      );
+
+      height += 48*2;
+
+      navItems.push(
+        <ColumnSubheading key='header-personal' text={intl.formatMessage(messages.personal)} />
       );
 
       height += 34;
-    } else if (profile_directory) {
+    } else {
       navItems.push(
-        <ColumnLink key='directory' icon='address-book' text={intl.formatMessage(messages.profile_directory)} to='/directory' />,
+        <ColumnLink key='group_directory' icon='address-book' text={intl.formatMessage(messages.group_directory)} to='/group_directory' />,
       );
 
       height += 48;
+
+      if (profile_directory) {
+        navItems.push(
+          <ColumnLink key='directory' icon='address-book' text={intl.formatMessage(messages.profile_directory)} to='/directory' />,
+        );
+
+        height += 48;
+      }
+
+      navItems.push(
+        <ColumnLink key='suggestions' icon='user-plus' text={intl.formatMessage(messages.suggestions)} to='/suggestions' />,
+        <ColumnLink key='trends' icon='line-chart' text={intl.formatMessage(messages.trends)} to='/trends' />,
+      );
+
+      height += 48*2;
     }
 
     if (multiColumn && !columns.find(item => item.get('id') === 'HOME')) {
@@ -132,14 +186,53 @@ class GettingStarted extends ImmutablePureComponent {
       height += 48;
     }
 
+    if (enable_limited_timeline && multiColumn && !columns.find(item => item.get('id') === 'LIMITED')) {
+      navItems.push(
+        <ColumnLink key='limited_timeline' icon='lock' text={intl.formatMessage(messages.limited_timeline)} to='/timelines/limited' />,
+      );
+      height += 48;
+    }
+
     navItems.push(
       <ColumnLink key='direct' icon='envelope' text={intl.formatMessage(messages.direct)} to='/timelines/direct' />,
       <ColumnLink key='bookmark' icon='bookmark' text={intl.formatMessage(messages.bookmarks)} to='/bookmarks' />,
       <ColumnLink key='favourites' icon='star' text={intl.formatMessage(messages.favourites)} to='/favourites' />,
+      <ColumnLink key='emoji_reactions' icon='smile-o' text={intl.formatMessage(messages.emoji_reactions)} to='/emoji_reactions' />,
       <ColumnLink key='lists' icon='list-ul' text={intl.formatMessage(messages.lists)} to='/lists' />,
+      <ColumnLink key='circles' icon='user-circle' text={intl.formatMessage(messages.circles)} to='/circles' />,
     );
 
-    height += 48*4;
+    height += 48*6;
+
+    if (lists && !lists.isEmpty()) {
+      navItems.push(<ColumnSubheading key='header-lists' text={intl.formatMessage(messages.lists_subheading)} />);
+      height += 34;
+
+      lists.map(list => {
+        navItems.push(<ColumnLink key={`list:${list.get('id')}`} icon='list-ul' text={list.get('title')} to={`/timelines/list/${list.get('id')}`} />);
+        height += 48
+      })
+    }
+
+    if (favourite_domains && !favourite_domains.isEmpty()) {
+      navItems.push(<ColumnSubheading key='header-sfavourite_domains' text={intl.formatMessage(messages.favourite_domains_subheading)} />);
+      height += 34;
+
+      favourite_domains.map(favourite_domain => {
+        navItems.push(<ColumnLink key={`favourite_domain:${favourite_domain.get('id')}`} icon='users' text={favourite_domain.get('name')} to={`/timelines/public/domain/${favourite_domain.get('name')}`} />);
+        height += 48
+      })
+    }
+
+    if (favourite_tags && !favourite_tags.isEmpty()) {
+      navItems.push(<ColumnSubheading key='header-favourite_tags' text={intl.formatMessage(messages.favourite_tags_subheading)} />);
+      height += 34;
+
+      favourite_tags.map(favourite_tag => {
+        navItems.push(<ColumnLink key={`favourite_tag:${favourite_tag.get('id')}`} icon='hashtag' text={favourite_tag.get('name')} to={`/timelines/tag/${favourite_tag.get('name')}`} />);
+        height += 48
+      })
+    }
 
     if (myAccount.get('locked') || unreadFollowRequests > 0) {
       navItems.push(<ColumnLink key='follow_requests' icon='user-plus' text={intl.formatMessage(messages.follow_requests)} badge={badgeDisplay(unreadFollowRequests, 40)} to='/follow_requests' />);

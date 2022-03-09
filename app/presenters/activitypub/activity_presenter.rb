@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 class ActivityPub::ActivityPresenter < ActiveModelSerializers::Model
-  attributes :id, :type, :actor, :published, :to, :cc, :virtual_object
+  attributes :id, :type, :actor, :published, :expiry, :to, :cc, :virtual_object
 
   class << self
-    def from_status(status)
+    def from_status(status, use_bearcap: true)
       new.tap do |presenter|
         presenter.id        = ActivityPub::TagManager.instance.activity_uri_for(status)
         presenter.type      = status.reblog? ? 'Announce' : 'Create'
@@ -12,6 +12,7 @@ class ActivityPub::ActivityPresenter < ActiveModelSerializers::Model
         presenter.published = status.created_at
         presenter.to        = ActivityPub::TagManager.instance.to(status)
         presenter.cc        = ActivityPub::TagManager.instance.cc(status)
+        presenter.expiry    = status.expiry
 
         presenter.virtual_object = begin
           if status.reblog?
@@ -20,6 +21,8 @@ class ActivityPub::ActivityPresenter < ActiveModelSerializers::Model
             else
               ActivityPub::TagManager.instance.uri_for(status.proper)
             end
+          elsif status.limited_visibility? && use_bearcap
+            "bear:?#{{ u: ActivityPub::TagManager.instance.uri_for(status.proper), t: status.capability_tokens.first.token }.to_query}"
           else
             status.proper
           end

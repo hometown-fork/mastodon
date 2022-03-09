@@ -1,0 +1,19 @@
+%tr
+  %td
+    = account_link_to account_subscribe.target_account
+  %td.nowrap.symbol
+    - if account_subscribe.show_reblogs
+      = fa_icon('check')
+  %td.nowrap.symbol
+    - if account_subscribe.media_only
+      = fa_icon('check')
+  %td.nowrap
+    - if account_subscribe.list_id
+      = fa_icon 'list-ul'
+      = account_subscribe.list&.title
+    - else
+      = fa_icon 'home'
+      = t 'lists.home'
+  %td.nowrap
+    = table_link_to 'pencil', t('account_subscribes.edit.title'), edit_settings_account_subscribe_path(account_subscribe)
+    = table_link_to 'trash', t('filters.index.delete'), settings_account_subscribe_path(account_subscribe), method: :delete, data: { confirm: t('admin.accounts.are_you_sure') }

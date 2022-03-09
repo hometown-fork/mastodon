@@ -135,12 +135,13 @@ class ImportService < BaseService
   end
 
   def relations_map_for_account(account, account_ids)
+    presenter = AccountRelationshipsPresenter.new(account_ids, account)
     {
       blocking: {},
-      blocked_by: Account.blocked_by_map(account_ids, account.id),
+      blocked_by: presenter.blocked_by,
       muting: {},
-      following: Account.following_map(account_ids, account.id),
-      domain_blocking_by_domain: {},
+      following: presenter.following,
+      domain_blocking: {},
     }
   end
 end

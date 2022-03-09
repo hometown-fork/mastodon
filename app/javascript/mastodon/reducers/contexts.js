@@ -3,7 +3,7 @@ import {
   ACCOUNT_MUTE_SUCCESS,
 } from '../actions/accounts';
 import { CONTEXT_FETCH_SUCCESS } from '../actions/statuses';
-import { TIMELINE_DELETE, TIMELINE_UPDATE } from '../actions/timelines';
+import { TIMELINE_DELETE, TIMELINE_EXPIRE, TIMELINE_UPDATE } from '../actions/timelines';
 import { Map as ImmutableMap, List as ImmutableList } from 'immutable';
 import compareId from '../compare_id';
 
@@ -97,6 +97,7 @@ export default function replies(state = initialState, action) {
   case CONTEXT_FETCH_SUCCESS:
     return normalizeContext(state, action.id, action.ancestors, action.descendants);
   case TIMELINE_DELETE:
+  case TIMELINE_EXPIRE:
     return deleteFromContexts(state, [action.id]);
   case TIMELINE_UPDATE:
     return updateContext(state, action.status);

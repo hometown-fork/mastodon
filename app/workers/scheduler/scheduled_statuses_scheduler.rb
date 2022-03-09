@@ -9,6 +9,7 @@ class Scheduler::ScheduledStatusesScheduler
     publish_scheduled_statuses!
     publish_scheduled_announcements!
     unpublish_expired_announcements!
+    process_expired_statuses!
   end
 
   private
@@ -39,5 +40,13 @@ class Scheduler::ScheduledStatusesScheduler
 
   def expired_announcements
     Announcement.published.where('ends_at IS NOT NULL AND ends_at <= ?', Time.now.utc)
+  end
+
+  def process_expired_statuses!
+    due_status_expires.find_each(&:queue_action)
+  end
+
+  def due_status_expires
+    StatusExpire.where('expires_at <= ?', Time.now.utc + PostStatusService::MIN_SCHEDULE_OFFSET)
   end
 end

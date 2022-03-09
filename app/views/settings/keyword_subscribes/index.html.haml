@@ -1,0 +1,29 @@
+- content_for :page_title do
+  = t('keyword_subscribes.index.title')
+
+%p= t('keyword_subscribes.hint_html')
+
+= link_to t('keyword_subscribes.new.title'), new_settings_keyword_subscribe_path, class: 'button'
+
+%hr.spacer/
+
+= render 'shared/error_messages', object: @keyword_subscribe
+
+- if @keyword_subscribes.empty?
+  = nothing_here 'nothing-here--under-tabs'
+- else
+  .table-wrapper
+    %table.table
+      %thead
+        %tr
+          %th.nowrap= t('simple_form.labels.keyword_subscribes.name')
+          %th.nowrap= t('simple_form.labels.keyword_subscribes.regexp')
+          %th= t('simple_form.labels.keyword_subscribes.keyword')
+          %th.nowrap= t('simple_form.labels.keyword_subscribes.ignorecase')
+          %th.nowrap= t('simple_form.labels.keyword_subscribes.ignore_block')
+          %th.nowrap= t('simple_form.labels.keyword_subscribes.media_only')
+          %th.nowrap= t('simple_form.labels.keyword_subscribes.timeline')
+          %th.nowrap= t('simple_form.labels.keyword_subscribes.disabled')
+          %th.nowrap
+      %tbody
+        = render partial: 'keyword_subscribe', collection: @keyword_subscribes

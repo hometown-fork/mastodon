@@ -8,6 +8,9 @@ class Api::V1::StatusesController < Api::BaseController
   before_action :require_user!, except:  [:show, :context]
   before_action :set_status, only:       [:show, :context]
   before_action :set_thread, only:       [:create]
+  before_action :set_circle, only:       [:create]
+  before_action :set_schedule, only:     [:create]
+  before_action :set_expire, only:       [:create]
 
   override_rate_limit_headers :create, family: :statuses
 
@@ -30,30 +33,35 @@ class Api::V1::StatusesController < Api::BaseController
 
     @context = Context.new(ancestors: loaded_ancestors, descendants: loaded_descendants)
     statuses = [@status] + @context.ancestors + @context.descendants
+    accountIds = statuses.filter(&:quote?).map { |status| status.quote.account_id }.uniq
 
-    render json: @context, serializer: REST::ContextSerializer, relationships: StatusRelationshipsPresenter.new(statuses, current_user&.account_id)
+    render json: @context, serializer: REST::ContextSerializer, relationships: StatusRelationshipsPresenter.new(statuses, current_user&.account_id), account_relationships: AccountRelationshipsPresenter.new(accountIds, current_user&.account_id)
   end
 
   def create
     @status = PostStatusService.new.call(current_user.account,
                                          text: status_params[:status],
                                          thread: @thread,
+                                         circle: @circle,
                                          media_ids: status_params[:media_ids],
                                          sensitive: status_params[:sensitive],
                                          spoiler_text: status_params[:spoiler_text],
                                          visibility: status_params[:visibility],
-                                         scheduled_at: status_params[:scheduled_at],
+                                         scheduled_at: @scheduled_at,
+                                         expires_at: @expires_at,
+                                         expires_action: status_params[:expires_action],
                                          application: doorkeeper_token.application,
                                          poll: status_params[:poll],
                                          idempotency: request.headers['Idempotency-Key'],
                                          with_rate_limit: true,
-                                         local_only: status_params[:local_only])
+                                         local_only: status_params[:local_only],
+                                         quote_id: status_params[:quote_id].presence)
 
     render json: @status, serializer: @status.is_a?(ScheduledStatus) ? REST::ScheduledStatusSerializer : REST::StatusSerializer
   end
 
   def destroy
-    @status = Status.where(account_id: current_user.account).find(params[:id])
+    @status = Status.include_expired.where(account_id: current_account.id).find(params[:id])
     authorize @status, :destroy?
 
     @status.discard
@@ -66,7 +74,7 @@ class Api::V1::StatusesController < Api::BaseController
   private
 
   def set_status
-    @status = Status.find(params[:id])
+    @status = Status.include_expired.find(params[:id])
     authorize @status, :show?
   rescue Mastodon::NotPermittedError
     not_found
@@ -78,15 +86,44 @@ class Api::V1::StatusesController < Api::BaseController
     render json: { error: I18n.t('statuses.errors.in_reply_not_found') }, status: 404
   end
 
+  def set_circle
+    @circle = begin
+      if status_params[:visibility] == 'mutual'
+        status_params[:visibility] = 'limited'
+        current_account
+      elsif status_params[:circle_id].blank?
+        nil
+      else
+        current_account.owned_circles.find(status_params[:circle_id])
+      end
+    end
+  rescue ActiveRecord::RecordNotFound
+    render json: { error: I18n.t('statuses.errors.circle_not_found') }, status: 404
+  end
+
+  def set_schedule
+    @scheduled_at = status_params[:scheduled_at]&.to_datetime&.to_time || (status_params[:scheduled_in].blank? ? nil : Time.now.utc + status_params[:scheduled_in].to_i.seconds)
+  end
+
+  def set_expire
+    @expires_at = status_params[:expires_at] || (status_params[:expires_in].blank? ? nil : (@scheduled_at || Time.now.utc) + status_params[:expires_in].to_i.seconds)
+  end
+
   def status_params
     params.permit(
       :status,
       :in_reply_to_id,
+      :circle_id,
       :sensitive,
       :spoiler_text,
       :visibility,
+      :scheduled_in,
       :scheduled_at,
       :local_only,
+      :quote_id,
+      :expires_in,
+      :expires_at,
+      :expires_action,
       media_ids: [],
       poll: [
         :multiple,

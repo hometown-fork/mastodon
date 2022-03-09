@@ -1,0 +1,9 @@
+- content_for :page_title do
+  = t('domain_subscribes.edit.title')
+
+= simple_form_for @domain_subscribe, url: settings_domain_subscribe_path(@domain_subscribe), method: :put do |f|
+  = render 'shared/error_messages', object: @domain_subscribe
+  = render 'fields', f: f
+
+  .actions
+    = f.button :button, t('generic.save_changes'), type: :submit

@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import StatusList from '../../../components/status_list';
 import { scrollTopTimeline, loadPending } from '../../../actions/timelines';
+import { getHomeVisibilities, getLimitedVisibilities } from 'mastodon/selectors';
 import { Map as ImmutableMap, List as ImmutableList } from 'immutable';
 import { createSelector } from 'reselect';
 import { debounce } from 'lodash';
@@ -8,16 +9,21 @@ import { me } from '../../../initial_state';
 
 const makeGetStatusIds = (pending = false) => createSelector([
   (state, { type }) => state.getIn(['settings', type], ImmutableMap()),
+  (state, { type }) => type === 'home' ? getHomeVisibilities(state) : type === 'limited' ? getLimitedVisibilities(state) : [],
   (state, { type }) => state.getIn(['timelines', type, pending ? 'pendingItems' : 'items'], ImmutableList()),
   (state)           => state.get('statuses'),
-], (columnSettings, statusIds, statuses) => {
+], (columnSettings, visibilities, statusIds, statuses) => {
   return statusIds.filter(id => {
     if (id === null) return true;
 
     const statusForId = statuses.get(id);
     let showStatus    = true;
 
-    if (statusForId.get('account') === me) return true;
+    if (visibilities.length) {
+      showStatus = showStatus && visibilities.includes(statusForId.get('visibility'));
+    }
+
+    if (statusForId.get('account') === me) return showStatus;
 
     if (columnSettings.getIn(['shows', 'reblog']) === false) {
       showStatus = showStatus && statusForId.get('reblog') === null;

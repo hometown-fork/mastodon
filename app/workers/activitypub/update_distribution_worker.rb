@@ -24,7 +24,7 @@ class ActivityPub::UpdateDistributionWorker
   private
 
   def inboxes
-    @inboxes ||= @account.followers.inboxes
+    @inboxes ||= @account.delivery_followers.inboxes
   end
 
   def signed_payload

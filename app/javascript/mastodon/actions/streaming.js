@@ -4,12 +4,15 @@ import { connectStream } from '../stream';
 import {
   updateTimeline,
   deleteFromTimelines,
+  expireFromTimelines,
   expandHomeTimeline,
   connectTimeline,
   disconnectTimeline,
 } from './timelines';
+import { getHomeVisibilities } from 'mastodon/selectors';
 import { updateNotifications, expandNotifications } from './notifications';
 import { updateConversations } from './conversations';
+import { updateEmojiReaction } from './interactions';
 import {
   fetchAnnouncements,
   updateAnnouncements,
@@ -44,10 +47,10 @@ export const connectTimelineStream = (timelineId, channelName, params = {}, opti
     let pollingId;
 
     /**
-     * @param {function(Function, Function): void} fallback
+     * @param {function(Function, Function, Function): void} fallback
      */
     const useFallback = fallback => {
-      fallback(dispatch, () => {
+      fallback(dispatch, getState, () => {
         pollingId = setTimeout(() => useFallback(fallback), 20000 + randomUpTo(20000));
       });
     };
@@ -78,6 +81,9 @@ export const connectTimelineStream = (timelineId, channelName, params = {}, opti
         case 'delete':
           dispatch(deleteFromTimelines(data.payload));
           break;
+        case 'expire':
+          dispatch(expireFromTimelines(data.payload));
+          break;
         case 'notification':
           dispatch(updateNotifications(JSON.parse(data.payload), messages, locale));
           break;
@@ -86,6 +92,9 @@ export const connectTimelineStream = (timelineId, channelName, params = {}, opti
           break;
         case 'filters_changed':
           dispatch(fetchFilters());
+          break;
+        case 'emoji_reaction':
+          dispatch(updateEmojiReaction(JSON.parse(data.payload)));
           break;
         case 'announcement':
           dispatch(updateAnnouncements(JSON.parse(data.payload)));
@@ -105,8 +114,10 @@ export const connectTimelineStream = (timelineId, channelName, params = {}, opti
  * @param {Function} dispatch
  * @param {function(): void} done
  */
-const refreshHomeTimelineAndNotification = (dispatch, done) => {
-  dispatch(expandHomeTimeline({}, () =>
+const refreshHomeTimelineAndNotification = (dispatch, getState, done) => {
+  const visibilities = getHomeVisibilities(getState());
+
+  dispatch(expandHomeTimeline({ visibilities }, () =>
     dispatch(expandNotifications({}, () =>
       dispatch(fetchAnnouncements(done))))));
 };
@@ -126,9 +137,28 @@ export const connectCommunityStream = ({ onlyMedia } = {}) =>
   connectTimelineStream(`community${onlyMedia ? ':media' : ''}`, `public:local${onlyMedia ? ':media' : ''}`);
 
 /**
+ * @param {string} domain
  * @param {Object} options
  * @param {boolean} [options.onlyMedia]
+ * @return {function(): void}
+ */
+export const connectDomainStream = (domain, { onlyMedia } = {}) =>
+  connectTimelineStream(`domain${onlyMedia ? ':media' : ''}:${domain}`, `public:domain${onlyMedia ? ':media' : ''}`, { domain: domain });
+
+/**
+ * @param {string} id
+ * @param {Object} options
+ * @param {boolean} [options.onlyMedia]
+ * @param {string} [options.tagged]
+ * @return {function(): void}
+ */
+export const connectGroupStream = (id, { onlyMedia, tagged } = {}) =>
+  connectTimelineStream(`group:${id}${onlyMedia ? ':media' : ''}${tagged ? `:${tagged}` : ''}`, `group${onlyMedia ? ':media' : ''}`, { id: id, tagged: tagged });
+
+/**
+ * @param {Object} options
  * @param {boolean} [options.onlyRemote]
+ * @param {boolean} [options.onlyMedia]
  * @return {function(): void}
  */
 export const connectPublicStream = ({ onlyMedia, onlyRemote } = {}) =>

@@ -17,6 +17,7 @@ import { fetchFilters } from '../../actions/filters';
 import { clearHeight } from '../../actions/height_cache';
 import { focusApp, unfocusApp, changeLayout } from 'mastodon/actions/app';
 import { synchronouslySubmitMarkers, submitMarkers, fetchMarkers } from 'mastodon/actions/markers';
+import { getHomeVisibilities } from 'mastodon/selectors';
 import { WrappedSwitch, WrappedRoute } from './util/react_router_helpers';
 import UploadArea from './components/upload_area';
 import ColumnsAreaContainer from './containers/columns_area_container';
@@ -29,29 +30,40 @@ import {
   KeyboardShortcuts,
   PublicTimeline,
   CommunityTimeline,
+  DomainTimeline,
+  GroupTimeline,
   AccountTimeline,
   AccountGallery,
   HomeTimeline,
   Followers,
   Following,
+  Subscribing,
   Reblogs,
   Favourites,
+  EmojiReactions,
+  Mentions,
   DirectTimeline,
+  LimitedTimeline,
   HashtagTimeline,
   Notifications,
   FollowRequests,
   GenericNotFound,
   FavouritedStatuses,
   BookmarkedStatuses,
+  EmojiReactionedStatuses,
   ListTimeline,
   Blocks,
   DomainBlocks,
   Mutes,
   PinnedStatuses,
   Lists,
+  Circles,
   Search,
+  GroupDirectory,
   Directory,
   FollowRecommendations,
+  Trends,
+  Suggestions,
 } from './util/async-components';
 import { me } from '../../initial_state';
 import { closeOnboarding, INTRODUCTION_VERSION } from 'mastodon/actions/onboarding';
@@ -72,6 +84,7 @@ const mapStateToProps = state => ({
   canUploadMore: !state.getIn(['compose', 'media_attachments']).some(x => ['audio', 'video'].includes(x.get('type'))) && state.getIn(['compose', 'media_attachments']).size < 4,
   dropdownMenuIsOpen: state.getIn(['dropdown_menu', 'openId']) !== null,
   firstLaunch: state.getIn(['settings', 'introductionVersion'], 0) < INTRODUCTION_VERSION,
+  visibilities: getHomeVisibilities(state),
 });
 
 const keyMap = {
@@ -97,6 +110,7 @@ const keyMap = {
   goToDirect: 'g d',
   goToStart: 'g s',
   goToFavourites: 'g f',
+  goToEmojiReactions: 'g e',
   goToPinned: 'g p',
   goToProfile: 'g u',
   goToBlocked: 'g b',
@@ -155,28 +169,38 @@ class SwitchingColumnsArea extends React.PureComponent {
           <WrappedRoute path='/timelines/home' component={HomeTimeline} content={children} />
           <WrappedRoute path='/timelines/public' exact component={PublicTimeline} content={children} />
           <WrappedRoute path='/timelines/public/local' exact component={CommunityTimeline} content={children} />
+          <WrappedRoute path='/timelines/public/domain/:domain' exact component={DomainTimeline} content={children} />
+          <WrappedRoute path='/timelines/groups/:id/:tagged?' exact component={GroupTimeline} content={children} />
           <WrappedRoute path='/timelines/direct' component={DirectTimeline} content={children} />
+          <WrappedRoute path='/timelines/limited' component={LimitedTimeline} content={children} />
           <WrappedRoute path='/timelines/tag/:id' component={HashtagTimeline} content={children} />
           <WrappedRoute path='/timelines/list/:id' component={ListTimeline} content={children} />
 
           <WrappedRoute path='/notifications' component={Notifications} content={children} />
           <WrappedRoute path='/favourites' component={FavouritedStatuses} content={children} />
           <WrappedRoute path='/bookmarks' component={BookmarkedStatuses} content={children} />
+          <WrappedRoute path='/emoji_reactions' component={EmojiReactionedStatuses} content={children} />
           <WrappedRoute path='/pinned' component={PinnedStatuses} content={children} />
 
           <WrappedRoute path='/start' component={FollowRecommendations} content={children} />
           <WrappedRoute path='/search' component={Search} content={children} />
+          <WrappedRoute path='/group_directory' component={GroupDirectory} content={children} />
           <WrappedRoute path='/directory' component={Directory} content={children} />
+          <WrappedRoute path='/trends' component={Trends} content={children} />
+          <WrappedRoute path='/suggestions' component={Suggestions} content={children} />
 
           <WrappedRoute path='/statuses/new' component={Compose} content={children} />
           <WrappedRoute path='/statuses/:statusId' exact component={Status} content={children} />
           <WrappedRoute path='/statuses/:statusId/reblogs' component={Reblogs} content={children} />
           <WrappedRoute path='/statuses/:statusId/favourites' component={Favourites} content={children} />
+          <WrappedRoute path='/statuses/:statusId/emoji_reactions' component={EmojiReactions} content={children} />
+          <WrappedRoute path='/statuses/:statusId/mentions' component={Mentions} content={children} />
 
           <WrappedRoute path='/accounts/:accountId' exact component={AccountTimeline} content={children} />
           <WrappedRoute path='/accounts/:accountId/with_replies' component={AccountTimeline} content={children} componentParams={{ withReplies: true }} />
           <WrappedRoute path='/accounts/:accountId/followers' component={Followers} content={children} />
           <WrappedRoute path='/accounts/:accountId/following' component={Following} content={children} />
+          <WrappedRoute path='/accounts/:accountId/subscribing' component={Subscribing} content={children} />
           <WrappedRoute path='/accounts/:accountId/media' component={AccountGallery} content={children} />
 
           <WrappedRoute path='/follow_requests' component={FollowRequests} content={children} />
@@ -184,6 +208,7 @@ class SwitchingColumnsArea extends React.PureComponent {
           <WrappedRoute path='/domain_blocks' component={DomainBlocks} content={children} />
           <WrappedRoute path='/mutes' component={Mutes} content={children} />
           <WrappedRoute path='/lists' component={Lists} content={children} />
+          <WrappedRoute path='/circles' component={Circles} content={children} />
 
           <WrappedRoute component={GenericNotFound} content={children} />
         </WrappedSwitch>
@@ -214,6 +239,7 @@ class UI extends React.PureComponent {
     dropdownMenuIsOpen: PropTypes.bool,
     layout: PropTypes.string.isRequired,
     firstLaunch: PropTypes.bool,
+    visibilities: PropTypes.arrayOf(PropTypes.string),
   };
 
   state = {
@@ -334,6 +360,8 @@ class UI extends React.PureComponent {
   }
 
   componentDidMount () {
+    const { dispatch, visibilities } = this.props;
+
     window.addEventListener('focus', this.handleWindowFocus, false);
     window.addEventListener('blur', this.handleWindowBlur, false);
     window.addEventListener('beforeunload', this.handleBeforeUnload, false);
@@ -352,12 +380,12 @@ class UI extends React.PureComponent {
     // On first launch, redirect to the follow recommendations page
     if (this.props.firstLaunch) {
       this.context.router.history.replace('/start');
-      this.props.dispatch(closeOnboarding());
+      dispatch(closeOnboarding());
     }
 
-    this.props.dispatch(fetchMarkers());
-    this.props.dispatch(expandHomeTimeline());
-    this.props.dispatch(expandNotifications());
+    dispatch(fetchMarkers());
+    dispatch(expandHomeTimeline({ visibilities }));
+    dispatch(expandNotifications());
     setTimeout(() => this.props.dispatch(fetchFilters()), 500);
 
     this.hotkeys.__mousetrap__.stopCallback = (e, element) => {
@@ -478,6 +506,10 @@ class UI extends React.PureComponent {
     this.context.router.history.push('/favourites');
   }
 
+  handleHotkeyGoToEmojiReactions = () => {
+    this.context.router.history.push('/emoji_reactions');
+  }
+
   handleHotkeyGoToPinned = () => {
     this.context.router.history.push('/pinned');
   }
@@ -517,6 +549,7 @@ class UI extends React.PureComponent {
       goToDirect: this.handleHotkeyGoToDirect,
       goToStart: this.handleHotkeyGoToStart,
       goToFavourites: this.handleHotkeyGoToFavourites,
+      goToEmojiReactions: this.handleHotkeyGoToEmojiReactions,
       goToPinned: this.handleHotkeyGoToPinned,
       goToProfile: this.handleHotkeyGoToProfile,
       goToBlocked: this.handleHotkeyGoToBlocked,

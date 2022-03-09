@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import ImmutablePureComponent from 'react-immutable-pure-component';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import PropTypes from 'prop-types';
@@ -10,11 +10,20 @@ import Permalink from 'mastodon/components/permalink';
 import RelativeTimestamp from 'mastodon/components/relative_timestamp';
 import IconButton from 'mastodon/components/icon_button';
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl';
-import { autoPlayGif, me, unfollowModal } from 'mastodon/initial_state';
+import {
+  autoPlayGif,
+  me,
+  unfollowModal,
+  unsubscribeModal,
+  show_followed_by,
+  follow_button_to_list_adder,
+} from 'mastodon/initial_state';
 import ShortNumber from 'mastodon/components/short_number';
 import {
   followAccount,
   unfollowAccount,
+  subscribeAccount,
+  unsubscribeAccount,
   blockAccount,
   unblockAccount,
   unmuteAccount,
@@ -25,12 +34,18 @@ import { initMuteModal } from 'mastodon/actions/mutes';
 const messages = defineMessages({
   follow: { id: 'account.follow', defaultMessage: 'Follow' },
   unfollow: { id: 'account.unfollow', defaultMessage: 'Unfollow' },
+  unsubscribe: { id: 'account.unsubscribe', defaultMessage: 'Unsubscribe' },
+  subscribe: { id: 'account.subscribe', defaultMessage: 'Subscribe' },
   requested: { id: 'account.requested', defaultMessage: 'Awaiting approval' },
   unblock: { id: 'account.unblock', defaultMessage: 'Unblock @{name}' },
   unmute: { id: 'account.unmute', defaultMessage: 'Unmute @{name}' },
   unfollowConfirm: {
     id: 'confirmations.unfollow.confirm',
     defaultMessage: 'Unfollow',
+  },
+  unsubscribeConfirm: {
+    id: 'confirmations.unsubscribe.confirm',
+    defaultMessage: 'Unsubscribe'
   },
 });
 
@@ -72,6 +87,28 @@ const mapDispatchToProps = (dispatch, { intl }) => ({
     }
   },
 
+  onSubscribe(account) {
+    if (account.getIn(['relationship', 'subscribing', '-1'], new Map).size > 0) {
+      if (unsubscribeModal) {
+        dispatch(openModal('CONFIRM', {
+          message: <FormattedMessage id='confirmations.unsubscribe.message' defaultMessage='Are you sure you want to unsubscribe {name}?' values={{ name: <strong>@{account.get('acct')}</strong> }} />,
+          confirm: intl.formatMessage(messages.unsubscribeConfirm),
+          onConfirm: () => dispatch(unsubscribeAccount(account.get('id'))),
+        }));
+      } else {
+        dispatch(unsubscribeAccount(account.get('id')));
+      }
+    } else {
+      dispatch(subscribeAccount(account.get('id')));
+    }
+  },
+
+  onAddToList(account){
+    dispatch(openModal('LIST_ADDER', {
+      accountId: account.get('id'),
+    }));
+  },
+
   onBlock(account) {
     if (account.getIn(['relationship', 'blocking'])) {
       dispatch(unblockAccount(account.get('id')));
@@ -98,6 +135,8 @@ class AccountCard extends ImmutablePureComponent {
     account: ImmutablePropTypes.map.isRequired,
     intl: PropTypes.object.isRequired,
     onFollow: PropTypes.func.isRequired,
+    onSubscribe: PropTypes.func.isRequired,
+    onAddToList: PropTypes.func.isRequired,
     onBlock: PropTypes.func.isRequired,
     onMute: PropTypes.func.isRequired,
   };
@@ -128,8 +167,20 @@ class AccountCard extends ImmutablePureComponent {
     }
   }
 
-  handleFollow = () => {
-    this.props.onFollow(this.props.account);
+  handleFollow = (e) => {
+    if ((e && e.shiftKey) ^ !follow_button_to_list_adder) {
+      this.props.onFollow(this.props.account);
+    } else {
+      this.props.onAddToList(this.props.account);
+    }
+  };
+
+  handleSubscribe = (e) => {
+    if ((e && e.shiftKey) ^ !follow_button_to_list_adder) {
+      this.props.onSubscribe(this.props.account);
+    } else {
+      this.props.onAddToList(this.props.account);
+    }
   };
 
   handleBlock = () => {
@@ -149,10 +200,14 @@ class AccountCard extends ImmutablePureComponent {
       account.get('id') !== me &&
       account.get('relationship', null) !== null
     ) {
-      const following = account.getIn(['relationship', 'following']);
-      const requested = account.getIn(['relationship', 'requested']);
-      const blocking = account.getIn(['relationship', 'blocking']);
-      const muting = account.getIn(['relationship', 'muting']);
+      const following        = account.getIn(['relationship', 'following']);
+      const delivery         = account.getIn(['relationship', 'delivery_following']);
+      const followed_by      = account.getIn(['relationship', 'followed_by']) && show_followed_by;
+      const subscribing      = account.getIn(['relationship', 'subscribing'], new Map).size > 0;
+      const subscribing_home = account.getIn(['relationship', 'subscribing', '-1'], new Map).size > 0;
+      const requested        = account.getIn(['relationship', 'requested']);
+      const blocking         = account.getIn(['relationship', 'blocking']);
+      const muting           = account.getIn(['relationship', 'muting']);
 
       if (requested) {
         buttons = (
@@ -179,22 +234,41 @@ class AccountCard extends ImmutablePureComponent {
             active
             icon='volume-up'
             title={intl.formatMessage(messages.unmute, {
-              name: account.get('username'),
+              name: account.get('username')
             })}
             onClick={this.handleMute}
           />
         );
-      } else if (!account.get('moved') || following) {
-        buttons = (
-          <IconButton
-            icon={following ? 'user-times' : 'user-plus'}
-            title={intl.formatMessage(
-              following ? messages.unfollow : messages.follow,
-            )}
-            onClick={this.handleFollow}
-            active={following}
-          />
-        );
+      } else {
+        let following_buttons, subscribing_buttons;
+        if(!account.get('moved') || subscribing) {
+          subscribing_buttons = (
+            <IconButton
+              icon='rss-square'
+              title={intl.formatMessage(
+                subscribing ? messages.unsubscribe : messages.subscribe
+              )}
+              onClick={this.handleSubscribe}
+              active={subscribing}
+              no_delivery={subscribing && !subscribing_home}
+            />
+          );
+        }
+        if(!account.get('moved') || following) {
+          following_buttons = (
+            <IconButton
+              icon={following ? 'user-times' : 'user-plus'}
+              title={intl.formatMessage(
+                following ? messages.unfollow : messages.follow
+              )}
+              onClick={this.handleFollow}
+              active={following}
+              passive={followed_by}
+              no_delivery={following && !delivery}
+            />
+          );
+        }
+        buttons = <Fragment>{subscribing_buttons}{following_buttons}</Fragment>;
       }
     }
 
@@ -213,7 +287,7 @@ class AccountCard extends ImmutablePureComponent {
           <Permalink
             className='directory__card__bar__name'
             href={account.get('url')}
-            to={`/accounts/${account.get('id')}`}
+            to={`${(account.get('group', false)) ? '/timelines/groups/' : '/accounts/'}${account.get('id')}`}
           >
             <Avatar account={account} size={48} />
             <DisplayName account={account} />

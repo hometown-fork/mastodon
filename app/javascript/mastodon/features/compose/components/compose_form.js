@@ -4,14 +4,18 @@ import Button from '../../../components/button';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import PropTypes from 'prop-types';
 import ReplyIndicatorContainer from '../containers/reply_indicator_container';
+import QuoteIndicatorContainer from '../containers/quote_indicator_container';
 import AutosuggestTextarea from '../../../components/autosuggest_textarea';
 import AutosuggestInput from '../../../components/autosuggest_input';
 import PollButtonContainer from '../containers/poll_button_container';
+import DateTimeButtonContainer from '../containers/datetime_button_container';
 import UploadButtonContainer from '../containers/upload_button_container';
 import { defineMessages, injectIntl } from 'react-intl';
 import SpoilerButtonContainer from '../containers/spoiler_button_container';
 import PrivacyDropdownContainer from '../containers/privacy_dropdown_container';
 import FederationDropdownContainer from '../containers/federation_dropdown_container';
+import CircleDropdownContainer from '../containers/circle_dropdown_container';
+import DateTimeFormContainer from '../containers/datetime_form_container';
 import EmojiPickerDropdown from '../containers/emoji_picker_dropdown_container';
 import PollFormContainer from '../containers/poll_form_container';
 import UploadFormContainer from '../containers/upload_form_container';
@@ -53,6 +57,7 @@ class ComposeForm extends ImmutablePureComponent {
     isSubmitting: PropTypes.bool,
     isChangingUpload: PropTypes.bool,
     isUploading: PropTypes.bool,
+    isCircleUnselected: PropTypes.bool,
     onChange: PropTypes.func.isRequired,
     onSubmit: PropTypes.func.isRequired,
     onClearSuggestions: PropTypes.func.isRequired,
@@ -85,11 +90,11 @@ class ComposeForm extends ImmutablePureComponent {
   }
 
   canSubmit = () => {
-    const { isSubmitting, isChangingUpload, isUploading, anyMedia } = this.props;
+    const { isSubmitting, isChangingUpload, isUploading, isCircleUnselected, anyMedia } = this.props;
     const fulltext = this.getFulltextForCharacterCounting();
     const isOnlyWhitespace = fulltext.length !== 0 && fulltext.trim().length === 0;
 
-    return !(isSubmitting || isUploading || isChangingUpload || length(fulltext) > maxChars || (isOnlyWhitespace && !anyMedia));
+    return !(isSubmitting || isUploading || isChangingUpload || isCircleUnselected || length(fulltext) > maxChars || (isOnlyWhitespace && !anyMedia));
   }
 
   handleSubmit = () => {
@@ -201,7 +206,7 @@ class ComposeForm extends ImmutablePureComponent {
     const disabled = this.props.isSubmitting;
     let publishText = '';
 
-    if (this.props.privacy === 'private' || this.props.privacy === 'direct') {
+    if (this.props.privacy !== 'public' && this.props.privacy !== 'unlisted') {
       publishText = <span className='compose-form__publish-private'><Icon id='lock' /> {intl.formatMessage(messages.publish)}</span>;
     } else {
       publishText = this.props.privacy !== 'unlisted' ? intl.formatMessage(messages.publishLoud, { publish: intl.formatMessage(messages.publish) }) : intl.formatMessage(messages.publish);
@@ -212,6 +217,7 @@ class ComposeForm extends ImmutablePureComponent {
         <WarningContainer />
 
         <ReplyIndicatorContainer />
+        <QuoteIndicatorContainer />
 
         <div className={`spoiler-input ${this.props.spoiler ? 'spoiler-input--visible' : ''}`} ref={this.setRef}>
           <AutosuggestInput
@@ -250,6 +256,7 @@ class ComposeForm extends ImmutablePureComponent {
           <div className='compose-form__modifiers'>
             <UploadFormContainer />
             <PollFormContainer />
+            <DateTimeFormContainer />
           </div>
         </AutosuggestTextarea>
 
@@ -260,9 +267,12 @@ class ComposeForm extends ImmutablePureComponent {
             <PrivacyDropdownContainer />
             <SpoilerButtonContainer />
             <FederationDropdownContainer />
+            <DateTimeButtonContainer />
           </div>
           <div className='character-counter__wrapper'><CharacterCounter max={maxChars} text={this.getFulltextForCharacterCounting()} /></div>
         </div>
+
+        <CircleDropdownContainer />
 
         <div className='compose-form__publish'>
           <div className='compose-form__publish-button-wrapper'><Button text={publishText} onClick={this.handleSubmit} disabled={!this.canSubmit()} block /></div>

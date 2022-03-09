@@ -13,14 +13,24 @@ SimpleNavigation::Configuration.run do |navigation|
     n.item :preferences, safe_join([fa_icon('cog fw'), t('settings.preferences')]), settings_preferences_url, if: -> { current_user.functional? } do |s|
       s.item :appearance, safe_join([fa_icon('desktop fw'), t('settings.appearance')]), settings_preferences_appearance_url
       s.item :notifications, safe_join([fa_icon('bell fw'), t('settings.notifications')]), settings_preferences_notifications_url
+      s.item :favourite_domains, safe_join([fa_icon('users fw'), t('settings.favourite_domains')]), settings_favourite_domains_url
+      s.item :favourite_tags, safe_join([fa_icon('hashtag fw'), t('settings.favourite_tags')]), settings_favourite_tags_url
       s.item :other, safe_join([fa_icon('cog fw'), t('preferences.other')]), settings_preferences_other_url
     end
 
-    n.item :relationships, safe_join([fa_icon('users fw'), t('settings.relationships')]), relationships_url, if: -> { current_user.functional? }
+    n.item :follow_and_subscriptions, safe_join([fa_icon('users fw'), t('settings.follow_and_subscriptions')]), relationships_url, if: -> { current_user.functional? } do |s|
+      s.item :relationships, safe_join([fa_icon('users fw'), t('settings.relationships')]), relationships_url, highlights_on: %r{/relationships}
+      s.item :follow_tags, safe_join([fa_icon('hashtag fw'), t('settings.follow_tags')]), settings_follow_tags_url, highlights_on: %r{/follow_tags}
+      s.item :account_subscribes, safe_join([fa_icon('users fw'), t('settings.account_subscribes')]), settings_account_subscribes_url, highlights_on: %r{/account_subscribes}
+      s.item :domain_subscribes, safe_join([fa_icon('server fw'), t('settings.domain_subscribes')]), settings_domain_subscribes_url, highlights_on: %r{/domain_subscribes}
+      s.item :keyword_subscribes, safe_join([fa_icon('search fw'), t('settings.keyword_subscribes')]), settings_keyword_subscribes_url, highlights_on: %r{/keyword_subscribes}
+    end
+
     n.item :filters, safe_join([fa_icon('filter fw'), t('filters.index.title')]), filters_path, highlights_on: %r{/filters}, if: -> { current_user.functional? }
+    n.item :statuses_cleanup, safe_join([fa_icon('history fw'), t('settings.statuses_cleanup')]), statuses_cleanup_url, if: -> { current_user.functional? }
 
     n.item :security, safe_join([fa_icon('lock fw'), t('settings.account')]), edit_user_registration_url do |s|
-      s.item :password, safe_join([fa_icon('lock fw'), t('settings.account_settings')]), edit_user_registration_url, highlights_on: %r{/auth/edit|/settings/delete|/settings/migration|/settings/aliases}
+      s.item :password, safe_join([fa_icon('lock fw'), t('settings.account_settings')]), edit_user_registration_url, highlights_on: %r{/auth/edit|/settings/delete|/settings/migration|/settings/aliases|/settings/login_activities}
       s.item :two_factor_authentication, safe_join([fa_icon('mobile fw'), t('settings.two_factor_authentication')]), settings_two_factor_authentication_methods_url, highlights_on: %r{/settings/two_factor_authentication|/settings/otp_authentication|/settings/security_keys}
       s.item :authorized_apps, safe_join([fa_icon('list fw'), t('settings.authorized_apps')]), oauth_authorized_applications_url
     end

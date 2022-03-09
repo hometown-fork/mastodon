@@ -20,6 +20,7 @@ class ActivityPub::DeleteSerializer < ActivityPub::Serializer
   end
 
   attributes :id, :type, :actor, :to
+  attribute :expiry, if: -> { expiry? }
 
   has_one :object, serializer: TombstoneSerializer
 
@@ -37,5 +38,13 @@ class ActivityPub::DeleteSerializer < ActivityPub::Serializer
 
   def to
     [ActivityPub::TagManager::COLLECTIONS[:public]]
+  end
+
+  def expiry?
+    instance_options && instance_options[:expiry].present?
+  end
+
+  def expiry
+    instance_options[:expiry].iso8601
   end
 end

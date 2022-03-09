@@ -158,6 +158,10 @@ body.rtl {
   .status__prepend {
     margin-left: 0;
     margin-right: 68px;
+
+    > span {
+      margin-left: 4px;
+    }
   }
 
   .status__prepend-icon-wrapper {
@@ -183,6 +187,16 @@ body.rtl {
   .column-back-button--slim-button {
     right: auto;
     left: 0;
+  }
+
+  .account__action-bar {
+    right: 10px;
+  
+    &.account__action-bar_home,
+    &.account__action-bar_list {
+      left: 10px;
+      right: unset;
+    }
   }
 
   .status__relative-time,
@@ -250,6 +264,7 @@ body.rtl {
   }
 
   .detailed-status__favorites,
+  .detailed-status__emoji_reactions,
   .detailed-status__reblogs {
     margin-left: 0;
     margin-right: 6px;
@@ -334,6 +349,11 @@ body.rtl {
   .table th,
   .table td {
     text-align: right;
+  }
+
+  .filter {
+    margin-right: 0;
+    margin-left: -45px;
   }
 
   .filters .filter-subset {
@@ -464,5 +484,25 @@ body.rtl {
   .picture-in-picture {
     right: auto;
     left: 20px;
+  }
+
+  .list-link .list-name,
+  .list-link .list-favourite-button,
+  .list-link .list-edit-button {
+      text-align: right;
+  }
+
+  .circle-dropdown .circle-dropdown__menu {
+    background-position: left 8px center;
+  }
+
+  .circle-dropdown__menu {
+    text-align: right;
+    padding: 9px 4px 9px 30px;
+  }
+
+  .circle-link .circle-edit-button,
+  .circle-link .circle-delete-button {
+      text-align: right;
   }
 }

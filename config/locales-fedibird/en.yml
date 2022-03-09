@@ -1,0 +1,88 @@
+---
+en:
+  account_subscribes:
+    edit:
+      title: Edit
+    hint_html: "<strong>What are account subscription?</strong> Insert public posts from the specified account into the home or list timeline. Posts received by the server (federated timeline) are targets."
+    new:
+      title: Add new account subscription
+  domain_subscribes:
+    edit:
+      title: Edit
+    hint_html: "<strong>What are domain subscription?</strong> Insert public posts from the specified domain into the home or list timeline. Posts received by the server (federated timeline) are targets."
+    new:
+      title: Add new domain subscription
+  favourite_domains:
+    add_new: Add new
+    errors:
+      limit: You have already favourite the maximum amount of domains
+    hint_html: "<strong>What are favourite domains?</strong> They are used only for you, and are tools to help you browse using domains. You can quickly switch between timelines."
+  favourite_tags:
+    add_new: Add new
+    errors:
+      limit: You have already favourite the maximum amount of hashtags
+    hint_html: "<strong>What are favourite hashtags?</strong> They are used only for you, and are tools to help you browse using hashtags. You can quickly switch between timelines."
+  follow_tags:
+    edit:
+      title: Edit
+    hint_html: "<strong>What are follow hashtags?</strong> They are a collection of hashtags you follow. From the posts with hashtags received by the server, the one with the hashtag specified here is inserted into the home or list timeline."
+    new:
+      title: Add new hashtag follow
+  keyword_subscribes:
+    disabled: Disabled
+    edit:
+      title: Edit
+    enabled: Enabled
+    errors:
+      duplicate: The same content has already been registered
+      limit: You have reached the maximum number of "Keyword subscribes" that can be registered
+      regexp: 'Regular expression error: %{message}'
+    hint_html: "<strong>What is a keyword subscribes?</strong> Inserts a public post that matches one of the specified words or a regular expression into the home or list timeline. Posts received by the server (federated timeline) are targets."
+    ignore_block: Ignore
+    ignorecase:
+      disabled: Sensitive
+      enabled: Ignore
+    index:
+      delete: Delete
+      title: Keyword subscribe
+    new:
+      title: Add new keyword subscribe
+    regexp:
+      disabled: Keyword
+      enabled: Regex
+  lists:
+    add_new: Add new list
+    home: Home
+  notification_mailer:
+    emoji_reaction:
+      body: 'Your post was emoji reactioned by %{name}:'
+      subject: "%{name} emoji reactioned your post"
+      title: New emoji reaction
+  preferences:
+    fedibird_features: Fedibird features
+  relationships:
+    interrelationship: Interrelationship
+    one_way: One-way
+  settings:
+    account_subscribes: Account subscribes
+    domain_subscribes: Domain subscribes
+    favourite_domains: Favourite domains
+    favourite_tags: Favourite hashtags
+    follow_and_subscriptions: Follows and subscriptions
+    follow_tags: Following hashtags
+    keyword_subscribes: Keyword subscribes
+  status_expire:
+    validations:
+      expire_in_the_past: It is already past expires. You cannot specify expires before the posting time.
+      invalid_expire_action: Invalid expires_action are specified.
+      invalid_expire_at: Invalid expires are specified.
+  statuses:
+    errors:
+      duration_too_long: is too far into the future
+      duration_too_short: is too soon
+    visibilities:
+      direct_long: Only show to mentioned users
+      limited: Circle
+      limited_long: Only show to circle users
+      mutual: Mutual
+      mutual_long: Only show to mutual followers

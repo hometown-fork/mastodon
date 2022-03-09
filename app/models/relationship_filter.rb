@@ -3,6 +3,7 @@
 class RelationshipFilter
   KEYS = %i(
     relationship
+    interrelationship
     status
     by_domain
     activity
@@ -42,6 +43,8 @@ class RelationshipFilter
     case key
     when 'relationship'
       relationship_scope(value)
+    when 'interrelationship'
+      by_interrelationship_scope(value)
     when 'by_domain'
       by_domain_scope(value)
     when 'location'
@@ -63,12 +66,31 @@ class RelationshipFilter
       account.following.eager_load(:account_stat).reorder(nil)
     when 'followed_by'
       account.followers.eager_load(:account_stat).reorder(nil)
-    when 'mutual'
-      account.followers.eager_load(:account_stat).reorder(nil).merge(Account.where(id: account.following))
     when 'invited'
       Account.joins(user: :invite).merge(Invite.where(user: account.user)).eager_load(:account_stat).reorder(nil)
     else
       raise "Unknown relationship: #{value}"
+    end
+  end
+
+  def by_interrelationship_scope(value)
+    case value
+    when 'mutual'
+      case params[:relationship]
+      when 'following'
+        Account.where(id: account.followers)
+      when 'followed_by'
+        Account.where(id: account.following)
+      end
+    when 'one_way'
+      case params[:relationship]
+      when 'following'
+        Account.where.not(id: account.followers)
+      when 'followed_by'
+        Account.where.not(id: account.following)
+      end
+    else
+      raise "Unknown interrelationship: #{value}"
     end
   end
 

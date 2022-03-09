@@ -85,6 +85,7 @@ Rails.application.routes.draw do
   end
 
   resource :inbox, only: [:create], module: :activitypub
+  resources :contexts, only: [:show], module: :activitypub
 
   get '/@:username', to: 'accounts#show', as: :short_account
   get '/@:username/with_replies', to: 'accounts#show', as: :short_account_with_replies
@@ -164,6 +165,13 @@ Rails.application.routes.draw do
     resources :aliases, only: [:index, :create, :destroy]
     resources :sessions, only: [:destroy]
     resources :featured_tags, only: [:index, :create, :destroy]
+    resources :favourite_domains, only: [:index, :create, :destroy]
+    resources :favourite_tags, only: [:index, :create, :destroy]
+    resources :follow_tags, except: [:show]
+    resources :account_subscribes, except: [:show]
+    resources :domain_subscribes, except: [:show]
+    resources :keyword_subscribes, except: [:show]
+    resources :login_activities, only: [:index]
   end
 
   resources :media, only: [:show] do
@@ -175,6 +183,7 @@ Rails.application.routes.draw do
   resources :invites, only: [:index, :create, :destroy]
   resources :filters, except: [:show]
   resource :relationships, only: [:show, :update]
+  resource :statuses_cleanup, controller: :statuses_cleanup, only: [:show, :update]
 
   get '/public', to: 'public_timelines#show', as: :public_timeline
   get '/media_proxy/:id/(*any)', to: 'media_proxy#show', as: :media_proxy
@@ -222,7 +231,7 @@ Rails.application.routes.draw do
         post :stop_delivery
       end
     end
-  
+
     resources :rules
 
     resources :reports, only: [:index, :show] do
@@ -282,6 +291,7 @@ Rails.application.routes.draw do
 
     resources :users, only: [] do
       resource :two_factor_authentication, only: [:destroy]
+      resource :sign_in_token_authentication, only: [:create, :destroy]
     end
 
     resources :custom_emojis, only: [:index, :new, :create] do
@@ -323,6 +333,8 @@ Rails.application.routes.draw do
         scope module: :statuses do
           resources :reblogged_by, controller: :reblogged_by_accounts, only: :index
           resources :favourited_by, controller: :favourited_by_accounts, only: :index
+          resources :emoji_reactioned_by, controller: :emoji_reactioned_by_accounts, only: :index
+          resources :mentioned_by, controller: :mentioned_by_accounts, only: :index
           resource :reblog, only: :create
           post :unreblog, to: 'reblogs#destroy'
 
@@ -337,6 +349,9 @@ Rails.application.routes.draw do
 
           resource :pin, only: :create
           post :unpin, to: 'pins#destroy'
+
+          resources :emoji_reactions, only: :update, constraints: { id: /[^\/]+/ }
+          post :emoji_unreaction, to: 'emoji_reactions#destroy'
         end
 
         member do
@@ -349,6 +364,7 @@ Rails.application.routes.draw do
         resource :public, only: :show, controller: :public
         resources :tag, only: :show
         resources :list, only: :show
+        resources :group, only: :show
       end
 
       resources :streaming, only: [:index]
@@ -390,16 +406,17 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :media,        only: [:create, :update, :show]
-      resources :blocks,       only: [:index]
-      resources :mutes,        only: [:index]
-      resources :favourites,   only: [:index]
-      resources :bookmarks,    only: [:index]
-      resources :reports,      only: [:create]
-      resources :trends,       only: [:index]
-      resources :filters,      only: [:index, :create, :show, :update, :destroy]
-      resources :endorsements, only: [:index]
-      resources :markers,      only: [:index, :create]
+      resources :media,           only: [:create, :update, :show]
+      resources :blocks,          only: [:index]
+      resources :mutes,           only: [:index]
+      resources :favourites,      only: [:index]
+      resources :bookmarks,       only: [:index]
+      resources :emoji_reactions, only: [:index]
+      resources :reports,         only: [:create]
+      resources :trends,          only: [:index]
+      resources :filters,         only: [:index, :create, :show, :update, :destroy]
+      resources :endorsements,    only: [:index]
+      resources :markers,         only: [:index, :create]
 
       namespace :apps do
         get :verify_credentials, to: 'credentials#show'
@@ -418,7 +435,9 @@ Rails.application.routes.draw do
       end
 
       resource :domain_blocks, only: [:show, :create, :destroy]
-      resource :directory, only: [:show]
+
+      resource :directory,       only: [:show]
+      resource :group_directory, only: [:show]
 
       resources :follow_requests, only: [:index] do
         member do
@@ -443,19 +462,23 @@ Rails.application.routes.draw do
         resource :search, only: :show, controller: :search
         resource :lookup, only: :show, controller: :lookup
         resources :relationships, only: :index
+        resources :subscribing, only: :index, controller: 'subscribing_accounts'
       end
 
-      resources :accounts, only: [:create, :show] do
+      resources :accounts, only: [:index, :create, :show] do
         resources :statuses, only: :index, controller: 'accounts/statuses'
         resources :followers, only: :index, controller: 'accounts/follower_accounts'
         resources :following, only: :index, controller: 'accounts/following_accounts'
         resources :lists, only: :index, controller: 'accounts/lists'
+        resources :circles, only: :index, controller: 'accounts/circles'
         resources :identity_proofs, only: :index, controller: 'accounts/identity_proofs'
         resources :featured_tags, only: :index, controller: 'accounts/featured_tags'
 
         member do
           post :follow
           post :unfollow
+          post :subscribe
+          post :unsubscribe
           post :block
           post :unblock
           post :mute
@@ -469,6 +492,16 @@ Rails.application.routes.draw do
 
       resources :lists, only: [:index, :create, :show, :update, :destroy] do
         resource :accounts, only: [:show, :create, :destroy], controller: 'lists/accounts'
+        resource :subscribes, only: [:show, :create, :destroy], controller: 'lists/subscribes'
+
+        member do
+          post :favourite
+          post :unfavourite
+        end
+    end
+
+      resources :circles, only: [:index, :create, :show, :update, :destroy] do
+        resource :accounts, only: [:show, :create, :destroy], controller: 'circles/accounts'
       end
 
       namespace :featured_tags do
@@ -476,6 +509,11 @@ Rails.application.routes.draw do
       end
 
       resources :featured_tags, only: [:index, :create, :destroy]
+      resources :favourite_domains, only: [:index, :create, :show, :update, :destroy]
+      resources :favourite_tags, only: [:index, :create, :show, :update, :destroy]
+      resources :follow_tags, only: [:index, :create, :show, :update, :destroy]
+      resources :domain_subscribes, only: [:index, :create, :show, :update, :destroy]
+      resources :keyword_subscribes, only: [:index, :create, :show, :update, :destroy]
 
       resources :polls, only: [:create, :show] do
         resources :votes, only: :create, controller: 'polls/votes'

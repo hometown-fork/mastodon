@@ -75,7 +75,16 @@ class Api::V1::NotificationsController < Api::BaseController
   def exclude_types
     val = params.permit(exclude_types: [])[:exclude_types] || []
     val = [val] unless val.is_a?(Enumerable)
-    val
+    val = val << 'emoji_reaction' << 'status' unless new_notification_type_compatible?
+    val.uniq
+  end
+
+  def new_notification_type_compatible?
+    application = doorkeeper_token&.application
+
+    return false if application&.name == 'Tootle for Mastodon'
+
+    true
   end
 
   def from_account

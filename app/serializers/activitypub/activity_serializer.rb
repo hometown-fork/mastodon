@@ -13,10 +13,15 @@ class ActivityPub::ActivitySerializer < ActivityPub::Serializer
   end
 
   attributes :id, :type, :actor, :published, :to, :cc
+  attribute :expiry, if: -> { object.expiry.present? }
 
   has_one :virtual_object, key: :object
 
   def published
     object.published.iso8601
+  end
+
+  def expiry
+    object.expiry.iso8601
   end
 end

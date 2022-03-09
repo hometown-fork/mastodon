@@ -42,6 +42,13 @@ describe UserSettingsDecorator do
       expect(user.settings['unfollow_modal']).to eq false
     end
 
+    it 'updates the user settings value for unsubscribe modal' do
+      values = { 'setting_unsubscribe_modal' => '0' }
+
+      settings.update(values)
+      expect(user.settings['unsubscribe_modal']).to eq false
+    end
+
     it 'updates the user settings value for boost modal' do
       values = { 'setting_boost_modal' => '1' }
 

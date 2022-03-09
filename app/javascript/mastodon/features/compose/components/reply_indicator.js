@@ -31,8 +31,13 @@ class ReplyIndicator extends ImmutablePureComponent {
 
   handleAccountClick = (e) => {
     if (e.button === 0 && !(e.ctrlKey || e.metaKey)) {
+      const { status } = this.props;
       e.preventDefault();
-      this.context.router.history.push(`/accounts/${this.props.status.getIn(['account', 'id'])}`);
+      if (status.getIn(['account', 'group'], false)) {
+        this.context.router.history.push(`/timelines/groups/${status.getIn(['account', 'id'])}`);
+      } else {
+        this.context.router.history.push(`/accounts/${status.getIn(['account', 'id'])}`);
+      }
     }
   }
 

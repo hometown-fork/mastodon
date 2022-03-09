@@ -2,12 +2,10 @@
 
 ## Supported Versions
 
-| Version | Supported          |
-| ------- | ------------------ |
-| 3.4.x   | :white_check_mark: |
-| 3.3.x   | :white_check_mark: |
-| < 3.3   | :x:                |
+| Version        | Supported          |
+| -------------- | ------------------ |
+| v0.1 + 3.4.1   | :white_check_mark: |
 
 ## Reporting a Vulnerability
 
-hello@joinmastodon.org
+noellabo@fedibird.com

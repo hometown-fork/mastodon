@@ -1,0 +1,14 @@
+.fields-group
+  = f.input :domain, wrapper: :with_label
+
+.fields-group
+  = f.input :exclude_reblog, wrapper: :with_label
+
+.fields-group
+  = f.input :media_only, as: :boolean, wrapper: :with_label
+
+.fields-group
+  = f.label :list_id
+  = f.collection_select :list_id, home_list_new(@lists), :first, :last
+
+%hr.spacer/

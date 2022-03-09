@@ -6,10 +6,12 @@ data:
   read:
     - config/locales/%{locale}.yml
     - config/locales/**/*.%{locale}.yml
+    - config/locales-fedibird/%{locale}.yml
+    - config/locales-fedibird/**/*.%{locale}.yml
 
   write:
-    - ['{devise, simple_form, doorkeeper}.*', 'config/locales/\1.%{locale}.yml']
-    - config/locales/%{locale}.yml
+    - ['{devise, simple_form, doorkeeper}.*', 'config/locales-fedibird/\1.%{locale}.yml']
+    - config/locales-fedibird/%{locale}.yml
 
   yaml:
     write:

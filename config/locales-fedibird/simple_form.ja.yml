@@ -1,0 +1,96 @@
+---
+ja:
+  simple_form:
+    hints:
+      defaults:
+        setting_enable_limited_timeline: フォロワー限定・サークル・ダイレクトメッセージを表示する限定ホームを有効にします
+        setting_enable_reaction: タイムラインでリアクションの表示を有効にし、リアクションボタンを表示する
+        setting_follow_button_to_list_adder: フォロー・購読ボタンの動作を変更し、フォロー・購読するリストを選択したり、ホームで受け取らないよう設定するダイアログを開きます
+        setting_place_tab_bar_at_bottom: タッチデバイス使用時に、タブの操作を指の届く範囲で行えます
+        setting_show_bookmark_button: オフにした場合、ブックマークの呼び出しはMastodon標準の位置となります（アクションバーのメニューの中）
+        setting_show_follow_button_on_timeline: フォロー状態を確認し易くなり、素早くフォローリストを構築できます
+        setting_show_followed_by: 'フォロー状態に応じてフォローボタンの色が変わります（灰色: フォロー関係なし、黄色: フォローされている、青色: フォローしている、緑色: 相互フォロー）'
+        setting_show_navigation_panel: 上級者向け UI の右端にナビゲーションパネルを表示します
+        setting_show_quote_button: アクションバーへボタンを表示するかどうかの設定です。引用機能の有効・無効を切り替えるものではありません
+        setting_show_reply_tree_button: オフにした場合、投稿者本人が自分自身にリプライで投稿を連ねている場合にのみ『スレッドを表示』ボタンが表示されます
+        setting_show_subscribe_button_on_timeline: 購読状態を確認し易くなり、素早く購読リストを構築できます
+        setting_show_tab_bar_label: リスト等をタブバーに追加する場合、アイコンだけでは区別がつかないので、ラベルを表示することをおすすめします
+        setting_show_target: 投稿対象と、フォロー・購読の対象を切り替える機能を有効にします
+      domain_subscribe:
+        domain: 購読したいサーバのドメイン名を指定します
+        exclude_reblog: ブーストされた投稿を購読から除外します
+        media_only: メディアが添付された投稿だけを対象にします
+      follow_tag:
+        media_only: メディアが添付された投稿だけを対象にします
+        name: フォローしたいハッシュタグを '#' 抜きで指定します
+      form_account_subscribe:
+        acct: 購読したいアカウントを username@domain 形式で指定します
+        media_only: メディアが添付された投稿だけを対象にします
+        show_reblogs: ブーストされた投稿を購読に含めます
+      keyword_subscribe:
+        exclude_keyword: カンマで区切って複数の除外するキーワードを並べます（または正規表現で指定します）
+        ignore_block: ドメイン全体を非表示にしたまま、キーワードの購読を優先することができます
+        keyword: カンマで区切って複数のキーワードを並べます（または正規表現で指定します）
+        media_only: メディアが添付された投稿だけを対象にします
+        name: オプションです
+    labels:
+      defaults:
+        setting_enable_limited_timeline: 限定ホームを有効にする
+        setting_enable_reaction: リアクションを有効にする
+        setting_follow_button_to_list_adder: フォローボタンでリスト追加ダイアログを開く
+        setting_place_tab_bar_at_bottom: タブバーを下に配置する
+        setting_show_bookmark_button: ブックマークボタンをアクションバーに表示する
+        setting_show_follow_button_on_timeline: タイムライン上にフォローボタンを表示する
+        setting_show_followed_by: 被フォロー状態をフォローボタンに反映する
+        setting_show_navigation_panel: ナビゲーションパネルを表示する
+        setting_show_quote_button: 引用ボタンをアクションバーに表示する
+        setting_show_reply_tree_button: リプライツリーの存在する投稿に『スレッドを表示』ボタンを表示する
+        setting_show_subscribe_button_on_timeline: タイムライン上に購読ボタンを表示する
+        setting_show_tab_bar_label: タブバーにラベルを表示する
+        setting_show_target: ターゲット機能を有効にする
+        setting_unsubscribe_modal: 購読を解除する前に確認ダイアログを表示する
+      domain_subscribe:
+        domain: ドメイン
+        exclude_reblog: ブースト除外
+        list_id: 対象タイムライン
+        media_only: メディアのみ
+        reblog: ブースト
+        timeline: タイムライン
+      favourite_domain:
+        name: ドメイン
+      favourite_tag:
+        name: ハッシュタグ
+      follow_tag:
+        list_id: 対象タイムライン
+        media_only: メディアのみ
+        name: ハッシュタグ
+        timeline: タイムライン
+      form_account_subscribe:
+        acct: アカウント
+        list_id: 対象タイムライン
+        media_only: メディアのみ
+        reblog: ブースト
+        show_reblogs: ブーストを表示
+        timeline: タイムライン
+      keyword_subscribe:
+        disabled: 一時的に購読を無効にする
+        exclude_keyword: 除外するキーワードまたは正規表現
+        ignore_block: ユーザーによるドメインブロックを無視する
+        ignorecase: 大文字と小文字を区別しない
+        keyword: キーワードまたは正規表現
+        list_id: 対象タイムライン
+        media_only: メディアのみ
+        name: 名称
+        regexp: キーワードに正規表現を使う
+      keyword_subscribes:
+        disabled: 状態
+        ignore_block: ブロック
+        ignorecase: 大小
+        keyword: 設定値
+        media_only: メディア
+        name: 名称
+        regexp: 種別
+        timeline: タイムライン
+      notification_emails:
+        emoji_reaction: 絵文字リアクションされた時
+        reaction: リアクションされた時

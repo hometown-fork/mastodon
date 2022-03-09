@@ -10,6 +10,7 @@ const tooltips = defineMessages({
   polls: { id: 'notifications.filter.polls', defaultMessage: 'Poll results' },
   follows: { id: 'notifications.filter.follows', defaultMessage: 'Follows' },
   statuses: { id: 'notifications.filter.statuses', defaultMessage: 'Updates from people you follow' },
+  reactions: { id: 'notifications.filter.emoji_reactions', defaultMessage: 'Reactions' },
 });
 
 export default @injectIntl
@@ -94,6 +95,13 @@ class FilterBar extends React.PureComponent {
           title={intl.formatMessage(tooltips.statuses)}
         >
           <Icon id='home' fixedWidth />
+        </button>
+        <button
+          className={selectedFilter === 'emoji_reaction' ? 'active' : ''}
+          onClick={this.onClick('emoji_reaction')}
+          title={intl.formatMessage(tooltips.reactions)}
+        >
+          <Icon id='smile-o' fixedWidth />
         </button>
         <button
           className={selectedFilter === 'follow' ? 'active' : ''}

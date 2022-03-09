@@ -1,0 +1,17 @@
+%tr
+  %td
+    = fa_icon 'hashtag'
+    = follow_tag.name
+  %td.nowrap.symbol
+    - if follow_tag.media_only
+      = fa_icon('check')
+  %td.nowrap
+    - if follow_tag.list_id
+      = fa_icon 'list-ul'
+      = follow_tag.list&.title
+    - else
+      = fa_icon 'home'
+      = t 'lists.home'
+  %td.nowrap
+    = table_link_to 'pencil', t('follow_tags.edit.title'), edit_settings_follow_tag_path(follow_tag)
+    = table_link_to 'trash', t('filters.index.delete'), settings_follow_tag_path(follow_tag), method: :delete, data: { confirm: t('admin.accounts.are_you_sure') }

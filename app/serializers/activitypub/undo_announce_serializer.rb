@@ -2,6 +2,7 @@
 
 class ActivityPub::UndoAnnounceSerializer < ActivityPub::Serializer
   attributes :id, :type, :actor, :to
+  attribute :expiry, if: -> { expiry? }
 
   has_one :virtual_object, key: :object, serializer: ActivityPub::ActivitySerializer
 
@@ -23,5 +24,13 @@ class ActivityPub::UndoAnnounceSerializer < ActivityPub::Serializer
 
   def virtual_object
     ActivityPub::ActivityPresenter.from_status(object)
+  end
+
+  def expiry?
+    instance_options && instance_options[:expiry].present?
+  end
+
+  def expiry
+    instance_options[:expiry].expiry.iso8601
   end
 end

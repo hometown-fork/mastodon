@@ -1,0 +1,25 @@
+- content_for :page_title do
+  = t('settings.domain_subscribes')
+
+%p= t('domain_subscribes.hint_html')
+
+= link_to t('domain_subscribes.new.title'), new_settings_domain_subscribe_path, class: 'button'
+
+%hr.spacer/
+
+- if @domain_subscribes.empty?
+  = nothing_here 'nothing-here--under-tabs'
+- else
+  .table-wrapper
+    %table.table
+      %thead
+        %tr
+          %th= t('simple_form.labels.domain_subscribe.domain')
+          %th.nowrap.symbol= t('simple_form.labels.domain_subscribe.reblog')
+          %th.nowrap.symbol= t('simple_form.labels.domain_subscribe.media_only')
+          %th.nowrap= t('simple_form.labels.domain_subscribe.timeline')
+          %th.nowrap
+      %tbody
+        = render partial: 'domain_subscribe', collection: @domain_subscribes
+
+= paginate @domain_subscribes

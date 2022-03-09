@@ -1,0 +1,44 @@
+%tr
+  %td.nowrap= keyword_subscribe.name
+  %td.nowrap
+    - if keyword_subscribe.regexp
+      = t 'keyword_subscribes.regexp.enabled'
+    - else
+      = t 'keyword_subscribes.regexp.disabled'
+  %td
+    .include-keyword
+      = keyword_subscribe.keyword
+    .exclude-keyword
+      = keyword_subscribe.exclude_keyword
+  %td.nowrap
+    - if keyword_subscribe.ignorecase
+      = t 'keyword_subscribes.ignorecase.enabled'
+    - else
+      = t 'keyword_subscribes.ignorecase.disabled'
+  %td.nowrap
+    - if keyword_subscribe.ignore_block
+      = t 'keyword_subscribes.ignore_block'
+  %td.nowrap.symbol
+    - if keyword_subscribe.media_only
+      = fa_icon('check')
+  %td.nowrap
+    - if keyword_subscribe.list_id
+      = fa_icon 'list-ul'
+      = keyword_subscribe.list&.title
+    - else
+      = fa_icon 'home'
+      = t 'keyword_subscribe.home'
+  %td.nowrap
+    - if !keyword_subscribe.disabled
+      %span.positive-hint
+        = fa_icon('check')
+        = ' '
+        = t 'keyword_subscribes.enabled'
+    - else
+      %span.negative-hint
+        = fa_icon('times')
+        = ' '
+        = t 'keyword_subscribes.disabled'
+  %td.nowrap
+    = table_link_to 'pencil', t('keyword_subscribes.edit.title'), edit_settings_keyword_subscribe_path(keyword_subscribe)
+    = table_link_to 'times', t('keyword_subscribes.index.delete'), settings_keyword_subscribe_path(keyword_subscribe), method: :delete

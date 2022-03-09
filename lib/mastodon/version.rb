@@ -53,8 +53,12 @@ module Mastodon
       end
     end
 
+    def fedibird_verson
+      '0.1'
+    end
+
     def user_agent
-      @user_agent ||= "#{HTTP::Request::USER_AGENT} (Mastodon/#{Version}; +http#{Rails.configuration.x.use_https ? 's' : ''}://#{Rails.configuration.x.web_domain}/)"
+      @user_agent ||= "#{HTTP::Request::USER_AGENT} (Mastodon/#{Version} Fedibird/#{fedibird_verson}; +http#{Rails.configuration.x.use_https ? 's' : ''}://#{Rails.configuration.x.web_domain}/)"
     end
   end
 end

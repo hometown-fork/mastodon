@@ -4,16 +4,25 @@ class REST::StatusSerializer < ActiveModel::Serializer
   attributes :id, :created_at, :in_reply_to_id, :in_reply_to_account_id,
              :sensitive, :spoiler_text, :visibility, :language,
              :uri, :url, :replies_count, :reblogs_count,
-             :favourites_count, :local_only, :activity_pub_type
+             :favourites_count, :local_only, :activity_pub_type,
+             :emoji_reactions
 
   attribute :favourited, if: :current_user?
   attribute :reblogged, if: :current_user?
   attribute :muted, if: :current_user?
   attribute :bookmarked, if: :current_user?
+  attribute :emoji_reactioned, if: :current_user?
   attribute :pinned, if: :pinnable?
+  attribute :circle_id, if: :limited_owned_parent_status?
 
   attribute :content, unless: :source_requested?
   attribute :text, if: :source_requested?
+
+  attribute :quote_id, if: :quote?
+
+  attribute :expires_at, if: :has_expires?
+  attribute :expires_action, if: :has_expires?
+  attribute :visibility_ex, if: :visibility_ex?
 
   belongs_to :reblog, serializer: REST::StatusSerializer
   belongs_to :application, if: :show_application?
@@ -39,12 +48,40 @@ class REST::StatusSerializer < ActiveModel::Serializer
     object.in_reply_to_account_id&.to_s
   end
 
+  def quote_id
+    object.quote_id.to_s
+  end
+
   def current_user?
     !current_user.nil?
   end
 
+  def owned_status?
+    current_user? && current_user.account_id == object.account_id
+  end
+
   def show_application?
-    object.account.user_shows_application? || (current_user? && current_user.account_id == object.account_id)
+    object.account.user_shows_application? || owned_status?
+  end
+
+  def quote?
+    object.quote?
+  end
+
+  def has_expires?
+    object.expires? || object.expired?
+  end
+
+  def expires_at
+    object&.status_expire&.expires_at || object.expired_at
+  end
+
+  def expires_action
+    object&.status_expire&.action || 'mark'
+  end
+
+  def visibility_ex?
+    object.limited_visibility?
   end
 
   def visibility
@@ -58,12 +95,24 @@ class REST::StatusSerializer < ActiveModel::Serializer
     end
   end
 
+  def visibility_ex
+    object.visibility
+  end
+
   def sensitive
     if current_user? && current_user.account_id == object.account_id
       object.sensitive
     else
       object.account.sensitized? || object.sensitive
     end
+  end
+
+  def limited_owned_parent_status?
+    object.limited_visibility? && owned_status? && (!object.reply? || object.thread&.conversation_id != object.conversation_id)
+  end
+
+  def circle_id
+    Redis.current.get("statuses/#{object.id}/circle_id")
   end
 
   def uri
@@ -90,6 +139,10 @@ class REST::StatusSerializer < ActiveModel::Serializer
     end
   end
 
+  def emoji_reactions
+    object.grouped_emoji_reactions(current_user&.account)
+  end
+
   def reblogged
     if instance_options && instance_options[:relationships]
       instance_options[:relationships].reblogs_map[object.id] || false
@@ -114,6 +167,14 @@ class REST::StatusSerializer < ActiveModel::Serializer
     end
   end
 
+  def emoji_reactioned
+    if instance_options && instance_options[:relationships]
+      instance_options[:relationships].emoji_reactions_map[object.id] || false
+    else
+      current_user.account.emoji_reactioned?(object)
+    end
+  end
+
   def pinned
     if instance_options && instance_options[:relationships]
       instance_options[:relationships].pins_map[object.id] || false
@@ -123,8 +184,7 @@ class REST::StatusSerializer < ActiveModel::Serializer
   end
 
   def pinnable?
-    current_user? &&
-      current_user.account_id == object.account_id &&
+    owned_status? &&
       !object.reblog? &&
       %w(public unlisted).include?(object.visibility)
   end
@@ -142,7 +202,7 @@ class REST::StatusSerializer < ActiveModel::Serializer
   end
 
   class MentionSerializer < ActiveModel::Serializer
-    attributes :id, :username, :url, :acct
+    attributes :id, :username, :url, :acct, :group
 
     def id
       object.account_id.to_s
@@ -159,6 +219,10 @@ class REST::StatusSerializer < ActiveModel::Serializer
     def acct
       object.account.pretty_acct
     end
+
+    def group
+      object.account.group?
+    end
   end
 
   class TagSerializer < ActiveModel::Serializer
@@ -170,4 +234,24 @@ class REST::StatusSerializer < ActiveModel::Serializer
       tag_url(object)
     end
   end
+end
+
+class REST::NestedQuoteSerializer < REST::StatusSerializer
+  attribute :quote do
+    nil
+  end
+  attribute :quote_muted, if: :current_user?
+
+  def quote_muted
+    if instance_options && instance_options[:account_relationships]
+      instance_options[:account_relationships].muting[object.account_id] ? true : false || instance_options[:account_relationships].blocking[object.account_id] || instance_options[:account_relationships].blocked_by[object.account_id] || instance_options[:account_relationships].domain_blocking[object.account_id] || false
+    else
+      current_user.account.muting?(object.account) || object.account.blocking?(current_user.account) || current_user.account.blocking?(object.account) || current_user.account.domain_blocking?(object.account.domain)
+    end
+  end
+
+end
+
+class REST::StatusSerializer < ActiveModel::Serializer
+  belongs_to :quote, serializer: REST::NestedQuoteSerializer
 end

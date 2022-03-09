@@ -943,7 +943,6 @@ ja:
     i_am_html: 私は %{service} の %{username} です。
     identity: 所属
     inactive: 非アクティブ
-    publicize_checkbox: 'そしてこれをトゥートします:'
     publicize_toot: '証明されました！私は %{service} の %{username} です: %{url}'
     remove: アカウントから証明書を削除
     removed: アカウントから証明書を削除することに成功しました

@@ -1,0 +1,88 @@
+---
+ja:
+  account_subscribes:
+    edit:
+      title: 編集
+    hint_html: "<strong>アカウントの購読とは何ですか？</strong> 指定したアカウントの公開投稿をホームタイムラインまたはリストに挿入します。サーバが受け取っている投稿（連合タイムライン）が対象です。"
+    new:
+      title: 新規アカウント購読を追加
+  domain_subscribes:
+    edit:
+      title: 編集
+    hint_html: "<strong>ドメインの購読とは何ですか？</strong> 指定したドメインの公開投稿をホームタイムラインまたはリストに挿入します。サーバが受け取っている投稿（連合タイムライン）が対象です。"
+    new:
+      title: 新規ドメイン購読を追加
+  favourite_domains:
+    add_new: 追加
+    errors:
+      limit: お気に入りドメインの上限に達しました
+    hint_html: "<strong>お気に入りのドメインとは何ですか？</strong> それらはあなた自身のためにだけ使用される、ドメインを活用したブラウジングを助けるためのツールです。すばやくタイムラインを切り替えることができます。"
+  favourite_tags:
+    add_new: 追加
+    errors:
+      limit: お気に入りハッシュタグの上限に達しました
+    hint_html: "<strong>お気に入りのハッシュタグとは何ですか？</strong> それらはあなた自身のためにだけ使用される、ハッシュタグを活用したブラウジングを助けるためのツールです。すばやくタイムラインを切り替えることができます。"
+  follow_tags:
+    edit:
+      title: 編集
+    hint_html: "<strong>ハッシュタグのフォローとは何ですか？</strong> それらはあなたがフォローするハッシュタグのコレクションです。サーバが受け取ったハッシュタグ付きの投稿の中から、ここで指定したハッシュタグのついた投稿をホームタイムラインまたはリストに挿入します。"
+    new:
+      title: ハッシュタグのフォローを追加
+  keyword_subscribes:
+    disabled: 無効
+    edit:
+      title: 編集
+    enabled: 有効
+    errors:
+      duplicate: 既に同じ内容が登録されています
+      limit: キーワード購読の登録可能数の上限に達しました
+      regexp: '正規表現に誤りがあります: %{message}'
+    hint_html: "<strong>キーワードの購読とは何ですか？</strong> 指定した単語のいずれか、または正規表現に一致する公開投稿をホームタイムラインまたはリストに挿入します。サーバが受け取っている投稿（連合タイムライン）が対象です。"
+    ignore_block: 無視
+    ignorecase:
+      disabled: 区別
+      enabled: 無視
+    index:
+      delete: 削除
+      title: キーワードの購読
+    new:
+      title: 新規キーワード購読を追加
+    regexp:
+      disabled: キーワード
+      enabled: 正規表現
+  lists:
+    add_new: 新しいリストを追加
+    home: ホーム
+  notification_mailer:
+    emoji_reaction:
+      body: "%{name} さんに絵文字リアクションされた、あなたの投稿があります:"
+      subject: "%{name} さんに絵文字リアクションされました"
+      title: 新たな絵文字リアクション
+  preferences:
+    fedibird_features: Fedibirdの機能
+  relationships:
+    interrelationship: 相互関係
+    one_way: 片方向
+  settings:
+    account_subscribes: アカウントの購読
+    domain_subscribes: ドメインの購読
+    favourite_domains: お気に入りドメイン
+    favourite_tags: お気に入りハッシュタグ
+    follow_and_subscriptions: フォロー・購読
+    follow_tags: ハッシュタグのフォロー
+    keyword_subscribes: キーワードの購読
+  status_expire:
+    validations:
+      expire_in_the_past: 既に公開期限を過ぎています。投稿時間より前の公開期限は指定できません
+      invalid_expire_action: 不正な公開期限時のアクションが指定されています
+      invalid_expire_at: 不正な公開期限が指定されています
+  statuses:
+    errors:
+      duration_too_long: が長過ぎます
+      duration_too_short: が短過ぎます
+    visibilities:
+      direct_long: 送信した相手のみ閲覧可
+      limited: サークル
+      limited_long: サークルで指定したユーザーのみ閲覧可
+      mutual: 相互フォロー限定
+      mutual_long: 相互フォロー相手にのみ表示されます

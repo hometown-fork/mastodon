@@ -6,6 +6,7 @@ class Api::V1::Statuses::ReblogsController < Api::BaseController
   before_action -> { doorkeeper_authorize! :write, :'write:statuses' }
   before_action :require_user!
   before_action :set_reblog, only: [:create]
+  before_action :set_circle, only: [:create]
 
   override_rate_limit_headers :create, family: :statuses
 
@@ -42,7 +43,22 @@ class Api::V1::Statuses::ReblogsController < Api::BaseController
     not_found
   end
 
+  def set_circle
+    reblog_params[:circle] = begin
+      if reblog_params[:visibility] == 'mutual'
+        reblog_params[:visibility] = 'limited'
+        current_account
+      elsif reblog_params[:circle_id].blank?
+        nil
+      else
+        current_account.owned_circles.find(reblog_params[:circle_id])
+      end
+    end
+  rescue ActiveRecord::RecordNotFound
+    render json: { error: I18n.t('statuses.errors.circle_not_found') }, status: 404
+  end
+
   def reblog_params
-    params.permit(:visibility)
+    params.permit(:visibility, :circle_id)
   end
 end

@@ -41,7 +41,7 @@ class PreviewCard < ApplicationRecord
 
   has_and_belongs_to_many :statuses
 
-  has_attached_file :image, processors: [:thumbnail, :blurhash_transcoder], styles: ->(f) { image_styles(f) }, convert_options: { all: '-quality 80 -strip' }
+  has_attached_file :image, processors: [:thumbnail, :blurhash_transcoder], styles: ->(f) { image_styles(f) }, convert_options: { all: '-quality 80 +profile exif' }
 
   include Attachmentable
 
@@ -78,7 +78,7 @@ class PreviewCard < ApplicationRecord
         original: {
           geometry: '400x400>',
           file_geometry_parser: FastGeometryParser,
-          convert_options: '-coalesce -strip',
+          convert_options: '-coalesce +profile exif',
           blurhash: BLURHASH_OPTIONS,
         },
       }

@@ -1,0 +1,27 @@
+.fields-group
+  = f.input :name, as: :string, wrapper: :with_label
+
+.fields-group
+  = f.input :keyword, as: :string, wrapper: :with_label
+
+.fields-group
+  = f.input :exclude_keyword, as: :string, wrapper: :with_label
+
+.fields-group
+  = f.input :ignorecase, wrapper: :with_label
+
+.fields-group
+  = f.input :regexp, wrapper: :with_label
+
+.fields-group
+  = f.input :ignore_block, wrapper: :with_label
+
+.fields-group
+  = f.input :media_only, as: :boolean, wrapper: :with_label
+
+.fields-group
+  = f.label :list_id
+  = f.collection_select :list_id, home_list_new(@lists), :first, :last
+
+.fields-group
+  = f.input :disabled, wrapper: :with_label

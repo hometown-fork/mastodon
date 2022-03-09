@@ -1,0 +1,25 @@
+- content_for :page_title do
+  = t('settings.account_subscribes')
+
+%p= t('account_subscribes.hint_html')
+
+= link_to t('account_subscribes.new.title'), new_settings_account_subscribe_path, class: 'button'
+
+%hr.spacer/
+
+- if @account_subscribings.empty?
+  = nothing_here 'nothing-here--under-tabs'
+- else
+  .table-wrapper
+    %table.table.accounts-table
+      %thead
+        %tr
+          %th= t('simple_form.labels.form_account_subscribe.acct')
+          %th.nowrap.symbol= t('simple_form.labels.form_account_subscribe.reblog')
+          %th.nowrap.symbol= t('simple_form.labels.form_account_subscribe.media_only')
+          %th.nowrap= t('simple_form.labels.form_account_subscribe.timeline')
+          %th.nowrap
+      %tbody
+        = render partial: 'account_subscribe', collection: @account_subscribings
+
+= paginate @account_subscribings
