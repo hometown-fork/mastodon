@@ -2,7 +2,7 @@
 de:
   about:
     about_hashtag_html: Das sind öffentliche Beiträge, die mit <strong>#%{hashtag}</strong> getaggt wurden. Wenn du irgendwo im Fediversum ein Konto besitzt, kannst du mit ihnen interagieren.
-    about_mastodon_html: %{title} ist ein Fork von Mastodon, ein soziales Netzwerk. Es basiert auf offenen Web-Protokollen und freier, quelloffener Software. Es ist dezentral (so wie E-Mail!).
+    about_mastodon_html: '%{title} ist ein Fork von Mastodon, ein soziales Netzwerk. Es basiert auf offenen Web-Protokollen und freier, quelloffener Software. Es ist dezentral (so wie E-Mail!).'
     about_this: Über diesen Server
     active_count_after: aktiv
     active_footnote: Monatlich Aktive User (MAU)
@@ -21,7 +21,7 @@ de:
     documentation: Dokumentation
     federation_hint_html: Mit einem Account auf %{instance} wirst du in der Lage sein Nutzern auf irgendeinem %{title}-Server und darüber hinaus zu folgen.
     get_apps: Versuche eine mobile App
-    hosted_on: %{title}, gehostet auf %{domain}
+    hosted_on: '%{title}, gehostet auf %{domain}'
     instance_actor_flash: |
       Dieses Konto ist ein virtueller Akteur, der den Server selbst und nicht einen einzelnen Benutzer repräsentiert.
       Dieser wird für Föderationszwecke verwendet und sollte nicht blockiert werden, es sei denn du möchtest die gesamte Instanz blockieren.
@@ -50,7 +50,7 @@ de:
       silenced_title: Stummgeschaltete Server
       suspended: Du kannst niemanden von diesem Server folgen, und keine Daten werden verarbeitet oder gespeichert und keine Daten ausgetauscht.
       suspended_title: Gesperrte Server
-    unavailable_content_html: %{title} erlaubt es dir generell, mit Inhalten zu interagieren, diese anzuzeigen und mit anderen Nutzern im Fediversum über Server hinweg zu interagieren. Dies sind die Ausnahmen, die auf diesem bestimmten Server gemacht wurden.
+    unavailable_content_html: '%{title} erlaubt es dir generell, mit Inhalten zu interagieren, diese anzuzeigen und mit anderen Nutzern im Fediversum über Server hinweg zu interagieren. Dies sind die Ausnahmen, die auf diesem bestimmten Server gemacht wurden.'
     user_count_after:
       one: Profil
       other: Profile
@@ -898,7 +898,7 @@ de:
     confirmation_dialogs: Bestätigungsfenster
     discovery: Entdecken
     localization:
-      body: %{title} wurde von Freiwilligen übersetzt.
+      body: '%{title} wurde von Freiwilligen übersetzt.'
       guide_link: https://de.crowdin.com/project/mastodon
       guide_link_text: Jeder kann etwas dazu beitragen.
     sensitive_content: NSFW
@@ -1598,9 +1598,9 @@ de:
       <p>Ursprünglich übernommen von der <a href="https://github.com/discourse/discourse">Discourse-Datenschutzerklärung</a>.</p>
     title: "%{instance} Nutzungsbedingungen und Datenschutzerklärung"
   themes:
-    contrast: %{title} (Hoher Kontrast)
-    default: %{title} (Dunkel)
-    mastodon-light: %{title} (Hell)
+    contrast: '%{title} (Hoher Kontrast)'
+    default: '%{title} (Dunkel)'
+    mastodon-light: '%{title} (Hell)'
   time:
     formats:
       default: "%d.%m.%Y %H:%M"
