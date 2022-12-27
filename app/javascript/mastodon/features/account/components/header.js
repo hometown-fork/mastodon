@@ -330,7 +330,7 @@ class Header extends ImmutablePureComponent {
 
           <div className='account__header__tabs__name'>
             <h1>
-              <span dangerouslySetInnerHTML={displayNameHtml} /> {badge}
+              <a href={account.get('url')} target="_blank" rel="noopener noreferrer"><span dangerouslySetInnerHTML={displayNameHtml} /></a>{isRemote ? <span> <IconButton icon='external-link' size={14} onClick={() => { window.open(account.get('url')) }}/></span> : null} {badge}
               <small>@{acct} {lockedIcon}</small>
             </h1>
           </div>

@@ -313,8 +313,8 @@ a.mention, .notification__message .fa {
 
 // profile in deck view
 
-.account__header__bar {
-  background: $purple5;
+.account__header__bar .avatar .account__avatar {
+  border-color: $purple1;
 }
 
 .account__header__image {
