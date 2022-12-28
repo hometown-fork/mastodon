@@ -715,6 +715,10 @@ en:
         all: To everyone
         disabled: To no one
         users: To logged-in local users
+      hometown:
+        title: Hometown
+        preamble: These site-wide settings are provided to you by Hometown. As the server admin, you should think carefully about what you want each setting to be, since this will have an impact in shaping your community.
+        privacy: Privacy
       registrations:
         preamble: Control who can create an account on your server.
         title: Registrations
