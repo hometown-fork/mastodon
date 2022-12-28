@@ -377,6 +377,13 @@ html {
       color: $darker-text-color;
     }
   }
+
+  &__container {
+    &__header {
+      background: $white;
+      border-bottom: 1px solid lighten($purple, 16%);
+    }
+  }
 }
 
 body.admin {
@@ -1119,4 +1126,13 @@ button.icon-button.disabled i.fa-retweet {
 
 .compose-form__upload__warning > button {
   color: $white !important;
+}
+
+.dropdown-menu__item.edited-timestamp__history__item {
+  border-bottom: 1px solid lighten($purple, 16%);
+
+  &.dropdown-menu__item--text,
+  button {
+    background: $white;
+  }
 }
