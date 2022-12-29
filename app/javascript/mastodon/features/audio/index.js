@@ -19,6 +19,7 @@ const messages = defineMessages({
   unmute: { id: 'video.unmute', defaultMessage: 'Unmute sound' },
   download: { id: 'video.download', defaultMessage: 'Download file' },
   hide: { id: 'audio.hide', defaultMessage: 'Hide audio' },
+  no_descriptive_text: { id: 'media.no_descriptive_text', defaultMessage: 'No descriptive text was provided for this media.' },
 });
 
 const TICK_SIZE = 10;
@@ -555,6 +556,7 @@ class Audio extends React.PureComponent {
             </div>
 
             <div className='video-player__buttons right'>
+              {!alt && <button type='button' title={intl.formatMessage(messages.no_descriptive_text)} aria-label={intl.formatMessage(messages.no_descriptive_text)} className='player-button no-action' ><Icon id='exclamation-triangle' fixedWidth /></button>}
               {!editable && <button type='button' title={intl.formatMessage(messages.hide)} aria-label={intl.formatMessage(messages.hide)} className='player-button' onClick={this.toggleReveal}><Icon id='eye-slash' fixedWidth /></button>}
               <a title={intl.formatMessage(messages.download)} aria-label={intl.formatMessage(messages.download)} className='video-player__download__icon player-button' href={this.props.src} download>
                 <Icon id={'download'} fixedWidth />

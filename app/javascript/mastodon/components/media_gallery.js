@@ -12,6 +12,7 @@ import Blurhash from 'mastodon/components/blurhash';
 
 const messages = defineMessages({
   toggle_visible: { id: 'media_gallery.toggle_visible', defaultMessage: '{number, plural, one {Hide image} other {Hide images}}' },
+  no_descriptive_text: { id: 'media.no_descriptive_text', defaultMessage: 'No descriptive text was provided for this media.' },
 });
 
 class Item extends React.PureComponent {
@@ -25,6 +26,7 @@ class Item extends React.PureComponent {
     displayWidth: PropTypes.number,
     visible: PropTypes.bool.isRequired,
     autoplay: PropTypes.bool,
+    noDescriptionTitle: PropTypes.object,
   };
 
   static defaultProps = {
@@ -169,6 +171,7 @@ class Item extends React.PureComponent {
           target='_blank'
           rel='noopener noreferrer'
         >
+          { !attachment.get('description') && <IconButton className='media-gallery__item-no-alt' title={this.props.noDescriptionTitle} icon='exclamation-triangle' overlay /> }
           <img
             src={previewUrl}
             srcSet={srcSet}
@@ -199,7 +202,10 @@ class Item extends React.PureComponent {
             muted
           />
 
-          <span className='media-gallery__gifv__label'>GIF</span>
+          <div className="media-gallery__gifv__label__container">
+            <span className='media-gallery__gifv__label'>GIF</span>
+            { !attachment.get('description') && <span className='media-gallery__gifv__label__no-description'><IconButton title={this.props.noDescriptionTitle} icon='exclamation-triangle' overlay /></span> }
+          </div>
         </div>
       );
     }
@@ -329,13 +335,14 @@ class MediaGallery extends React.PureComponent {
       style.height = height;
     }
 
-    const size     = media.take(4).size;
-    const uncached = media.every(attachment => attachment.get('type') === 'unknown');
+    const size       = media.take(4).size;
+    const uncached   = media.every(attachment => attachment.get('type') === 'unknown');
+    const noDescriptionTitle = intl.formatMessage(messages.no_descriptive_text);
 
     if (standalone && this.isFullSizeEligible()) {
-      children = <Item standalone autoplay={autoplay} onClick={this.handleClick} attachment={media.get(0)} displayWidth={width} visible={visible} />;
+      children = <Item standalone autoplay={autoplay} onClick={this.handleClick} attachment={media.get(0)} displayWidth={width} visible={visible} noDescriptionTitle={noDescriptionTitle} />;
     } else {
-      children = media.take(4).map((attachment, i) => <Item key={attachment.get('id')} autoplay={autoplay} onClick={this.handleClick} attachment={attachment} index={i} size={size} displayWidth={width} visible={visible || uncached} />);
+      children = media.take(4).map((attachment, i) => <Item key={attachment.get('id')} autoplay={autoplay} onClick={this.handleClick} attachment={attachment} index={i} size={size} displayWidth={width} visible={visible || uncached} noDescriptionTitle={noDescriptionTitle} />);
     }
 
     if (uncached) {
