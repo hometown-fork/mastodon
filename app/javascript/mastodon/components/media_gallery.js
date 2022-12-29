@@ -202,7 +202,7 @@ class Item extends React.PureComponent {
             muted
           />
 
-          <div className="media-gallery__gifv__label__container">
+          <div className='media-gallery__gifv__label__container'>
             <span className='media-gallery__gifv__label'>GIF</span>
             { !attachment.get('description') && <span className='media-gallery__gifv__label__no-description'><IconButton title={this.props.noDescriptionTitle} icon='exclamation-triangle' overlay /></span> }
           </div>
