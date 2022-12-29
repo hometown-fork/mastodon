@@ -559,7 +559,7 @@ class Video extends React.PureComponent {
     return (
       <div
         role='menuitem'
-        className={classNames('video-player', { inactive: !revealed, detailed, inline: inline && !fullscreen, fullscreen, editable })}
+        className={classNames('video-player', { inactive: !revealed, detailed, inline: inline && !fullscreen, fullscreen, editable, 'media-missing-description': !alt })}
         style={playerStyle}
         ref={this.setPlayerRef}
         onMouseEnter={this.handleMouseEnter}

@@ -137,7 +137,7 @@ class Item extends React.PureComponent {
     if (attachment.get('type') === 'unknown') {
       return (
         <div className={classNames('media-gallery__item', { standalone })} key={attachment.get('id')} style={{ left: left, top: top, right: right, bottom: bottom, width: `${width}%`, height: `${height}%` }}>
-          <a className='media-gallery__item-thumbnail' href={attachment.get('remote_url') || attachment.get('url')} style={{ cursor: 'pointer' }} title={attachment.get('description')} target='_blank' rel='noopener noreferrer'>
+          <a className={`media-gallery__item-thumbnail ${!attachment.get('description') && 'media-missing-description'}`} href={attachment.get('remote_url') || attachment.get('url')} style={{ cursor: 'pointer' }} title={attachment.get('description')} target='_blank' rel='noopener noreferrer'>
             <Blurhash
               hash={attachment.get('blurhash')}
               className='media-gallery__preview'
@@ -165,7 +165,7 @@ class Item extends React.PureComponent {
 
       thumbnail = (
         <a
-          className='media-gallery__item-thumbnail'
+          className={`media-gallery__item-thumbnail ${!attachment.get('description') && 'media-missing-description'}`}
           href={attachment.get('remote_url') || originalUrl}
           onClick={this.handleClick}
           target='_blank'
@@ -189,7 +189,7 @@ class Item extends React.PureComponent {
       thumbnail = (
         <div className={classNames('media-gallery__gifv', { autoplay: autoPlay })}>
           <video
-            className='media-gallery__item-gifv-thumbnail'
+            className={`media-gallery__item-gifv-thumbnail ${!attachment.get('description') && 'media-missing-description'}`}
             aria-label={attachment.get('description')}
             title={attachment.get('description')}
             role='application'
