@@ -132,7 +132,7 @@
     grid-row: 3;
   }
 
-  @media screen and (max-width: $no-gap-breakpoint) {
+  @media screen and (max-width: $no-gap-breakpoint-static) {
     grid-gap: 0;
     grid-template-columns: minmax(0, 100%);
 
@@ -218,7 +218,7 @@
     }
   }
 
-  @media screen and (max-width: $no-gap-breakpoint) {
+  @media screen and (max-width: $no-gap-breakpoint-static) {
     grid-gap: 0;
     grid-template-columns: minmax(0, 100%);
 
@@ -249,14 +249,14 @@
 }
 
 .public-layout {
-  @media screen and (max-width: $no-gap-breakpoint) {
+  @media screen and (max-width: $no-gap-breakpoint-static) {
     padding-top: 48px;
   }
 
   .container {
     max-width: 960px;
 
-    @media screen and (max-width: $no-gap-breakpoint) {
+    @media screen and (max-width: $no-gap-breakpoint-static) {
       padding: 0;
     }
   }
@@ -273,7 +273,7 @@
     flex-wrap: nowrap;
     overflow: hidden;
 
-    @media screen and (max-width: $no-gap-breakpoint) {
+    @media screen and (max-width: $no-gap-breakpoint-static) {
       position: fixed;
       width: 100%;
       top: 0;
@@ -322,7 +322,7 @@
         bottom: -2px;
         fill: $primary-text-color;
 
-        @media screen and (max-width: $no-gap-breakpoint) {
+        @media screen and (max-width: $no-gap-breakpoint-static) {
           height: 20px;
         }
       }
@@ -404,7 +404,7 @@
   }
 
   .page-header {
-    @media screen and (max-width: $no-gap-breakpoint) {
+    @media screen and (max-width: $no-gap-breakpoint-static) {
       border-bottom: 0;
     }
   }
@@ -470,13 +470,13 @@
       .public-account-header__image img {
         border-radius: 4px;
 
-        @media screen and (max-width: $no-gap-breakpoint) {
+        @media screen and (max-width: $no-gap-breakpoint-static) {
           border-radius: 0;
         }
       }
     }
 
-    @media screen and (max-width: $no-gap-breakpoint) {
+    @media screen and (max-width: $no-gap-breakpoint-static) {
       margin-bottom: 0;
       box-shadow: none;
 
@@ -554,7 +554,7 @@
         }
       }
 
-      @media screen and (max-width: $no-gap-breakpoint) {
+      @media screen and (max-width: $no-gap-breakpoint-static) {
         border-radius: 0;
       }
 
@@ -759,7 +759,7 @@
   .account__section-headline {
     border-radius: 4px 4px 0 0;
 
-    @media screen and (max-width: $no-gap-breakpoint) {
+    @media screen and (max-width: $no-gap-breakpoint-static) {
       border-radius: 0;
     }
   }
@@ -775,7 +775,7 @@
     overflow: hidden;
     margin-bottom: 10px;
 
-    @media screen and (max-width: $no-gap-breakpoint) {
+    @media screen and (max-width: $no-gap-breakpoint-static) {
       box-shadow: none;
       margin-bottom: 0;
       border-radius: 0;
@@ -826,7 +826,7 @@
       flex-direction: column;
     }
 
-    @media screen and (max-width: $no-gap-breakpoint) {
+    @media screen and (max-width: $no-gap-breakpoint-static) {
       display: block;
 
       .account-card {
@@ -859,7 +859,7 @@
       }
     }
 
-    @media screen and (max-width: $no-gap-breakpoint) {
+    @media screen and (max-width: $no-gap-breakpoint-static) {
       margin: 0;
       border-top: 1px solid lighten($ui-base-color, 8%);
 
