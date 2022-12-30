@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { defineMessages, injectIntl } from 'react-intl';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import Logo from 'mastodon/components/logo';
 import Avatar from 'mastodon/components/avatar';
 import Permalink from 'mastodon/components/permalink';
 import { timelinePreview, showTrends, me } from 'mastodon/initial_state';
@@ -35,7 +33,7 @@ const messages = defineMessages({
 const Account = connect(state => ({
   account: state.getIn(['accounts', me]),
 }))(({ account }) => (
-  <Permalink className="column-link column-link--transparent" href={account.get('url')} to={`/@${account.get('acct')}`} title={account.get('acct')}>
+  <Permalink className='column-link column-link--transparent' href={account.get('url')} to={`/@${account.get('acct')}`} title={account.get('acct')}>
     <Avatar account={account} size={24} />
   </Permalink>
 ));
@@ -62,7 +60,7 @@ class NavigationPanel extends React.Component {
         {signedIn && (
           <React.Fragment>
             <Account />
-            <ColumnLink id="navigation-panel__publish" transparent to='/publish' icon='pencil' text={intl.formatMessage(messages.publish)} />
+            <ColumnLink id='navigation-panel__publish' transparent to='/publish' icon='pencil' text={intl.formatMessage(messages.publish)} />
             <ColumnLink transparent to='/home' icon='home' text={intl.formatMessage(messages.home)} />
             <ColumnLink transparent to='/notifications' icon={<NotificationsCounterIcon className='column-link__icon' />} text={intl.formatMessage(messages.notifications)} />
             <FollowRequestsColumnLink />

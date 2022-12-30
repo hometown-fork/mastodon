@@ -2,7 +2,7 @@ import React from 'react';
 import Logo from 'mastodon/components/logo';
 import { Link, withRouter } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
-import { registrationsOpen, me } from 'mastodon/initial_state';
+import { registrationsOpen } from 'mastodon/initial_state';
 import PropTypes from 'prop-types';
 
 export default @withRouter
@@ -18,7 +18,6 @@ class Header extends React.PureComponent {
 
   render () {
     const { signedIn } = this.context.identity;
-    const { location } = this.props;
 
     let content;
 

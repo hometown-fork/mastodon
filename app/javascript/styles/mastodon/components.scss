@@ -2295,7 +2295,7 @@ a.account__display-name {
   }
 }
 
-$ui-header-height: 0px;
+$ui-header-height: 0;
 
 .ui__header {
   display: none;
@@ -8783,7 +8783,7 @@ div.status__content--with-spoiler {
 
   i {
     background-color: darken($ui-highlight-color, 2%);
-    padding: 8px 6px 8px 6px;
+    padding: 8px 6px;
     border-radius: 4px;
     color: $primary-text-color;
   }
