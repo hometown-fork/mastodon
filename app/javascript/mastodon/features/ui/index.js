@@ -166,7 +166,9 @@ class SwitchingColumnsArea extends React.PureComponent {
     } else if (showTrends && trendsAsLanding) {
       redirect = <Redirect from='/' to='/explore' exact />;
     } else {
-      redirect = <Redirect from='/' to='/about' exact />;
+      // Hometown: if signed-out landing page is the about page, don't render the app shell, just redirect
+      window.location = '/about';
+      return null;
     }
 
     return (
