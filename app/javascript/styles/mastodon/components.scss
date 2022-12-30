@@ -2295,7 +2295,8 @@ a.account__display-name {
   }
 }
 
-$ui-header-height: 0;
+/* stylelint-disable-next-line */
+$ui-header-height: 0px;
 
 .ui__header {
   display: none;
