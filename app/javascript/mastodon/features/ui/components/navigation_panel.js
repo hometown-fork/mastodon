@@ -2,8 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { defineMessages, injectIntl } from 'react-intl';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import Logo from 'mastodon/components/logo';
-import { timelinePreview, showTrends } from 'mastodon/initial_state';
+import Avatar from 'mastodon/components/avatar';
+import Permalink from 'mastodon/components/permalink';
+import { timelinePreview, showTrends, me } from 'mastodon/initial_state';
 import ColumnLink from './column_link';
 import DisabledAccountBanner from './disabled_account_banner';
 import FollowRequestsColumnLink from './follow_requests_column_link';
@@ -26,7 +29,16 @@ const messages = defineMessages({
   followsAndFollowers: { id: 'navigation_bar.follows_and_followers', defaultMessage: 'Follows and followers' },
   about: { id: 'navigation_bar.about', defaultMessage: 'About' },
   search: { id: 'navigation_bar.search', defaultMessage: 'Search' },
+  publish: { id: 'compose_form.publish', defaultMessage: 'Post' },
 });
+
+const Account = connect(state => ({
+  account: state.getIn(['accounts', me]),
+}))(({ account }) => (
+  <Permalink className="column-link column-link--transparent" href={account.get('url')} to={`/@${account.get('acct')}`} title={account.get('acct')}>
+    <Avatar account={account} size={24} />
+  </Permalink>
+));
 
 export default @injectIntl
 class NavigationPanel extends React.Component {
@@ -49,6 +61,8 @@ class NavigationPanel extends React.Component {
 
         {signedIn && (
           <React.Fragment>
+            <Account />
+            <ColumnLink id="navigation-panel__publish" transparent to='/publish' icon='pencil' text={intl.formatMessage(messages.publish)} />
             <ColumnLink transparent to='/home' icon='home' text={intl.formatMessage(messages.home)} />
             <ColumnLink transparent to='/notifications' icon={<NotificationsCounterIcon className='column-link__icon' />} text={intl.formatMessage(messages.notifications)} />
             <FollowRequestsColumnLink />

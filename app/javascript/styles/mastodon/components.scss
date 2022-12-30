@@ -2295,7 +2295,7 @@ a.account__display-name {
   }
 }
 
-$ui-header-height: 55px;
+$ui-header-height: 0px;
 
 .ui__header {
   display: none;
@@ -8775,5 +8775,23 @@ div.status__content--with-spoiler {
         text-overflow: ellipsis;
       }
     }
+  }
+}
+
+#navigation-panel__publish {
+  padding: 10px;
+
+  i {
+    background-color: darken($ui-highlight-color, 2%);
+    padding: 8px 6px 8px 6px;
+    border-radius: 4px;
+    color: $primary-text-color;
+  }
+}
+
+#navigation-panel__publish.active {
+  i {
+    background-color: lighten($ui-highlight-color, 20%);
+    color: lighten($ui-highlight-color, 30%);
   }
 }

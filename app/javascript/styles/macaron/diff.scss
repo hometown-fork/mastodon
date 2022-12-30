@@ -1168,3 +1168,16 @@ button.icon-button.disabled i.fa-retweet {
     background: $white;
   }
 }
+
+#navigation-panel__publish {
+  i {
+    color: $ui-base-lighter-color;
+  }
+}
+
+#navigation-panel__publish.active {
+  i {
+    background-color: darken($ui-highlight-color, 20%);
+    color: darken($ui-highlight-color, 30%);
+  }
+}
