@@ -1169,6 +1169,7 @@ button.icon-button.disabled i.fa-retweet {
   }
 }
 
+<<<<<<< HEAD
 #navigation-panel__publish {
   i {
     color: $ui-base-lighter-color;
@@ -1212,4 +1213,12 @@ button.icon-button.disabled i.fa-retweet {
     box-sizing: border-box;
     height: 48px;
   }
+}
+
+.rules-list {
+  background-color: $cream;
+}
+
+.button.button-tertiary {
+  color: $darker-text-color;
 }
