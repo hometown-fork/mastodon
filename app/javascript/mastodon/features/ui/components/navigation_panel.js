@@ -83,29 +83,30 @@ class NavigationPanel extends React.Component {
 
     return (
       <div className='navigation-panel'>
-        <ColumnLink transparent button onClick={this.handleMenuToggle} icon='bars' text={intl.formatMessage(messages.menu)} />
+        <a class="skip-link" href='#main-content' tabindex="1" autofocus>Skip to content</a>
+        <ColumnLink transparent button onClick={this.handleMenuToggle} icon='bars' text={intl.formatMessage(messages.menu)} tabindex="1" />
 
         { (isWideSingleColumnLayout || !this.state.retracted) && <div id='navigation-retractable'>
           {signedIn && (
             <React.Fragment>
-              <Account />
-              <ColumnLink id='navigation-panel__publish' transparent to='/publish' icon='pencil' text={intl.formatMessage(messages.publish)} />
-              <ColumnLink transparent to='/home' icon='home' text={intl.formatMessage(messages.home)} />
-              <ColumnLink transparent to='/notifications' icon={<NotificationsCounterIcon className='column-link__icon' />} text={intl.formatMessage(messages.notifications)} />
-              <FollowRequestsColumnLink />
+              <Account tabindex="1" />
+              <ColumnLink id='navigation-panel__publish' transparent to='/publish' icon='pencil' text={intl.formatMessage(messages.publish)} tabindex="1" />
+              <ColumnLink transparent to='/home' icon='home' text={intl.formatMessage(messages.home)} tabindex="1" />
+              <ColumnLink transparent to='/notifications' icon={<NotificationsCounterIcon className='column-link__icon' tabindex="1" />} text={intl.formatMessage(messages.notifications)} />
+              <FollowRequestsColumnLink tabindex="1" />
             </React.Fragment>
           )}
 
           {showTrends ? (
-            <ColumnLink transparent to='/explore' icon='search' text={intl.formatMessage(messages.explore)} />
+            <ColumnLink transparent to='/explore' icon='search' text={intl.formatMessage(messages.explore)} tabindex="1" />
           ) : (
-            <ColumnLink transparent to='/search' icon='search' text={intl.formatMessage(messages.search)} />
+            <ColumnLink transparent to='/search' icon='search' text={intl.formatMessage(messages.search)} tabindex="1" />
           )}
 
           {(signedIn || timelinePreview) && (
             <>
-              <ColumnLink transparent to='/public/local' icon='users' text={intl.formatMessage(messages.local)} />
-              <ColumnLink transparent exact to='/public' icon='globe' text={intl.formatMessage(messages.federated)} />
+              <ColumnLink transparent to='/public/local' icon='users' text={intl.formatMessage(messages.local)} tabindex="1" />
+              <ColumnLink transparent exact to='/public' icon='globe' text={intl.formatMessage(messages.federated)} tabindex="1" />
             </>
           )}
 
@@ -118,10 +119,10 @@ class NavigationPanel extends React.Component {
 
           {signedIn && (
             <React.Fragment>
-              <ColumnLink transparent to='/conversations' icon='at' text={intl.formatMessage(messages.direct)} />
-              <ColumnLink transparent to='/favourites' icon='star' text={intl.formatMessage(messages.favourites)} />
-              <ColumnLink transparent to='/bookmarks' icon='bookmark' text={intl.formatMessage(messages.bookmarks)} />
-              <ColumnLink transparent to='/lists' icon='list-ul' text={intl.formatMessage(messages.lists)} />
+              <ColumnLink transparent to='/conversations' icon='at' text={intl.formatMessage(messages.direct)} tabindex="1" />
+              <ColumnLink transparent to='/favourites' icon='star' text={intl.formatMessage(messages.favourites)} tabindex="1" />
+              <ColumnLink transparent to='/bookmarks' icon='bookmark' text={intl.formatMessage(messages.bookmarks)} tabindex="1" />
+              <ColumnLink transparent to='/lists' icon='list-ul' text={intl.formatMessage(messages.lists)} tabindex="1" />
 
               <ListPanel />
 
