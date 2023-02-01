@@ -22,6 +22,7 @@ gem 'aws-sdk-s3', '~> 1.117', require: false
 gem 'fog-core', '<= 2.4.0'
 gem 'fog-openstack', '~> 0.3', require: false
 gem 'kt-paperclip', '~> 7.1'
+gem 'md-paperclip-azure', '~> 2.2', require: false
 gem 'blurhash', '~> 0.1'
 
 gem 'active_model_serializers', '~> 0.10'
