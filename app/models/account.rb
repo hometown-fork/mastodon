@@ -103,6 +103,7 @@ class Account < ApplicationRecord
   scope :without_suspended, -> { where(suspended_at: nil) }
   scope :without_silenced, -> { where(silenced_at: nil) }
   scope :without_instance_actor, -> { where.not(id: -99) }
+  scope :without_bots, -> { where.not(actor_type: %w(Application Service)).or(where(actor_type: nil)) }
   scope :recent, -> { reorder(id: :desc) }
   scope :bots, -> { where(actor_type: %w(Application Service)) }
   scope :groups, -> { where(actor_type: 'Group') }

@@ -37,8 +37,13 @@ class Api::V1::Timelines::PublicController < Api::BaseController
       current_account,
       local: truthy_param?(:local),
       remote: truthy_param?(:remote),
-      only_media: truthy_param?(:only_media)
+      only_media: truthy_param?(:only_media),
+      without_bots: without_bots?
     )
+  end
+
+  def without_bots?
+    Rails.configuration.x.local_timeline_exclude_bots && truthy_param?(:local)
   end
 
   def insert_pagination_headers

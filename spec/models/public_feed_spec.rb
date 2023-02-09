@@ -39,6 +39,39 @@ RSpec.describe PublicFeed, type: :model do
       expect(subject).not_to include(silenced_status.id)
     end
 
+    describe '#without_bots=' do
+      let(:person_account) { Fabricate(:account, actor_type: 'Person') }
+      let(:bot_account) { Fabricate(:account, actor_type: 'Application') }
+
+      context 'when the setting is false' do
+        subject { described_class.new(nil, without_bots: false).get(20).map(&:id) }
+
+        it 'includes bots' do
+          status = Fabricate(:status, account: account)
+          person_status = Fabricate(:status, account: person_account)
+          bot_status = Fabricate(:status, account: bot_account)
+
+          expect(subject).to include(status.id)
+          expect(subject).to include(person_status.id)
+          expect(subject).to include(bot_status.id)
+        end
+      end
+
+      context 'when the setting is true' do
+        subject { described_class.new(nil, without_bots: true).get(20).map(&:id) }
+
+        it 'filters out bot accounts' do
+          status = Fabricate(:status, account: account)
+          person_status = Fabricate(:status, account: person_account)
+          bot_status = Fabricate(:status, account: bot_account)
+
+          expect(subject).to include(status.id)
+          expect(subject).to include(person_status.id)
+          expect(subject).not_to include(bot_status.id)
+        end
+      end
+    end
+
     context 'without local_only option' do
       let(:viewer) { nil }
 
