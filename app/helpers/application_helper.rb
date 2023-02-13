@@ -180,11 +180,11 @@ module ApplicationHelper
   end
 
   def storage_host
-    "https://#{ENV['S3_ALIAS_HOST'].presence || ENV['S3_CLOUDFRONT_HOST']}"
+    "https://#{ENV['S3_ALIAS_HOST'].presence || ENV['S3_CLOUDFRONT_HOST'].presence || ENV['AZURE_ALIAS_HOST']}"
   end
 
   def storage_host?
-    ENV['S3_ALIAS_HOST'].present? || ENV['S3_CLOUDFRONT_HOST'].present?
+    ENV['S3_ALIAS_HOST'].present? || ENV['S3_CLOUDFRONT_HOST'].present? || ENV['AZURE_ALIAS_HOST'].present?
   end
 
   def quote_wrap(text, line_width: 80, break_sequence: "\n")
