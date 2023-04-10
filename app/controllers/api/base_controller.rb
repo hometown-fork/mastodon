@@ -133,7 +133,7 @@ class Api::BaseController < ApplicationController
   end
 
   def disallow_unauthenticated_api_access?
-    ENV['DISALLOW_UNAUTHENTICATED_API_ACCESS'] == 'true' || Rails.configuration.x.whitelist_mode
+    (ENV['DISALLOW_UNAUTHENTICATED_API_ACCESS'] == 'true' || Rails.configuration.x.whitelist_mode) unless current_user
   end
 
   private
