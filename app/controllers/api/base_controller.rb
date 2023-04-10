@@ -136,6 +136,15 @@ class Api::BaseController < ApplicationController
     (ENV['DISALLOW_UNAUTHENTICATED_API_ACCESS'] == 'true' || Rails.configuration.x.whitelist_mode) unless current_user
   end
 
+  def user_would_block_unauthenticated_api_access?(account)
+    # alternately account.locked? would also be a good candidate for this
+    disallow_unauthenticated_api_access? && account.user_prefers_noindex?
+  end
+
+  def user_blocks_unauthenticated_api_access
+    render json: { error: 'This user is only visible to authenticated users' }, status: 401
+  end
+
   private
 
   def respond_with_error(code)
