@@ -190,6 +190,10 @@ export default function timelines(state = initialState, action) {
   case TIMELINE_EXPAND_REQUEST:
     return state.update(action.timeline, initialTimeline, map => map.set('isLoading', true));
   case TIMELINE_EXPAND_FAIL:
+    if (action.error?.response?.status === 401) {
+      // don't loop continuously on 401 unauthenticated response
+      return state.update(action.timeline, initialTimeline, map => map.set('hasMore', false));
+    }
     return state.update(action.timeline, initialTimeline, map => map.set('isLoading', false));
   case TIMELINE_EXPAND_SUCCESS:
     return expandNormalizedTimeline(state, action.timeline, fromJS(action.statuses), action.next, action.partial, action.isLoadingRecent, action.usePendingItems);
