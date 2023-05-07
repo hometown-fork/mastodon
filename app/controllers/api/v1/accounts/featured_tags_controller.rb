@@ -21,6 +21,9 @@ class Api::V1::Accounts::FeaturedTagsController < Api::BaseController
   end
 
   def set_featured_tags
-    @featured_tags = @account.suspended? || disallow_unauthenticated_api_access? ? [] : @account.featured_tags
+    @featured_tags = if @account.suspended? || disallow_unauthenticated_api_access?
+      []
+    else
+      @account.featured_tags
   end
 end

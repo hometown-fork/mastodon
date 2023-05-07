@@ -22,7 +22,10 @@ class Api::V1::Accounts::StatusesController < Api::BaseController
   end
 
   def load_statuses
-    @account.suspended? || disallow_unauthenticated_api_access? ? [] : cached_account_statuses
+    if @account.suspended? || disallow_unauthenticated_api_access?
+      []
+    else
+      cached_account_statuses
   end
 
   def cached_account_statuses
