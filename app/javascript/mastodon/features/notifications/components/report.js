@@ -11,6 +11,7 @@ const messages = defineMessages({
   other: { id: 'report_notification.categories.other', defaultMessage: 'Other' },
   spam: { id: 'report_notification.categories.spam', defaultMessage: 'Spam' },
   violation: { id: 'report_notification.categories.violation', defaultMessage: 'Rule violation' },
+  dislike: { id: 'report_notification.categories.dislike', defaultMessage: 'Dislike' },
 });
 
 export default @injectIntl
