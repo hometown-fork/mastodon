@@ -21,8 +21,8 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
-export default @connect(null, mapDispatchToProps)
-@withRouter
+export default @withRouter
+@connect(null, mapDispatchToProps)
 class Header extends React.PureComponent {
 
   static contextTypes = {
