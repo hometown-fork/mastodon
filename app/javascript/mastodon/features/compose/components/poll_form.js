@@ -26,6 +26,7 @@ class Option extends React.PureComponent {
 
   static propTypes = {
     title: PropTypes.string.isRequired,
+    lang: PropTypes.string,
     index: PropTypes.number.isRequired,
     isPollMultiple: PropTypes.bool,
     autoFocus: PropTypes.bool,
@@ -58,22 +59,22 @@ class Option extends React.PureComponent {
     if (e.key === 'Enter' || e.key === ' ') {
       this.handleToggleMultiple(e);
     }
-  }
+  };
 
   onSuggestionsClearRequested = () => {
     this.props.onClearSuggestions();
-  }
+  };
 
   onSuggestionsFetchRequested = (token) => {
     this.props.onFetchSuggestions(token);
-  }
+  };
 
   onSuggestionSelected = (tokenStart, token, value) => {
     this.props.onSuggestionSelected(tokenStart, token, value, ['poll', 'options', this.props.index]);
-  }
+  };
 
   render () {
-    const { isPollMultiple, title, index, autoFocus, intl } = this.props;
+    const { isPollMultiple, title, lang, index, autoFocus, intl } = this.props;
 
     return (
       <li>
@@ -92,6 +93,7 @@ class Option extends React.PureComponent {
             placeholder={intl.formatMessage(messages.option_placeholder, { number: index + 1 })}
             maxLength={50}
             value={title}
+            lang={lang}
             onChange={this.handleOptionTitleChange}
             suggestions={this.props.suggestions}
             onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
@@ -117,6 +119,7 @@ class PollForm extends ImmutablePureComponent {
 
   static propTypes = {
     options: ImmutablePropTypes.list,
+    lang: PropTypes.string,
     expiresIn: PropTypes.number,
     isMultiple: PropTypes.bool,
     onChangeOption: PropTypes.func.isRequired,
@@ -143,7 +146,7 @@ class PollForm extends ImmutablePureComponent {
   };
 
   render () {
-    const { options, expiresIn, isMultiple, onChangeOption, onRemoveOption, intl, ...other } = this.props;
+    const { options, lang, expiresIn, isMultiple, onChangeOption, onRemoveOption, intl, ...other } = this.props;
 
     if (!options) {
       return null;
@@ -154,7 +157,7 @@ class PollForm extends ImmutablePureComponent {
     return (
       <div className='compose-form__poll-wrapper'>
         <ul>
-          {options.map((title, i) => <Option title={title} key={i} index={i} onChange={onChangeOption} onRemove={onRemoveOption} isPollMultiple={isMultiple} onToggleMultiple={this.handleToggleMultiple} autoFocus={i === autoFocusIndex} {...other} />)}
+          {options.map((title, i) => <Option title={title} lang={lang} key={i} index={i} onChange={onChangeOption} onRemove={onRemoveOption} isPollMultiple={isMultiple} onToggleMultiple={this.handleToggleMultiple} autoFocus={i === autoFocusIndex} {...other} />)}
         </ul>
         <div className='is-multiple-toggle'>
           <Toggle className='is-multiple-checkbox' checked={isMultiple} onChange={this.handleToggleMultiple}/>

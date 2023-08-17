@@ -149,7 +149,7 @@ class Video extends React.PureComponent {
     if (this.player) {
       this._setDimensions();
     }
-  }
+  };
 
   _setDimensions () {
     const width = this.player.offsetWidth;
@@ -169,26 +169,26 @@ class Video extends React.PureComponent {
     if (this.video) {
       this.setState({ volume: this.video.volume, muted: this.video.muted });
     }
-  }
+  };
 
   setSeekRef = c => {
     this.seek = c;
-  }
+  };
 
   setVolumeRef = c => {
     this.volume = c;
-  }
+  };
 
   handleClickRoot = e => e.stopPropagation();
 
   handlePlay = () => {
     this.setState({ paused: false });
     this._updateTime();
-  }
+  };
 
   handlePause = () => {
     this.setState({ paused: true });
-  }
+  };
 
   _updateTime () {
     requestAnimationFrame(() => {
@@ -207,7 +207,7 @@ class Video extends React.PureComponent {
       currentTime: this.video.currentTime,
       duration:this.video.duration,
     });
-  }
+  };
 
   handleVolumeMouseDown = e => {
     document.addEventListener('mousemove', this.handleMouseVolSlide, true);
@@ -219,14 +219,14 @@ class Video extends React.PureComponent {
 
     e.preventDefault();
     e.stopPropagation();
-  }
+  };
 
   handleVolumeMouseUp = () => {
     document.removeEventListener('mousemove', this.handleMouseVolSlide, true);
     document.removeEventListener('mouseup', this.handleVolumeMouseUp, true);
     document.removeEventListener('touchmove', this.handleMouseVolSlide, true);
     document.removeEventListener('touchend', this.handleVolumeMouseUp, true);
-  }
+  };
 
   handleMouseVolSlide = throttle(e => {
     const { x } = getPointerPosition(this.volume, e);
@@ -250,7 +250,7 @@ class Video extends React.PureComponent {
 
     e.preventDefault();
     e.stopPropagation();
-  }
+  };
 
   handleMouseUp = () => {
     document.removeEventListener('mousemove', this.handleMouseMove, true);
@@ -260,7 +260,7 @@ class Video extends React.PureComponent {
 
     this.setState({ dragging: false });
     this.video.play();
-  }
+  };
 
   handleMouseMove = throttle(e => {
     const { x } = getPointerPosition(this.seek, e);
@@ -292,7 +292,7 @@ class Video extends React.PureComponent {
       e.stopPropagation();
       this.togglePlay();
     }
-  }
+  };
 
   handleKeyDown = e => {
     const frameTime = 1 / this.getFrameRate();
@@ -346,7 +346,7 @@ class Video extends React.PureComponent {
         exitFullscreen();
       }
     }
-  }
+  };
 
   togglePlay = () => {
     if (this.state.paused) {
@@ -354,7 +354,7 @@ class Video extends React.PureComponent {
     } else {
       this.setState({ paused: true }, () => this.video.pause());
     }
-  }
+  };
 
   toggleFullscreen = () => {
     if (isFullscreen()) {
@@ -362,7 +362,7 @@ class Video extends React.PureComponent {
     } else {
       requestFullscreen(this.player);
     }
-  }
+  };
 
   componentDidMount () {
     document.addEventListener('fullscreenchange', this.handleFullscreenChange, true);
@@ -435,19 +435,19 @@ class Video extends React.PureComponent {
 
       this.setState({ paused: true });
     }
-  }, 150, { trailing: true })
+  }, 150, { trailing: true });
 
   handleFullscreenChange = () => {
     this.setState({ fullscreen: isFullscreen() });
-  }
+  };
 
   handleMouseEnter = () => {
     this.setState({ hovered: true });
-  }
+  };
 
   handleMouseLeave = () => {
     this.setState({ hovered: false });
-  }
+  };
 
   toggleMute = () => {
     const muted = !this.video.muted;
@@ -455,7 +455,7 @@ class Video extends React.PureComponent {
     this.setState({ muted }, () => {
       this.video.muted = muted;
     });
-  }
+  };
 
   toggleReveal = () => {
     if (this.props.onToggleVisibility) {
@@ -463,7 +463,7 @@ class Video extends React.PureComponent {
     } else {
       this.setState({ revealed: !this.state.revealed });
     }
-  }
+  };
 
   handleLoadedData = () => {
     const { currentTime, volume, muted, autoPlay } = this.props;
@@ -483,7 +483,7 @@ class Video extends React.PureComponent {
     if (autoPlay) {
       this.video.play();
     }
-  }
+  };
 
   handleProgress = () => {
     const lastTimeRange = this.video.buffered.length - 1;
@@ -491,11 +491,11 @@ class Video extends React.PureComponent {
     if (lastTimeRange > -1) {
       this.setState({ buffer: Math.ceil(this.video.buffered.end(lastTimeRange) / this.video.duration * 100) });
     }
-  }
+  };
 
   handleVolumeChange = () => {
     this.setState({ volume: this.video.volume, muted: this.video.muted });
-  }
+  };
 
   handleOpenVideo = () => {
     this.video.pause();
@@ -506,12 +506,12 @@ class Video extends React.PureComponent {
       defaultVolume: this.state.volume,
       componentIndex: this.props.componentIndex,
     });
-  }
+  };
 
   handleCloseVideo = () => {
     this.video.pause();
     this.props.onCloseVideo();
-  }
+  };
 
   getFrameRate () {
     if (this.props.frameRate && isNaN(this.props.frameRate)) {
