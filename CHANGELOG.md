@@ -5,8 +5,42 @@ All notable changes to this project will be documented in this file.
 
 ## End of life notice
 
-**The 3.5.x branch will not receive any update after 2023-12-31.**
-This means that no security fix will be made available for this branch after this date, and you will need to update to a more recent version (such as the 4.1.x branch) to receive security fixes.
+**The 3.5.x branch has reached its end of life and will not receive any further update.**
+This means that no security fix will be made available for this branch after this date, and you will need to update to a more recent version (such as the 4.2.x branch) to receive security fixes.
+
+## [3.5.17] - 2024-02-01
+
+### Security
+
+- Fix TODO
+
+## [3.5.16] - 2023-12-04
+
+### Changed
+
+- Change GIF max matrix size error to explicitly mention GIF files ([ClearlyClaire](https://github.com/mastodon/mastodon/pull/27927))
+- Change `Follow` activities delivery to bypass availability check ([ShadowJonathan](https://github.com/mastodon/mastodon/pull/27586))
+- Change Content-Security-Policy to be tighter on media paths ([ClearlyClaire](https://github.com/mastodon/mastodon/pull/26889))
+
+### Fixed
+
+- Fix incoming status creation date not being restricted to standard ISO8601 ([ClearlyClaire](https://github.com/mastodon/mastodon/pull/27655), [ClearlyClaire](https://github.com/mastodon/mastodon/pull/28081))
+- Fix posts from force-sensitized accounts being able to trend ([ClearlyClaire](https://github.com/mastodon/mastodon/pull/27620))
+- Fix processing LDSigned activities from actors with unknown public keys ([ClearlyClaire](https://github.com/mastodon/mastodon/pull/27474))
+
+## [3.5.15] - 2023-10-10
+
+### Changed
+
+- Change user archive export allowed period from 7 days to 6 days ([suddjian](https://github.com/mastodon/mastodon/pull/27200))
+
+### Fixed
+
+- Fix mentions being matched in some URL query strings ([mjankowski](https://github.com/mastodon/mastodon/pull/25656))
+- Fix importer returning negative row estimates ([jgillich](https://github.com/mastodon/mastodon/pull/27258))
+- Fix filtering audit log for entries about disabling 2FA ([ClearlyClaire](https://github.com/mastodon/mastodon/pull/27186))
+- Fix tIME chunk not being properly removed from PNG uploads ([TheEssem](https://github.com/mastodon/mastodon/pull/27111))
+- Fix inefficient queries in “Follows and followers” as well as several admin pages ([ClearlyClaire](https://github.com/mastodon/mastodon/pull/27116), [ClearlyClaire](https://github.com/mastodon/mastodon/pull/27306))
 
 ## [3.5.14] - 2023-09-19
 
