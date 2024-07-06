@@ -381,22 +381,6 @@ a.mention,
   background: $purple1;
 }
 
-.dropdown-menu,
-.dropdown-menu__item a {
-  background: $purple4;
-}
-
-.dropdown-menu__item a {
-  &:hover,
-  &:focus {
-    background: $purple2;
-  }
-}
-
-.dropdown-menu__separator {
-  border-bottom: 1px solid darken($purple4, 4%);
-}
-
 .button.logo-button.button--destructive:active,
 .button.logo-button.button--destructive:focus,
 .button.logo-button.button--destructive:hover {
