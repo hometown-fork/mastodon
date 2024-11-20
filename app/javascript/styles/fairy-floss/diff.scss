@@ -214,6 +214,15 @@ body.admin {
 
 // link previews
 
+.status-card {
+  background: $purple5;
+
+  &:hover,
+  &:focus {
+    background: darken($purple5, 4%);
+  }
+}
+
 .status-card.compact {
   border-color: darken($purple5, 8%);
   background: $purple5;
@@ -221,15 +230,6 @@ body.admin {
 
 .status-card__image {
   background: $purple3;
-}
-
-.status-card__content {
-  background: $purple5;
-
-  &:hover,
-  &:focus {
-    background: darken($purple5, 4%);
-  }
 }
 
 .notification__filter-bar button.active,
@@ -379,22 +379,6 @@ a.mention,
 .notification__filter-bar,
 .account__section-headline {
   background: $purple1;
-}
-
-.dropdown-menu,
-.dropdown-menu__item a {
-  background: $purple4;
-}
-
-.dropdown-menu__item a {
-  &:hover,
-  &:focus {
-    background: $purple2;
-  }
-}
-
-.dropdown-menu__separator {
-  border-bottom: 1px solid darken($purple4, 4%);
 }
 
 .button.logo-button.button--destructive:active,
