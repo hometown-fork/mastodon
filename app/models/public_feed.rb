@@ -8,6 +8,7 @@ class PublicFeed
   # @option [Boolean] :local
   # @option [Boolean] :remote
   # @option [Boolean] :only_media
+  # @option [Boolean] :without_bots
   def initialize(account, options = {})
     @account = account
     @options = options
@@ -68,8 +69,16 @@ class PublicFeed
     options[:only_media]
   end
 
+  def without_bots?
+    options[:without_bots]
+  end
+
   def public_scope
-    Status.with_public_visibility.joins(:account).merge(Account.without_suspended.without_silenced)
+    account_scope = Account.without_suspended.without_silenced
+    if without_bots?
+      account_scope = account_scope.without_bots
+    end
+    scope = Status.with_public_visibility.joins(:account).merge(account_scope)
   end
 
   def local_only_scope
