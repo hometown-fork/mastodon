@@ -247,6 +247,7 @@
   dl {
     display: flex;
     border-bottom: 1px solid lighten($ui-base-color, 12%);
+    align-items: stretch;
   }
 
   dt,

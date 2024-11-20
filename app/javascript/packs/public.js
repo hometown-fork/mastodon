@@ -322,6 +322,42 @@ function main() {
       }
     });
   });
+
+  delegate(document, '.account__header__fields dl', 'click', ( { target } ) => {
+    const row = target.parentNode;
+
+    if (row.children[0].style.maxHeight === '48px' || row.children[1].style.maxHeight === '48px') {
+        row.children[0].style.maxHeight = 'none';
+        row.children[1].style.maxHeight = 'none';
+        row.children[0].style.whiteSpace = 'normal';
+        row.children[1].style.whiteSpace = 'normal';
+    } else {
+        row.children[0].style.maxHeight = '48px';
+        row.children[1].style.maxHeight = '48px';
+        row.children[0].style.whiteSpace = 'nowrap';
+        row.children[1].style.whiteSpace = 'nowrap';
+    }
+  });
+
+  ready(() => {
+
+    const dls = document.querySelectorAll('.account__header__fields dl');
+    console.log(dls);
+
+    for (let i = 0; i < dls.length; i++) {
+
+      if(dls[i].children[0].offsetWidth < dls[i].children[0].scrollWidth ||
+         dls[i].children[1].offsetWidth < dls[i].children[1].scrollWidth) {
+           dls[i].children[0].style.maxHeight = '48px';
+           dls[i].children[1].style.maxHeight = '48px';
+           dls[i].children[0].style.whiteSpace = 'nowrap';
+           dls[i].children[1].style.whiteSpace = 'nowrap';
+           dls[i].style.cursor = 'pointer';
+         }
+
+    }
+
+  });
 }
 
 loadPolyfills()
