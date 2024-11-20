@@ -3,11 +3,15 @@
 class Api::V1::Accounts::StatusesController < Api::BaseController
   before_action -> { authorize_if_got_token! :read, :'read:statuses' }
   before_action :set_account
+  skip_before_action :require_authenticated_user!, only: [:index]
 
   after_action :insert_pagination_headers, unless: -> { truthy_param?(:pinned) }
 
   def index
     @statuses = load_statuses
+    if user_would_block_unauthenticated_api_access?(@account)
+      user_blocks_unauthenticated_api_access and return
+    end
     render json: @statuses, each_serializer: REST::StatusSerializer, relationships: StatusRelationshipsPresenter.new(@statuses, current_user&.account_id)
   end
 
@@ -18,7 +22,10 @@ class Api::V1::Accounts::StatusesController < Api::BaseController
   end
 
   def load_statuses
-    @account.suspended? ? [] : cached_account_statuses
+    if @account.suspended? || disallow_unauthenticated_api_access?
+      []
+    else
+      cached_account_statuses
   end
 
   def cached_account_statuses

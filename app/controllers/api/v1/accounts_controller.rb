@@ -13,11 +13,14 @@ class Api::V1::AccountsController < Api::BaseController
   before_action :check_account_confirmation, except: [:create]
   before_action :check_enabled_registrations, only: [:create]
 
-  skip_before_action :require_authenticated_user!, only: :create
+  skip_before_action :require_authenticated_user!, only: [:create, :show]
 
   override_rate_limit_headers :follow, family: :follows
 
   def show
+    if user_would_block_unauthenticated_api_access?(@account)
+      user_blocks_unauthenticated_api_access and return
+    end
     render json: @account, serializer: REST::AccountSerializer
   end
 
